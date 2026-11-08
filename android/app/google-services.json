@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "733243978828",
+    "project_id": "codequeest-coding-puzzle-game",
+    "storage_bucket": "codequeest-coding-puzzle-game.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:733243978828:android:c2e156d66e6fcf60bb70e9",
+        "android_client_info": {
+          "package_name": "com.codequest.codequest"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCHVn_eKv2L-6yAprWo_G896wg6NQCtcgo"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
