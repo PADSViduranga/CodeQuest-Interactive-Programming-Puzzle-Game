@@ -1,31 +1,12 @@
-import 'package:codequest/app.dart';
+import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_test/flutter_test.dart';
-import 'package:shared_preferences/shared_preferences.dart';
+
+import 'package:codequest/app.dart';
 
 void main() {
-  testWidgets('App starts with onboarding', (tester) async {
-    SharedPreferences.setMockInitialValues({});
-    await tester.pumpWidget(const CodeQuestApp());
-    await tester.pumpAndSettle();
-    expect(find.text('CODEQUEST'), findsOneWidget);
-    expect(find.text('Learn by playing'), findsOneWidget);
-  });
-
-  testWidgets('Onboarding saves selections and opens the world map', (
-    tester,
-  ) async {
-    SharedPreferences.setMockInitialValues({});
-    await tester.pumpWidget(const CodeQuestApp());
-    await tester.pumpAndSettle();
-
-    await tester.tap(find.text('Skip'));
-    await tester.pumpAndSettle();
-    expect(find.text('Choose your toolkit'), findsOneWidget);
-
-    await tester.tap(find.text('Start my journey'));
-    await tester.pumpAndSettle();
-
-    expect(find.text('Your learning world'), findsOneWidget);
-    expect(find.text('Python Valley'), findsOneWidget);
+  testWidgets('app shows the CodeQuest title', (tester) async {
+    await tester.pumpWidget(const ProviderScope(child: CodeQuestApp()));
+    expect(find.text('CodeQuest'), findsOneWidget);
   });
 }

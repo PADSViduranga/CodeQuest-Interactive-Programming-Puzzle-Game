@@ -50,20 +50,20 @@ class DefaultFirebaseOptions {
   }
 
   static const FirebaseOptions web = FirebaseOptions(
-    apiKey: 'AIzaSyBjtxLyJFTgfej4DsfH6omVDTbFdR_Yl-s',
-    appId: '1:733243978828:web:806f55f120216aa6bb70e9',
-    messagingSenderId: '733243978828',
-    projectId: 'codequeest-coding-puzzle-game',
-    authDomain: 'codequeest-coding-puzzle-game.firebaseapp.com',
-    storageBucket: 'codequeest-coding-puzzle-game.firebasestorage.app',
-    measurementId: 'G-Q039NQTFLH',
+    apiKey: 'AIzaSyDc87Pd6xzTrgtLwUVrI_h9aI52qysq-ZQ',
+    appId: '1:779372606002:web:ff4bacef68c555097d422b',
+    messagingSenderId: '779372606002',
+    projectId: 'codequest-puzzle-game',
+    authDomain: 'codequest-puzzle-game.firebaseapp.com',
+    storageBucket: 'codequest-puzzle-game.firebasestorage.app',
+    measurementId: 'G-0DYS3RLYJY',
   );
 
   static const FirebaseOptions android = FirebaseOptions(
-    apiKey: 'AIzaSyCHVn_eKv2L-6yAprWo_G896wg6NQCtcgo',
-    appId: '1:733243978828:android:c2e156d66e6fcf60bb70e9',
-    messagingSenderId: '733243978828',
-    projectId: 'codequeest-coding-puzzle-game',
-    storageBucket: 'codequeest-coding-puzzle-game.firebasestorage.app',
+    apiKey: 'AIzaSyB1QNuU5UIp47gE-mcp_NhW4F4V8AL5Dpo',
+    appId: '1:779372606002:android:518386ae8f5aeeeb7d422b',
+    messagingSenderId: '779372606002',
+    projectId: 'codequest-puzzle-game',
+    storageBucket: 'codequest-puzzle-game.firebasestorage.app',
   );
 }
