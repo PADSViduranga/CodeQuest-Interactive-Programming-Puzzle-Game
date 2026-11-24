@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+
 import '../theme/app_colors.dart';
 
 class MitoLogo extends StatelessWidget {
@@ -7,10 +8,10 @@ class MitoLogo extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) => SizedBox(
-        width: size,
-        height: size,
-        child: CustomPaint(painter: _MitoPainter()),
-      );
+    width: size,
+    height: size,
+    child: CustomPaint(painter: _MitoPainter()),
+  );
 }
 
 class _MitoPainter extends CustomPainter {

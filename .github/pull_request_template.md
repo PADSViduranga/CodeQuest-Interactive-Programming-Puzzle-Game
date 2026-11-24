@@ -1,17 +1,15 @@
-## What does this PR do?
-<!-- One or two sentences. What changed and why? -->
+## What does this change?
+<!-- One or two sentences. -->
 
-## Type of change
-- [ ] New feature
-- [ ] Bug fix
-- [ ] Refactor or cleanup
-- [ ] Docs, CI or config
-
-## How was it tested?
-- [ ] Ran on web or an emulator
-- [ ] Tests added or updated
-- [ ] Not applicable (docs or config only)
+## Branch
+- [ ] My branch is a feature branch, not `main` or `develop`
+- [ ] This PR targets `develop`
 
 ## Checklist
-- [ ] `dart format .`, `flutter analyze` and `flutter test` pass locally
-- [ ] No secrets, keys or personal data committed
+- [ ] `dart format .` is clean
+- [ ] `flutter analyze` shows no issues
+- [ ] `flutter test` passes
+- [ ] I tested the screen on Android or web
+
+## Screenshots
+<!-- Add one for any UI change. -->

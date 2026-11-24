@@ -1,26 +1,65 @@
 {
   "project_info": {
-    "project_number": "733243978828",
-    "project_id": "codequeest-coding-puzzle-game",
-    "storage_bucket": "codequeest-coding-puzzle-game.firebasestorage.app"
+    "project_number": "779372606002",
+    "project_id": "codequest-puzzle-game",
+    "storage_bucket": "codequest-puzzle-game.firebasestorage.app"
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:733243978828:android:c2e156d66e6fcf60bb70e9",
+        "mobilesdk_app_id": "1:779372606002:android:518386ae8f5aeeeb7d422b",
         "android_client_info": {
           "package_name": "com.codequest.codequest"
         }
       },
-      "oauth_client": [],
+      "oauth_client": [
+        {
+          "client_id": "779372606002-9hbntfcmul79jjng5v8hu1o6n7rfdo6v.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
       "api_key": [
         {
-          "current_key": "AIzaSyCHVn_eKv2L-6yAprWo_G896wg6NQCtcgo"
+          "current_key": "AIzaSyB1QNuU5UIp47gE-mcp_NhW4F4V8AL5Dpo"
         }
       ],
       "services": {
         "appinvite_service": {
-          "other_platform_oauth_client": []
+          "other_platform_oauth_client": [
+            {
+              "client_id": "779372606002-9hbntfcmul79jjng5v8hu1o6n7rfdo6v.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:779372606002:android:789161ac5d8d48877d422b",
+        "android_client_info": {
+          "package_name": "com.codequestalternate.codequestalternate"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "779372606002-9hbntfcmul79jjng5v8hu1o6n7rfdo6v.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyB1QNuU5UIp47gE-mcp_NhW4F4V8AL5Dpo"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "779372606002-9hbntfcmul79jjng5v8hu1o6n7rfdo6v.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
         }
       }
     }

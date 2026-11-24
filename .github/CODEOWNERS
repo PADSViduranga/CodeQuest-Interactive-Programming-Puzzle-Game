@@ -1,0 +1,27 @@
+# Lead: project setup, CI and shared files
+/.github/                       @PADSviduranga
+/pubspec.yaml                   @PADSviduranga
+/firebase.json                  @PADSviduranga
+/lib/core/                      @PADSviduranga
+
+# Auth, security and settings
+/lib/features/auth/             @PADSviduranga
+/lib/features/settings/         @PADSviduranga
+/firestore.rules                @PADSviduranga
+
+# Games and compiler
+/lib/features/games/            @PADSviduranga
+/functions/                     @PADSviduranga
+
+# World, lessons and progress
+/lib/features/world_map/        @PADSviduranga
+/lib/features/lessons/          @PADSviduranga
+/lib/features/progress/         @PADSviduranga
+
+# Rewards, social and mascot
+/lib/features/rewards/          @PADSviduranga
+/lib/features/leaderboard/      @PADSviduranga
+/lib/features/mascot/           @PADSviduranga
+
+# Admin and analytics
+/lib/features/admin/            @PADSviduranga

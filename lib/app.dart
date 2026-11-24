@@ -8,7 +8,7 @@ class CodeQuestApp extends StatelessWidget {
     return MaterialApp(
       title: 'CodeQuest',
       debugShowCheckedModeBanner: false,
-      theme: ThemeData(colorSchemeSeed: Colors.teal, useMaterial3: true),
+      theme: ThemeData.dark(useMaterial3: true),
       home: const Scaffold(body: Center(child: Text('CodeQuest'))),
     );
   }
