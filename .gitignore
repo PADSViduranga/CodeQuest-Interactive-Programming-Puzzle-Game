@@ -60,3 +60,12 @@ functions/lib/
 *.jks
 key.properties
 service-account*.json
+
+# Secrets (never commit)
+.env
+*.env
+service-account*.json
+google-services.json.bak
+key.properties
+*.jks
+*.keystore

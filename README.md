@@ -1,17 +1,22 @@
-# codequest
+# CodeQuest
 
-A new Flutter project.
+A coding puzzle game for mobile and web, built with Flutter, Dart and Firebase.
+Players pick a language and a level, learn through short lessons, and solve puzzles
+and mini-games to earn XP and climb the leaderboard.
 
-## Getting Started
+## Tech
+- Flutter and Dart
+- Firebase: Auth, Firestore, Cloud Functions, App Check, Remote Config, Analytics
+- Riverpod for state, go_router for navigation
+- Judge0 for running player code
 
-This project is a starting point for a Flutter application.
+## Branches
+- `main`: final, stable release
+- `develop`: integration and testing
+- `feature/*`: one branch per area of work
 
-A few resources to get you started if this is your first Flutter project:
-
-- [Learn Flutter](https://docs.flutter.dev/get-started/learn-flutter)
-- [Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Flutter learning resources](https://docs.flutter.dev/reference/learning-resources)
-
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+## Run
+```bash
+flutter pub get
+flutter run -d chrome
+```
