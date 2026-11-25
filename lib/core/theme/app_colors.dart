@@ -1,55 +1,47 @@
-<<<<<<< HEAD
 import 'package:flutter/material.dart';
 
 class AppColors {
   AppColors._();
 
-=======
-import 'package:material_ui/material_ui.dart';
+  // Rich violet base (brighter than black, feels like a game)
+  static const background = Color(0xFF1A0B4D);
+  static const surface = Color(0xFF281366);
+  static const surfaceRaised = Color(0xFF371C86);
+  static const border = Color(0xFF5230B8);
 
-abstract final class AppColors {
->>>>>>> develop
-  static const background = Color(0xFF0A0A1A);
-  static const surface = Color(0xFF12122B);
-  static const surfaceRaised = Color(0xFF1A1A38);
-  static const border = Color(0xFF2A2A4F);
+  // Brand violet for main buttons
+  static const primary = Color(0xFF9B5CFF);
+  static const primaryLight = Color(0xFFC7A6FF);
+  static const primaryDark = Color(0xFF6A2FE0);
 
-<<<<<<< HEAD
-  static const primary = Color(0xFF7B3FF2);
-  static const primaryLight = Color(0xFFA585FF);
-=======
-  static const primary = Color(0xFF7B3FE2);
-  static const primaryLight = Color(0xFFA58AFF);
->>>>>>> develop
-  static const primaryDark = Color(0xFF4B23A8);
-
-  static const cyan = Color(0xFF22D3EE);
-  static const green = Color(0xFF34D399);
-  static const yellow = Color(0xFFFBBF24);
-<<<<<<< HEAD
-  static const pink = Color(0xFFFF4D6D);
-=======
-  static const pinkRed = Color(0xFFFF4D6D);
->>>>>>> develop
-  static const danger = Color(0xFFE11D48);
+  // Each accent has one job
+  static const cyan = Color(0xFF2EE6FF); // timers and info
+  static const green = Color(0xFF4DFF7C); // correct answers
+  static const yellow = Color(0xFFFFD21F); // XP and coins
+  static const pink = Color(0xFFFF4FA3); // streaks and combos
+  static const danger = Color(0xFFFF4D4D); // wrong answers and lives
 
   static const textPrimary = Color(0xFFFFFFFF);
-  static const textSecondary = Color(0xFFA8A9C9);
-<<<<<<< HEAD
-  static const textMuted = Color(0xFF6E7096);
+  static const textSecondary = Color(0xFFD3C4FF);
+  static const textMuted = Color(0xFF9C86E0);
 
-  static const primaryTint = Color(0xFF1E1546);
-  static const cyanTint = Color(0xFF0D2A35);
-  static const greenTint = Color(0xFF0D2B22);
-  static const yellowTint = Color(0xFF2B2410);
-  static const dangerTint = Color(0xFF2D1020);
-=======
-  static const textMuted = Color(0xFF6E7086);
+  // Dark tints behind each accent
+  static const primaryTint = Color(0xFF3A1D8F);
+  static const cyanTint = Color(0xFF0B3A66);
+  static const greenTint = Color(0xFF0B4A3A);
+  static const yellowTint = Color(0xFF4D3A0B);
+  static const dangerTint = Color(0xFF591236);
 
-  static const purpleTint = Color(0xFF1E1546);
-  static const cyanTint = Color(0xFF0D2A35);
-  static const greenTint = Color(0xFF0D2B22);
-  static const yellowTint = Color(0xFF2B2410);
-  static const redTint = Color(0xFF2D1020);
->>>>>>> develop
+  // Gradients and glow for rewards
+  static const brandGradient = LinearGradient(
+    colors: [primary, pink],
+    begin: Alignment.centerLeft,
+    end: Alignment.centerRight,
+  );
+  static const xpGradient = LinearGradient(colors: [yellow, pink]);
+  static const progressGradient = LinearGradient(colors: [primary, cyan]);
+
+  static List<BoxShadow> glow(Color c) => [
+    BoxShadow(color: c.withValues(alpha: 0.6), blurRadius: 24),
+  ];
 }
