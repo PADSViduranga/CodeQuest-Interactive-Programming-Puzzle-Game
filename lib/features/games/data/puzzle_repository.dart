@@ -49,6 +49,25 @@ class SamplePuzzleRepository implements PuzzleRepository {
         ['name = "Mito"', 'print(name.upper())'],
         ['Mito', 'MITO', 'mito', '"MITO"'],
       ),
+      Puzzle(
+        id: 'demo_do_1',
+        type: GameType.dragOrder,
+        language: 'python',
+        level: 'beginner',
+        title: 'Drag to order',
+        prompt: 'Put the lines in order so the code prints 6.',
+        payload: {
+          'items': [
+            {'id': 'c', 'text': '    total = total + n'},
+            {'id': 'a', 'text': 'total = 0'},
+            {'id': 'd', 'text': 'print(total)'},
+            {'id': 'b', 'text': 'for n in [1, 2, 3]:'},
+          ],
+        },
+        difficulty: 1,
+        xpReward: 20,
+        maxHints: 2,
+      ),
     ];
   }
 }
