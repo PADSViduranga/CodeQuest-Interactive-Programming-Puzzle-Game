@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:go_router/go_router.dart';
 
 import '../../../auth/presentation/providers/auth_provider.dart';
 import '../../../auth/presentation/providers/guest_timer_provider.dart';
@@ -21,7 +22,15 @@ class HomeScreen extends ConsumerWidget {
     return ProfileSync(
       child: GuestTimeLimitGuard(
         child: Scaffold(
-          appBar: AppBar(title: const Text('CodeQuest')),
+          appBar: AppBar(
+            title: const Text('CodeQuest'),
+            actions: [
+              IconButton(
+                icon: const Icon(Icons.settings_outlined),
+                onPressed: () => context.push('/settings'),
+              ),
+            ],
+          ),
           body: Center(
             child: Column(
               mainAxisSize: MainAxisSize.min,

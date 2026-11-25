@@ -7,6 +7,9 @@ import '../../features/auth/presentation/screens/login_screen.dart';
 import '../../features/auth/presentation/screens/register_screen.dart';
 import '../../features/auth/presentation/screens/reset_password_screen.dart';
 import '../../features/home/presentation/screens/home_screen.dart';
+import '../../features/settings/presentation/screens/delete_account_screen.dart';
+import '../../features/settings/presentation/screens/privacy_policy_screen.dart';
+import '../../features/settings/presentation/screens/settings_screen.dart';
 import 'app_routes.dart';
 
 final routerProvider = Provider<GoRouter>((ref) {
@@ -46,6 +49,18 @@ final routerProvider = Provider<GoRouter>((ref) {
       GoRoute(
         path: AppRoutes.resetPassword,
         builder: (_, _) => const ResetPasswordScreen(),
+      ),
+      GoRoute(
+        path: AppRoutes.settings,
+        builder: (_, _) => const SettingsScreen(),
+      ),
+      GoRoute(
+        path: AppRoutes.privacy,
+        builder: (_, _) => const PrivacyPolicyScreen(),
+      ),
+      GoRoute(
+        path: AppRoutes.deleteAccount,
+        builder: (_, _) => const DeleteAccountScreen(),
       ),
       GoRoute(path: AppRoutes.home, builder: (_, _) => const HomeScreen()),
     ],

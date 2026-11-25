@@ -44,4 +44,6 @@ class ProfileRepository {
         .snapshots()
         .map((s) => s.exists ? PlayerProfile.fromMap(uid, s.data()!) : null);
   }
+
+  Future<void> deleteProfile(String uid) => _doc(uid).delete();
 }
