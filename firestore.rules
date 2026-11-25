@@ -32,7 +32,7 @@ service cloud.firestore {
           'selectedLevel', 'settings', 'lastActiveAt'
         ]);
 
-      allow delete: if false;
+      allow delete: if isOwner(uid);
     }
 
     // Everything else is closed until a later branch opens it on purpose.

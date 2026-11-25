@@ -63,6 +63,27 @@ class AuthRepositoryImpl implements AuthRepository {
   @override
   Future<void> signOut() => _auth.signOut();
 
+  @override
+  Future<void> reauthenticate(String password) => _guard(() async {
+    final user = _auth.currentUser;
+    final email = user?.email;
+    if (user == null || email == null) {
+      throw const AuthFailure('Sign in with an email account first.');
+    }
+    await user.reauthenticateWithCredential(
+      fb.EmailAuthProvider.credential(email: email, password: password),
+    );
+  });
+
+  @override
+  Future<void> deleteAccount() => _guard(() async {
+    final user = _auth.currentUser;
+    if (user == null) {
+      throw const AuthFailure('You are not signed in.');
+    }
+    await user.delete();
+  });
+
   Future<void> _guard(Future<Object?> Function() action) async {
     try {
       await action();
