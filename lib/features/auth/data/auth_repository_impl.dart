@@ -84,7 +84,7 @@ class AuthRepositoryImpl implements AuthRepository {
     await user.delete();
   });
 
-  Future<void> _guard(Future<Object?> Function() action) async {
+  Future<void> _guard(Future<void> Function() action) async {
     try {
       await action();
     } on fb.FirebaseAuthException catch (e) {
