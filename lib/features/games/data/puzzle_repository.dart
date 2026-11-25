@@ -68,6 +68,26 @@ class SamplePuzzleRepository implements PuzzleRepository {
         xpReward: 20,
         maxHints: 2,
       ),
+      Puzzle(
+        id: 'demo_fb_1',
+        type: GameType.fillBlank,
+        language: 'python',
+        level: 'beginner',
+        title: 'Fill in the blank',
+        prompt: 'Fill the blank so the code prints 3.',
+        payload: {
+          'code': ['nums = [4, 8, 15]', 'print(____(nums))'],
+          'options': [
+            {'id': 'a', 'text': 'sum'},
+            {'id': 'b', 'text': 'len'},
+            {'id': 'c', 'text': 'max'},
+            {'id': 'd', 'text': 'min'},
+          ],
+        },
+        difficulty: 1,
+        xpReward: 20,
+        maxHints: 2,
+      ),
     ];
   }
 }

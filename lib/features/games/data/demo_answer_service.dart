@@ -34,6 +34,14 @@ class DemoAnswerService implements AnswerService {
       'Create total first, then loop and add each number, then print it.',
       ['The variable must exist before the loop.', 'print comes last.'],
     ),
+    'demo_fb_1': _Demo(
+      'b',
+      'len() counts the items in the list, and the list has 3 numbers.',
+      [
+        'Which function counts items?',
+        'sum adds, max and min pick one number.',
+      ],
+    ),
   };
 
   final _combo = <String, int>{};
