@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 
 import '../../../../core/theme/app_colors.dart';
 import '../../domain/stage.dart';
@@ -40,7 +41,7 @@ class WorldMapView extends StatelessWidget {
       shape: const RoundedRectangleBorder(
         borderRadius: BorderRadius.vertical(top: Radius.circular(24)),
       ),
-      builder: (_) => Padding(
+      builder: (sheetContext) => Padding(
         padding: const EdgeInsets.fromLTRB(24, 20, 24, 28),
         child: Column(
           mainAxisSize: MainAxisSize.min,
@@ -71,11 +72,20 @@ class WorldMapView extends StatelessWidget {
                 'Earn ${stage.unlockXp - totalXp} more XP to unlock this stage.',
                 style: const TextStyle(color: AppColors.yellow),
               )
-            else
+            else ...[
+              OutlinedButton(
+                onPressed: () {
+                  Navigator.of(sheetContext).pop();
+                  context.push('/lesson/${stage.id}');
+                },
+                child: const Text('Read lesson'),
+              ),
+              const SizedBox(height: 10),
               const FilledButton(
                 onPressed: null,
                 child: Text('Start stage (coming soon)'),
               ),
+            ],
           ],
         ),
       ),

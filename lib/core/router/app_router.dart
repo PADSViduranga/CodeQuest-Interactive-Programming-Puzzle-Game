@@ -7,6 +7,7 @@ import '../../features/auth/presentation/screens/login_screen.dart';
 import '../../features/auth/presentation/screens/register_screen.dart';
 import '../../features/auth/presentation/screens/reset_password_screen.dart';
 import '../../features/home/presentation/screens/home_screen.dart';
+import '../../features/lessons/presentation/screens/lesson_screen.dart';
 import '../../features/onboarding/presentation/screens/choose_language_screen.dart';
 import '../../features/onboarding/presentation/screens/choose_level_screen.dart';
 import '../../features/profile/presentation/providers/profile_provider.dart';
@@ -79,6 +80,11 @@ final routerProvider = Provider<GoRouter>((ref) {
       GoRoute(
         path: AppRoutes.chooseLevel,
         builder: (_, _) => const ChooseLevelScreen(),
+      ),
+      GoRoute(
+        path: AppRoutes.lesson,
+        builder: (_, state) =>
+            LessonScreen(stageId: state.pathParameters['stageId']!),
       ),
       GoRoute(path: AppRoutes.home, builder: (_, _) => const HomeScreen()),
       GoRoute(

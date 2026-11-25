@@ -1,82 +1,178 @@
-import 'package:material_ui/material_ui.dart';
-import 'package:flutter/services.dart';
+import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 
 import '../../../../core/theme/app_colors.dart';
-import '../../../../core/theme/app_text_styles.dart';
-import '../../../../core/widgets/app_widgets.dart';
-import '../../../games/presentation/screens/practice_screen.dart';
+import '../../domain/lesson.dart';
 
 class LessonScreen extends StatelessWidget {
-  const LessonScreen({super.key});
+  const LessonScreen({super.key, required this.stageId});
 
-  static const code = "score = 100\nif score >= 80:\n    print('Great job!')";
+  final String stageId;
 
   @override
-  Widget build(BuildContext context) => Scaffold(
-    appBar: AppBar(title: const Text('The branching forest')),
-    body: ListView(
-      padding: const EdgeInsets.fromLTRB(20, 8, 20, 28),
+  Widget build(BuildContext context) {
+    final lesson = sampleLessons[stageId];
+
+    return Scaffold(
+      appBar: AppBar(
+        title: const Text('Lesson'),
+        leading: IconButton(
+          icon: const Icon(Icons.arrow_back_ios_new, size: 18),
+          onPressed: () => context.pop(),
+        ),
+      ),
+      body: lesson == null
+          ? const Center(child: Text('This lesson is not ready yet.'))
+          : ListView(
+              padding: const EdgeInsets.all(20),
+              children: [
+                Text(
+                  lesson.title,
+                  style: const TextStyle(
+                    fontSize: 26,
+                    fontWeight: FontWeight.w800,
+                    letterSpacing: -0.5,
+                  ),
+                ),
+                const SizedBox(height: 10),
+                Text(
+                  lesson.explanation,
+                  style: const TextStyle(
+                    fontSize: 15,
+                    height: 1.55,
+                    color: AppColors.textSecondary,
+                  ),
+                ),
+                const SizedBox(height: 18),
+                _CodeBox(lines: lesson.example),
+                const SizedBox(height: 12),
+                _OutputBox(lines: lesson.output),
+                const SizedBox(height: 12),
+                Container(
+                  padding: const EdgeInsets.all(14),
+                  decoration: BoxDecoration(
+                    color: AppColors.yellowTint,
+                    borderRadius: BorderRadius.circular(14),
+                    border: Border.all(
+                      color: AppColors.yellow.withValues(alpha: 0.5),
+                    ),
+                  ),
+                  child: Row(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      const Icon(
+                        Icons.lightbulb_outline,
+                        color: AppColors.yellow,
+                        size: 20,
+                      ),
+                      const SizedBox(width: 10),
+                      Expanded(
+                        child: Text(
+                          lesson.tip,
+                          style: const TextStyle(color: AppColors.yellow),
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+                const SizedBox(height: 24),
+                FilledButton(
+                  onPressed: () => context.pop(),
+                  child: const Text('Got it'),
+                ),
+              ],
+            ),
+    );
+  }
+}
+
+class _CodeBox extends StatelessWidget {
+  const _CodeBox({required this.lines});
+
+  final List<String> lines;
+
+  @override
+  Widget build(BuildContext context) => Container(
+    width: double.infinity,
+    padding: const EdgeInsets.symmetric(vertical: 12, horizontal: 14),
+    decoration: BoxDecoration(
+      color: AppColors.cyanTint,
+      borderRadius: BorderRadius.circular(14),
+      border: Border.all(color: AppColors.cyan.withValues(alpha: 0.5)),
+    ),
+    child: Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        const ProgressBar(value: .35),
-        const SizedBox(height: 24),
-        const Text('Make decisions with if', style: AppTextStyles.title),
-        const SizedBox(height: 8),
-        const Text(
-          'Teach your code to choose what happens next.',
-          style: AppTextStyles.body,
-        ),
-        const SizedBox(height: 22),
-        const MitoBubble(
-          message: 'Sometimes code needs to ask a question. The if statement is your decision-making superpower!',
-          mood: MitoMood.thinking,
-        ),
-        const SizedBox(height: 24),
-        const SectionTitle('The if statement'),
-        const SizedBox(height: 10),
-        const Text(
-          'Use if to run a block of code only when a condition is true.',
-          style: AppTextStyles.body,
-        ),
-        const SizedBox(height: 14),
-        CodeCard(code: code, onCopy: () => _copy(context)),
-        const SizedBox(height: 22),
-        Container(
-          padding: const EdgeInsets.all(16),
-          decoration: BoxDecoration(
-            color: AppColors.yellowTint,
-            borderRadius: BorderRadius.circular(14),
-          ),
-          child: const Row(
+        for (var i = 0; i < lines.length; i++)
+          Row(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Icon(Icons.lightbulb_outline, color: AppColors.yellow),
-              SizedBox(width: 10),
+              SizedBox(
+                width: 22,
+                child: Text(
+                  '${i + 1}',
+                  style: const TextStyle(
+                    fontFamily: 'monospace',
+                    fontSize: 12,
+                    height: 1.7,
+                    color: AppColors.textMuted,
+                  ),
+                ),
+              ),
               Expanded(
                 child: Text(
-                  'Tip: Conditions use comparisons like >=, ==, and !=.',
-                  style: AppTextStyles.body,
+                  lines[i],
+                  style: const TextStyle(
+                    fontFamily: 'monospace',
+                    fontSize: 13,
+                    height: 1.7,
+                  ),
                 ),
               ),
             ],
           ),
-        ),
-        const SizedBox(height: 28),
-        AppButton(
-          label: 'Start practice',
-          icon: Icons.play_arrow_rounded,
-          onPressed: () => Navigator.of(context)
-              .push(MaterialPageRoute(builder: (_) => const PracticeScreen())),
-        ),
       ],
     ),
   );
+}
 
-  static Future<void> _copy(BuildContext context) async {
-    await Clipboard.setData(const ClipboardData(text: code));
-    if (context.mounted) {
-      ScaffoldMessenger.of(
-        context,
-      ).showSnackBar(const SnackBar(content: Text('Code copied to clipboard')));
-    }
-  }
+class _OutputBox extends StatelessWidget {
+  const _OutputBox({required this.lines});
+
+  final List<String> lines;
+
+  @override
+  Widget build(BuildContext context) => Container(
+    width: double.infinity,
+    padding: const EdgeInsets.all(14),
+    decoration: BoxDecoration(
+      color: AppColors.greenTint,
+      borderRadius: BorderRadius.circular(14),
+      border: Border.all(color: AppColors.green.withValues(alpha: 0.5)),
+    ),
+    child: Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        const Text(
+          'OUTPUT',
+          style: TextStyle(
+            fontSize: 11,
+            fontWeight: FontWeight.w700,
+            letterSpacing: 1.2,
+            color: AppColors.green,
+          ),
+        ),
+        const SizedBox(height: 6),
+        for (final l in lines)
+          Text(
+            l,
+            style: const TextStyle(
+              fontFamily: 'monospace',
+              fontSize: 13,
+              height: 1.6,
+            ),
+          ),
+      ],
+    ),
+  );
 }

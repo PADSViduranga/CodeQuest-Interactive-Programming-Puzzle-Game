@@ -12,6 +12,8 @@ class AppRoutes {
 
   // Main
   static const home = '/home';
+  static const lesson = '/lesson/:stageId';
+  static String lessonPath(String stageId) => '/lesson/$stageId';
   static const profile = '/profile';
   static const settings = '/settings';
   static const privacy = '/privacy';
