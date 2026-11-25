@@ -7,6 +7,7 @@ import '../../features/auth/presentation/providers/auth_provider.dart';
 import '../../features/auth/presentation/screens/login_screen.dart';
 import '../../features/auth/presentation/screens/register_screen.dart';
 import '../../features/auth/presentation/screens/reset_password_screen.dart';
+import '../../features/daily_challenge/presentation/screens/daily_challenge_screen.dart';
 import '../../features/home/presentation/screens/home_screen.dart';
 import '../../features/home/presentation/screens/main_shell.dart';
 import '../../features/lessons/presentation/screens/lesson_screen.dart';
@@ -104,10 +105,7 @@ final routerProvider = Provider<GoRouter>((ref) {
             routes: [
               GoRoute(
                 path: AppRoutes.daily,
-                builder: (_, _) => const ComingSoon(
-                  title: 'Daily challenge',
-                  icon: Icons.calendar_today,
-                ),
+                builder: (_, _) => const DailyChallengeScreen(),
               ),
             ],
           ),
