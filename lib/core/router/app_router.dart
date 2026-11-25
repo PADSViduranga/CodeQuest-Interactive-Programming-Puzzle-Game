@@ -1,4 +1,5 @@
 import 'package:flutter/foundation.dart';
+import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 
@@ -7,6 +8,7 @@ import '../../features/auth/presentation/screens/login_screen.dart';
 import '../../features/auth/presentation/screens/register_screen.dart';
 import '../../features/auth/presentation/screens/reset_password_screen.dart';
 import '../../features/home/presentation/screens/home_screen.dart';
+import '../../features/home/presentation/screens/main_shell.dart';
 import '../../features/lessons/presentation/screens/lesson_screen.dart';
 import '../../features/onboarding/presentation/screens/choose_language_screen.dart';
 import '../../features/onboarding/presentation/screens/choose_level_screen.dart';
@@ -18,6 +20,7 @@ import '../../features/rewards/presentation/screens/stage_complete_screen.dart';
 import '../../features/settings/presentation/screens/delete_account_screen.dart';
 import '../../features/settings/presentation/screens/privacy_policy_screen.dart';
 import '../../features/settings/presentation/screens/settings_screen.dart';
+import '../widgets/coming_soon.dart';
 import 'app_routes.dart';
 
 final routerProvider = Provider<GoRouter>((ref) {
@@ -84,6 +87,64 @@ final routerProvider = Provider<GoRouter>((ref) {
         path: AppRoutes.chooseLevel,
         builder: (_, _) => const ChooseLevelScreen(),
       ),
+
+      // The five main tabs
+      StatefulShellRoute.indexedStack(
+        builder: (_, _, shell) => MainShell(navigationShell: shell),
+        branches: [
+          StatefulShellBranch(
+            routes: [
+              GoRoute(
+                path: AppRoutes.home,
+                builder: (_, _) => const HomeScreen(),
+              ),
+            ],
+          ),
+          StatefulShellBranch(
+            routes: [
+              GoRoute(
+                path: AppRoutes.daily,
+                builder: (_, _) => const ComingSoon(
+                  title: 'Daily challenge',
+                  icon: Icons.calendar_today,
+                ),
+              ),
+            ],
+          ),
+          StatefulShellBranch(
+            routes: [
+              GoRoute(
+                path: AppRoutes.leaderboard,
+                builder: (_, _) => const ComingSoon(
+                  title: 'Leaderboard',
+                  icon: Icons.emoji_events,
+                ),
+              ),
+            ],
+          ),
+          StatefulShellBranch(
+            routes: [
+              GoRoute(
+                path: AppRoutes.progress,
+                builder: (_, _) => const ComingSoon(
+                  title: 'My progress',
+                  icon: Icons.bar_chart,
+                ),
+              ),
+            ],
+          ),
+          StatefulShellBranch(
+            routes: [
+              GoRoute(
+                path: AppRoutes.profile,
+                builder: (_, _) => const ProfileScreen(),
+              ),
+            ],
+          ),
+        ],
+      ),
+
+      // Pages opened on top of the tabs
       GoRoute(
         path: AppRoutes.lesson,
         builder: (_, state) =>
@@ -122,11 +183,6 @@ final routerProvider = Provider<GoRouter>((ref) {
             next: q['next'],
           );
         },
-      ),
-      GoRoute(path: AppRoutes.home, builder: (_, _) => const HomeScreen()),
-      GoRoute(
-        path: AppRoutes.profile,
-        builder: (_, _) => const ProfileScreen(),
       ),
       GoRoute(
         path: AppRoutes.settings,

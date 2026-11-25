@@ -1,13 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:go_router/go_router.dart';
 
 import '../../../../core/theme/app_colors.dart';
 import '../../../auth/presentation/providers/auth_provider.dart';
 import '../../../auth/presentation/providers/guest_timer_provider.dart';
-import '../../../auth/presentation/widgets/guest_time_limit_guard.dart';
 import '../../../profile/presentation/providers/profile_provider.dart';
-import '../../../profile/presentation/widgets/profile_sync.dart';
 import '../../../world_map/domain/stage.dart';
 import '../../../world_map/presentation/widgets/world_map_view.dart';
 
@@ -25,78 +22,70 @@ class HomeScreen extends ConsumerWidget {
     final mm = left.inMinutes;
     final ss = (left.inSeconds % 60).toString().padLeft(2, '0');
 
-    return ProfileSync(
-      child: GuestTimeLimitGuard(
-        child: Scaffold(
-          body: SafeArea(
-            child: Padding(
-              padding: const EdgeInsets.fromLTRB(20, 12, 20, 0),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
+    return Scaffold(
+      body: SafeArea(
+        child: Padding(
+          padding: const EdgeInsets.fromLTRB(20, 12, 20, 0),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Row(
                 children: [
-                  Row(
-                    children: [
-                      Expanded(
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            Text(
-                              'Hi $name',
-                              style: const TextStyle(
-                                fontSize: 12,
-                                color: AppColors.textSecondary,
-                              ),
-                            ),
-                            Text(
-                              '${_pretty(profile?.selectedLanguage)} · ${_pretty(profile?.selectedLevel)}',
-                              style: const TextStyle(
-                                fontSize: 19,
-                                fontWeight: FontWeight.w800,
-                              ),
-                            ),
-                          ],
+                  Expanded(
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Text(
+                          'Hi $name',
+                          style: const TextStyle(
+                            fontSize: 12,
+                            color: AppColors.textSecondary,
+                          ),
                         ),
-                      ),
-                      _Chip(
-                        icon: Icons.local_fire_department_rounded,
-                        text: '${profile?.currentStreak ?? 0}',
-                        color: AppColors.pink,
-                      ),
-                      const SizedBox(width: 8),
-                      _Chip(
-                        icon: Icons.bolt_rounded,
-                        text: '$xp',
-                        color: AppColors.yellow,
-                      ),
-                      IconButton(
-                        icon: const Icon(Icons.person_outline),
-                        onPressed: () => context.push('/profile'),
-                      ),
-                    ],
-                  ),
-                  if (timer.isGuest)
-                    Padding(
-                      padding: const EdgeInsets.only(top: 8),
-                      child: _Chip(
-                        icon: Icons.timer_outlined,
-                        text: 'Guest time left $mm:$ss',
-                        color: AppColors.cyan,
-                      ),
-                    ),
-                  const SizedBox(height: 16),
-                  Text(
-                    sampleWorldTitle.toUpperCase(),
-                    style: const TextStyle(
-                      fontSize: 11,
-                      fontWeight: FontWeight.w700,
-                      letterSpacing: 1.2,
-                      color: AppColors.textSecondary,
+                        Text(
+                          '${_pretty(profile?.selectedLanguage)} · ${_pretty(profile?.selectedLevel)}',
+                          style: const TextStyle(
+                            fontSize: 19,
+                            fontWeight: FontWeight.w800,
+                          ),
+                        ),
+                      ],
                     ),
                   ),
-                  Expanded(child: WorldMapView(totalXp: xp)),
+                  _Chip(
+                    icon: Icons.local_fire_department_rounded,
+                    text: '${profile?.currentStreak ?? 0}',
+                    color: AppColors.pink,
+                  ),
+                  const SizedBox(width: 8),
+                  _Chip(
+                    icon: Icons.bolt_rounded,
+                    text: '$xp',
+                    color: AppColors.yellow,
+                  ),
                 ],
               ),
-            ),
+              if (timer.isGuest)
+                Padding(
+                  padding: const EdgeInsets.only(top: 8),
+                  child: _Chip(
+                    icon: Icons.timer_outlined,
+                    text: 'Guest time left $mm:$ss',
+                    color: AppColors.cyan,
+                  ),
+                ),
+              const SizedBox(height: 16),
+              Text(
+                sampleWorldTitle.toUpperCase(),
+                style: const TextStyle(
+                  fontSize: 11,
+                  fontWeight: FontWeight.w700,
+                  letterSpacing: 1.2,
+                  color: AppColors.textSecondary,
+                ),
+              ),
+              Expanded(child: WorldMapView(totalXp: xp)),
+            ],
           ),
         ),
       ),
@@ -105,14 +94,8 @@ class HomeScreen extends ConsumerWidget {
 
   String _pretty(String? id) {
     if (id == null || id.isEmpty) return '-';
-    for (final part in const {
-      'html_css': 'HTML/CSS',
-      'cpp': 'C++',
-      'sql': 'SQL',
-    }.entries) {
-      if (id == part.key) return part.value;
-    }
-    return id[0].toUpperCase() + id.substring(1);
+    const special = {'html_css': 'HTML/CSS', 'cpp': 'C++', 'sql': 'SQL'};
+    return special[id] ?? id[0].toUpperCase() + id.substring(1);
   }
 }
 
