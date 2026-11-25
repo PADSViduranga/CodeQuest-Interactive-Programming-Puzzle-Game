@@ -1,0 +1,43 @@
+rules_version = '2';
+
+service cloud.firestore {
+  match /databases/{database}/documents {
+
+    function signedIn() {
+      return request.auth != null;
+    }
+
+    function isOwner(uid) {
+      return signedIn() && request.auth.uid == uid;
+    }
+
+    // Player profile. The client may create a fresh one and edit a few
+    // safe fields. XP, level and streaks can only be changed by the server.
+    match /users/{uid} {
+      allow read: if isOwner(uid);
+
+      allow create: if isOwner(uid)
+        && request.resource.data.totalXp == 0
+        && request.resource.data.level == 1
+        && request.resource.data.currentStreak == 0
+        && request.resource.data.keys().hasOnly([
+          'displayName', 'isGuest', 'avatarId', 'selectedLanguage',
+          'selectedLevel', 'totalXp', 'level', 'currentStreak',
+          'longestStreak', 'createdAt', 'lastActiveAt', 'settings'
+        ]);
+
+      allow update: if isOwner(uid)
+        && request.resource.data.diff(resource.data).affectedKeys().hasOnly([
+          'displayName', 'isGuest', 'avatarId', 'selectedLanguage',
+          'selectedLevel', 'settings', 'lastActiveAt'
+        ]);
+
+      allow delete: if false;
+    }
+
+    // Everything else is closed until a later branch opens it on purpose.
+    match /{document=**} {
+      allow read, write: if false;
+    }
+  }
+}
