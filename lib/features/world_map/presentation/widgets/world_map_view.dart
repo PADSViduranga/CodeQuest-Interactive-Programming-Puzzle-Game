@@ -82,9 +82,12 @@ class WorldMapView extends StatelessWidget {
                 child: const Text('Read lesson'),
               ),
               const SizedBox(height: 10),
-              const FilledButton(
-                onPressed: null,
-                child: Text('Start stage (coming soon)'),
+              FilledButton(
+                onPressed: () {
+                  Navigator.of(sheetContext).pop();
+                  context.push('/play/${stage.id}');
+                },
+                child: const Text('Start stage'),
               ),
               if (kDebugMode)
                 TextButton(

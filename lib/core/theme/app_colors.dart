@@ -44,4 +44,9 @@ class AppColors {
   static List<BoxShadow> glow(Color c) => [
     BoxShadow(color: c.withValues(alpha: 0.6), blurRadius: 24),
   ];
+
+  // Aliases used by older screens.
+  static const Color pinkRed = pink;
+  static const Color redTint = dangerTint;
+  static const Color purpleTint = primaryTint;
 }
