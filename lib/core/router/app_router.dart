@@ -31,7 +31,10 @@ final routerProvider = Provider<GoRouter>((ref) {
       final onAuthPage = authPages.contains(state.matchedLocation);
 
       if (!loggedIn && !onAuthPage) return AppRoutes.login;
-      if (loggedIn && onAuthPage) return AppRoutes.home;
+      final guestRegistering =
+          auth.value?.isGuest == true &&
+          state.matchedLocation == AppRoutes.register;
+      if (loggedIn && onAuthPage && !guestRegistering) return AppRoutes.home;
       return null;
     },
     routes: [
