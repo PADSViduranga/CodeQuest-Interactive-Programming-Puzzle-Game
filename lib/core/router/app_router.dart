@@ -7,6 +7,9 @@ import '../../features/auth/presentation/screens/login_screen.dart';
 import '../../features/auth/presentation/screens/register_screen.dart';
 import '../../features/auth/presentation/screens/reset_password_screen.dart';
 import '../../features/home/presentation/screens/home_screen.dart';
+import '../../features/onboarding/presentation/screens/choose_language_screen.dart';
+import '../../features/onboarding/presentation/screens/choose_level_screen.dart';
+import '../../features/profile/presentation/providers/profile_provider.dart';
 import '../../features/profile/presentation/screens/profile_screen.dart';
 import '../../features/settings/presentation/screens/delete_account_screen.dart';
 import '../../features/settings/presentation/screens/privacy_policy_screen.dart';
@@ -16,6 +19,7 @@ import 'app_routes.dart';
 final routerProvider = Provider<GoRouter>((ref) {
   final refresh = ValueNotifier<int>(0);
   ref.listen(authStateProvider, (_, _) => refresh.value++);
+  ref.listen(playerProfileProvider, (_, _) => refresh.value++);
   ref.onDispose(refresh.dispose);
 
   const authPages = {
@@ -23,6 +27,7 @@ final routerProvider = Provider<GoRouter>((ref) {
     AppRoutes.register,
     AppRoutes.resetPassword,
   };
+  const setupPages = {AppRoutes.chooseLanguage, AppRoutes.chooseLevel};
 
   return GoRouter(
     initialLocation: AppRoutes.login,
@@ -31,14 +36,30 @@ final routerProvider = Provider<GoRouter>((ref) {
       final auth = ref.read(authStateProvider);
       if (auth.isLoading) return null;
 
-      final loggedIn = auth.value != null;
-      final onAuthPage = authPages.contains(state.matchedLocation);
+      final user = auth.value;
+      final location = state.matchedLocation;
+      final onAuthPage = authPages.contains(location);
 
-      if (!loggedIn && !onAuthPage) return AppRoutes.login;
-      final guestRegistering =
-          auth.value?.isGuest == true &&
-          state.matchedLocation == AppRoutes.register;
-      if (loggedIn && onAuthPage && !guestRegistering) return AppRoutes.home;
+      // Logged out: only the auth pages are allowed.
+      if (user == null) return onAuthPage ? null : AppRoutes.login;
+
+      // A guest may open Register to upgrade their account.
+      final guestRegistering = user.isGuest && location == AppRoutes.register;
+      if (onAuthPage && !guestRegistering) return AppRoutes.home;
+
+      // Wait for the profile, then make sure language and level are chosen.
+      final profileState = ref.read(playerProfileProvider);
+      if (profileState.isLoading) return null;
+      final profile = profileState.value;
+      if (profile == null) return null;
+
+      final needsSetup =
+          profile.selectedLanguage == null || profile.selectedLevel == null;
+      final onSetupPage = setupPages.contains(location);
+      if (needsSetup && !onSetupPage && !guestRegistering) {
+        return AppRoutes.chooseLanguage;
+      }
+      if (!needsSetup && onSetupPage) return AppRoutes.home;
       return null;
     },
     routes: [
@@ -52,6 +73,19 @@ final routerProvider = Provider<GoRouter>((ref) {
         builder: (_, _) => const ResetPasswordScreen(),
       ),
       GoRoute(
+        path: AppRoutes.chooseLanguage,
+        builder: (_, _) => const ChooseLanguageScreen(),
+      ),
+      GoRoute(
+        path: AppRoutes.chooseLevel,
+        builder: (_, _) => const ChooseLevelScreen(),
+      ),
+      GoRoute(path: AppRoutes.home, builder: (_, _) => const HomeScreen()),
+      GoRoute(
+        path: AppRoutes.profile,
+        builder: (_, _) => const ProfileScreen(),
+      ),
+      GoRoute(
         path: AppRoutes.settings,
         builder: (_, _) => const SettingsScreen(),
       ),
@@ -63,11 +97,6 @@ final routerProvider = Provider<GoRouter>((ref) {
         path: AppRoutes.deleteAccount,
         builder: (_, _) => const DeleteAccountScreen(),
       ),
-      GoRoute(
-        path: AppRoutes.profile,
-        builder: (_, _) => const ProfileScreen(),
-      ),
-      GoRoute(path: AppRoutes.home, builder: (_, _) => const HomeScreen()),
     ],
   );
 });
