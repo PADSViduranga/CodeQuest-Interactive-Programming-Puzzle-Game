@@ -1,3 +1,4 @@
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 
@@ -85,6 +86,14 @@ class WorldMapView extends StatelessWidget {
                 onPressed: null,
                 child: Text('Start stage (coming soon)'),
               ),
+              if (kDebugMode)
+                TextButton(
+                  onPressed: () {
+                    Navigator.of(sheetContext).pop();
+                    context.push(_previewRewards());
+                  },
+                  child: const Text('Preview rewards (debug)'),
+                ),
             ],
           ],
         ),
@@ -159,4 +168,26 @@ class _StageNode extends StatelessWidget {
       ),
     );
   }
+}
+
+/// Debug helper: opens stage complete, then level up, then a badge.
+String _previewRewards() {
+  final badge = Uri(
+    path: '/badge',
+    queryParameters: {'name': 'On Fire', 'desc': 'Play 7 days in a row.'},
+  ).toString();
+  final level = Uri(
+    path: '/level-up',
+    queryParameters: {'level': '2', 'next': badge},
+  ).toString();
+  return Uri(
+    path: '/stage-complete',
+    queryParameters: {
+      'stars': '3',
+      'xp': '60',
+      'accuracy': '83',
+      'combo': '4',
+      'next': level,
+    },
+  ).toString();
 }

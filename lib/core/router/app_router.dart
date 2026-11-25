@@ -12,6 +12,9 @@ import '../../features/onboarding/presentation/screens/choose_language_screen.da
 import '../../features/onboarding/presentation/screens/choose_level_screen.dart';
 import '../../features/profile/presentation/providers/profile_provider.dart';
 import '../../features/profile/presentation/screens/profile_screen.dart';
+import '../../features/rewards/presentation/screens/badge_unlocked_screen.dart';
+import '../../features/rewards/presentation/screens/level_up_screen.dart';
+import '../../features/rewards/presentation/screens/stage_complete_screen.dart';
 import '../../features/settings/presentation/screens/delete_account_screen.dart';
 import '../../features/settings/presentation/screens/privacy_policy_screen.dart';
 import '../../features/settings/presentation/screens/settings_screen.dart';
@@ -85,6 +88,40 @@ final routerProvider = Provider<GoRouter>((ref) {
         path: AppRoutes.lesson,
         builder: (_, state) =>
             LessonScreen(stageId: state.pathParameters['stageId']!),
+      ),
+      GoRoute(
+        path: AppRoutes.stageComplete,
+        builder: (_, state) {
+          final q = state.uri.queryParameters;
+          return StageCompleteScreen(
+            stars: int.tryParse(q['stars'] ?? '') ?? 3,
+            xp: int.tryParse(q['xp'] ?? '') ?? 0,
+            accuracy: int.tryParse(q['accuracy'] ?? '') ?? 0,
+            combo: int.tryParse(q['combo'] ?? '') ?? 1,
+            next: q['next'],
+          );
+        },
+      ),
+      GoRoute(
+        path: AppRoutes.levelUp,
+        builder: (_, state) {
+          final q = state.uri.queryParameters;
+          return LevelUpScreen(
+            level: int.tryParse(q['level'] ?? '') ?? 2,
+            next: q['next'],
+          );
+        },
+      ),
+      GoRoute(
+        path: AppRoutes.badge,
+        builder: (_, state) {
+          final q = state.uri.queryParameters;
+          return BadgeUnlockedScreen(
+            name: q['name'] ?? 'New badge',
+            description: q['desc'] ?? '',
+            next: q['next'],
+          );
+        },
       ),
       GoRoute(path: AppRoutes.home, builder: (_, _) => const HomeScreen()),
       GoRoute(
