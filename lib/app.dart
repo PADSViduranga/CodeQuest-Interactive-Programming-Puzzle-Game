@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 
+import 'core/theme/app_theme.dart';
+
 class CodeQuestApp extends StatelessWidget {
   const CodeQuestApp({super.key});
 
@@ -8,7 +10,8 @@ class CodeQuestApp extends StatelessWidget {
     return MaterialApp(
       title: 'CodeQuest',
       debugShowCheckedModeBanner: false,
-      theme: ThemeData.dark(useMaterial3: true),
+      theme: AppTheme.dark,
+      themeMode: ThemeMode.dark,
       home: const Scaffold(body: Center(child: Text('CodeQuest'))),
     );
   }
