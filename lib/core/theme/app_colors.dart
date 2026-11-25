@@ -46,7 +46,7 @@ class AppColors {
   ];
 
   // Aliases used by older screens.
-  static Color get pinkRed => pink;
-  static Color get redTint => dangerTint;
-  static Color get purpleTint => primaryTint;
+  static const Color pinkRed = pink;
+  static const Color redTint = dangerTint;
+  static const Color purpleTint = primaryTint;
 }
