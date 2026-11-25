@@ -10,6 +10,7 @@ import '../../features/auth/presentation/screens/reset_password_screen.dart';
 import '../../features/daily_challenge/presentation/screens/daily_challenge_screen.dart';
 import '../../features/home/presentation/screens/home_screen.dart';
 import '../../features/home/presentation/screens/main_shell.dart';
+import '../../features/leaderboard/presentation/screens/leaderboard_screen.dart';
 import '../../features/lessons/presentation/screens/lesson_screen.dart';
 import '../../features/onboarding/presentation/screens/choose_language_screen.dart';
 import '../../features/onboarding/presentation/screens/choose_level_screen.dart';
@@ -113,10 +114,7 @@ final routerProvider = Provider<GoRouter>((ref) {
             routes: [
               GoRoute(
                 path: AppRoutes.leaderboard,
-                builder: (_, _) => const ComingSoon(
-                  title: 'Leaderboard',
-                  icon: Icons.emoji_events,
-                ),
+                builder: (_, _) => const LeaderboardScreen(),
               ),
             ],
           ),
