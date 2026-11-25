@@ -44,4 +44,9 @@ class AppColors {
   static List<BoxShadow> glow(Color c) => [
     BoxShadow(color: c.withValues(alpha: 0.6), blurRadius: 24),
   ];
+
+  // Aliases used by older screens.
+  static Color get pinkRed => pink;
+  static Color get redTint => dangerTint;
+  static Color get purpleTint => primaryTint;
 }
