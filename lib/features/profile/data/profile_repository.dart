@@ -49,8 +49,8 @@ class ProfileRepository {
 
   Future<void> updateSelection(String uid, {String? language, String? level}) =>
       _doc(uid).update({
-        if (language != null) 'selectedLanguage': language,
-        if (level != null) 'selectedLevel': level,
+        'selectedLanguage': ?language,
+        'selectedLevel': ?level,
         'lastActiveAt': FieldValue.serverTimestamp(),
       });
 }

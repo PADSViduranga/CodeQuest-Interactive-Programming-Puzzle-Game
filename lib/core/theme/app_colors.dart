@@ -20,17 +20,20 @@ class AppColors {
   static const yellow = Color(0xFFFFD21F); // XP and coins
   static const pink = Color(0xFFFF4FA3); // streaks and combos
   static const danger = Color(0xFFFF4D4D); // wrong answers and lives
+  static const pinkRed = danger;
 
   static const textPrimary = Color(0xFFFFFFFF);
   static const textSecondary = Color(0xFFD3C4FF);
   static const textMuted = Color(0xFF9C86E0);
 
   // Dark tints behind each accent
-  static const primaryTint = Color(0xFF3A1D8F);
+  static const primaryTint = Color(0xFF1E1546);
+  static const purpleTint = primaryTint;
   static const cyanTint = Color(0xFF0B3A66);
   static const greenTint = Color(0xFF0B4A3A);
   static const yellowTint = Color(0xFF4D3A0B);
   static const dangerTint = Color(0xFF591236);
+  static const redTint = dangerTint;
 
   // Gradients and glow for rewards
   static const brandGradient = LinearGradient(
