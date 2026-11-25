@@ -13,6 +13,9 @@ abstract class AnswerService {
     required int timeTakenMs,
     required int hintsUsed,
   });
+
+  /// Returns the text of hint number [hintNumber] (1 based), if any.
+  Future<String?> getHint(String puzzleId, int hintNumber);
 }
 
 class CloudAnswerService implements AnswerService {
@@ -40,5 +43,14 @@ class CloudAnswerService implements AnswerService {
     return AnswerResult.fromMap(
       Map<String, dynamic>.from(response.data as Map),
     );
+  }
+
+  @override
+  Future<String?> getHint(String puzzleId, int hintNumber) async {
+    final response = await _functions.httpsCallable('getHint').call({
+      'puzzleId': puzzleId,
+      'hintNumber': hintNumber,
+    });
+    return (response.data as Map)['hint'] as String?;
   }
 }

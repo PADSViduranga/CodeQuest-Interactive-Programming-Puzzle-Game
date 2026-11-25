@@ -8,6 +8,7 @@ import '../../features/auth/presentation/screens/login_screen.dart';
 import '../../features/auth/presentation/screens/register_screen.dart';
 import '../../features/auth/presentation/screens/reset_password_screen.dart';
 import '../../features/daily_challenge/presentation/screens/daily_challenge_screen.dart';
+import '../../features/games/presentation/screens/game_play_screen.dart';
 import '../../features/home/presentation/screens/home_screen.dart';
 import '../../features/home/presentation/screens/main_shell.dart';
 import '../../features/leaderboard/presentation/screens/leaderboard_screen.dart';
@@ -138,6 +139,11 @@ final routerProvider = Provider<GoRouter>((ref) {
       ),
 
       // Pages opened on top of the tabs
+      GoRoute(
+        path: AppRoutes.play,
+        builder: (_, state) =>
+            GamePlayScreen(stageId: state.pathParameters['stageId']!),
+      ),
       GoRoute(
         path: AppRoutes.lesson,
         builder: (_, state) =>

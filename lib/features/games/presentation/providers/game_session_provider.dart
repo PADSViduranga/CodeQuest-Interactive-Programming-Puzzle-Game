@@ -1,12 +1,16 @@
 import 'package:cloud_functions/cloud_functions.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../core/game_module.dart';
 import '../../data/answer_service.dart';
+import '../../data/demo_answer_service.dart';
 import '../../domain/answer_result.dart';
 
 final answerServiceProvider = Provider<AnswerService>(
-  (ref) => CloudAnswerService(FirebaseFunctions.instance),
+  (ref) => kDebugMode
+      ? DemoAnswerService()
+      : CloudAnswerService(FirebaseFunctions.instance),
 );
 
 class GameSessionState implements GameSessionView {
