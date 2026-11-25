@@ -1,1 +1,26 @@
-{"flutter":{"platforms":{"android":{"default":{"projectId":"codequest-puzzle-game","appId":"1:779372606002:android:518386ae8f5aeeeb7d422b","fileOutput":"android/app/google-services.json"}},"dart":{"lib/firebase_options.dart":{"projectId":"codequest-puzzle-game","configurations":{"android":"1:779372606002:android:518386ae8f5aeeeb7d422b","web":"1:779372606002:web:ff4bacef68c555097d422b"}}}}}}
+{
+  "flutter": {
+    "platforms": {
+      "android": {
+        "default": {
+          "projectId": "codequest-puzzle-game",
+          "appId": "1:779372606002:android:518386ae8f5aeeeb7d422b",
+          "fileOutput": "android/app/google-services.json"
+        }
+      },
+      "dart": {
+        "lib/firebase_options.dart": {
+          "projectId": "codequest-puzzle-game",
+          "configurations": {
+            "android": "1:779372606002:android:518386ae8f5aeeeb7d422b",
+            "web": "1:779372606002:web:ff4bacef68c555097d422b"
+          }
+        }
+      }
+    }
+  },
+  "firestore": {
+    "rules": "firestore.rules",
+    "indexes": "firestore.indexes.json"
+  }
+}
