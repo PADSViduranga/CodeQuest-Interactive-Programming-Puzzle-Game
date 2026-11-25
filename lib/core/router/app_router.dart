@@ -15,6 +15,7 @@ import '../../features/lessons/presentation/screens/lesson_screen.dart';
 import '../../features/onboarding/presentation/screens/choose_language_screen.dart';
 import '../../features/onboarding/presentation/screens/choose_level_screen.dart';
 import '../../features/profile/presentation/providers/profile_provider.dart';
+import '../../features/progress/presentation/screens/progress_screen.dart';
 import '../../features/profile/presentation/screens/profile_screen.dart';
 import '../../features/rewards/presentation/screens/badge_unlocked_screen.dart';
 import '../../features/rewards/presentation/screens/level_up_screen.dart';
@@ -22,7 +23,6 @@ import '../../features/rewards/presentation/screens/stage_complete_screen.dart';
 import '../../features/settings/presentation/screens/delete_account_screen.dart';
 import '../../features/settings/presentation/screens/privacy_policy_screen.dart';
 import '../../features/settings/presentation/screens/settings_screen.dart';
-import '../widgets/coming_soon.dart';
 import 'app_routes.dart';
 
 final routerProvider = Provider<GoRouter>((ref) {
@@ -122,10 +122,7 @@ final routerProvider = Provider<GoRouter>((ref) {
             routes: [
               GoRoute(
                 path: AppRoutes.progress,
-                builder: (_, _) => const ComingSoon(
-                  title: 'My progress',
-                  icon: Icons.bar_chart,
-                ),
+                builder: (_, _) => const ProgressScreen(),
               ),
             ],
           ),
