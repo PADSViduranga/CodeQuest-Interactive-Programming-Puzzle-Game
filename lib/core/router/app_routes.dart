@@ -5,6 +5,7 @@ class AppRoutes {
   static const register = '/register';
   static const resetPassword = '/reset-password';
   static const home = '/home';
+  static const profile = '/profile';
   static const settings = '/settings';
   static const privacy = '/privacy';
   static const deleteAccount = '/delete-account';

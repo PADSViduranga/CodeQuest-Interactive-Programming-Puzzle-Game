@@ -26,6 +26,10 @@ class HomeScreen extends ConsumerWidget {
             title: const Text('CodeQuest'),
             actions: [
               IconButton(
+                icon: const Icon(Icons.person_outline),
+                onPressed: () => context.push('/profile'),
+              ),
+              IconButton(
                 icon: const Icon(Icons.settings_outlined),
                 onPressed: () => context.push('/settings'),
               ),
