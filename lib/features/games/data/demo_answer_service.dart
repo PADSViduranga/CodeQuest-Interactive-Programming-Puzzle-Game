@@ -47,6 +47,11 @@ class DemoAnswerService implements AnswerService {
       'len(nums) counts the items, and the list has 3 numbers.',
       ['Which function counts items?', 'Put the list name in the brackets.'],
     ),
+    'demo_gr_1': _Demo(
+      ['c1', 'c3', 'c5'],
+      'Names cannot start with a digit, cannot be a keyword like class, and cannot contain a dash.',
+      ['One name starts with a number.', 'class is a reserved word.'],
+    ),
   };
 
   final _combo = <String, int>{};
@@ -60,6 +65,12 @@ class DemoAnswerService implements AnswerService {
         return (answer['text'] as String?)?.trim() == expected;
       }
       return answer['selectedOptionId'] == expected;
+    }
+    if (expected is List && answer['selected'] is List) {
+      final picked = answer['selected'] as List;
+      return picked.length == expected.length &&
+          picked.toSet().length == picked.length &&
+          picked.every(expected.contains);
     }
     final given = answer['order'];
     if (expected is List && given is List && given.length == expected.length) {

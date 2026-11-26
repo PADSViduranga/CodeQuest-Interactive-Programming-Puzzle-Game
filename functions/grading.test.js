@@ -39,3 +39,11 @@ test('typing ignores extra spaces and accepts alternatives', () => {
   assert.strictEqual(checkAnswer(secret, { text: 'LEN(nums)' }), false);
   assert.strictEqual(checkAnswer(secret, { text: 5 }), false);
 });
+
+test('grid needs exactly the right cells, in any order', () => {
+  const secret = { type: 'grid', answer: ['x1', 'x3'] };
+  assert.strictEqual(checkAnswer(secret, { selected: ['x3', 'x1'] }), true);
+  assert.strictEqual(checkAnswer(secret, { selected: ['x1'] }), false);
+  assert.strictEqual(checkAnswer(secret, { selected: ['x1', 'x3', 'x2'] }), false);
+  assert.strictEqual(checkAnswer(secret, { selected: ['x1', 'x1'] }), false);
+});

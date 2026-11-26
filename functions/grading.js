@@ -5,6 +5,15 @@ function sameList(a, b) {
 }
 
 /** secret = { type, answer }, answer = what the player sent. */
+/** Same cells, in any order, no repeats. */
+function sameSet(a, b) {
+  return (
+    a.length === b.length &&
+    new Set(a).size === a.length &&
+    a.every((v) => b.includes(v))
+  );
+}
+
 /** Trimmed, with runs of spaces collapsed to one. */
 function normalize(text) {
   return String(text).trim().replace(/\s+/g, ' ');
@@ -24,6 +33,12 @@ function checkAnswer(secret, answer) {
         Array.isArray(answer.order) &&
         Array.isArray(secret.answer) &&
         sameList(answer.order, secret.answer)
+      );
+    case 'grid':
+      return (
+        Array.isArray(answer.selected) &&
+        Array.isArray(secret.answer) &&
+        sameSet(answer.selected, secret.answer)
       );
     case 'typing': {
       if (typeof answer.text !== 'string') return false;

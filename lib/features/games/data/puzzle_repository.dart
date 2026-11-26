@@ -103,6 +103,28 @@ class SamplePuzzleRepository implements PuzzleRepository {
         xpReward: 20,
         maxHints: 2,
       ),
+      Puzzle(
+        id: 'demo_gr_1',
+        type: GameType.grid,
+        language: 'python',
+        level: 'beginner',
+        title: 'Pick them all',
+        prompt: 'Tap every valid Python variable name.',
+        payload: {
+          'columns': 2,
+          'cells': [
+            {'id': 'c1', 'text': 'my_name'},
+            {'id': 'c2', 'text': '2cool'},
+            {'id': 'c3', 'text': 'total_1'},
+            {'id': 'c4', 'text': 'class'},
+            {'id': 'c5', 'text': 'score'},
+            {'id': 'c6', 'text': 'first-name'},
+          ],
+        },
+        difficulty: 1,
+        xpReward: 20,
+        maxHints: 2,
+      ),
     ];
   }
 }

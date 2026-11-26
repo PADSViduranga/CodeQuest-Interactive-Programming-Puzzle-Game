@@ -45,6 +45,12 @@ const secrets = {
     explanation: 'len(nums) counts the items, and the list has 3 numbers.',
     hints: ['Which function counts items?', 'Put the list name in the brackets.'],
   },
+  demo_gr_1: {
+    type: 'grid',
+    answer: ['c1', 'c3', 'c5'],
+    explanation: 'Names cannot start with a digit, cannot be a keyword like class, and cannot contain a dash.',
+    hints: ['One name starts with a number.', 'class is a reserved word.'],
+  },
 };
 
 (async () => {
