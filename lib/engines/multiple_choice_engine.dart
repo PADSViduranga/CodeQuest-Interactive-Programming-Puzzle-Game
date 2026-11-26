@@ -29,15 +29,18 @@ class _MultipleChoiceEngineState extends State<MultipleChoiceEngine> {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.stretch,
       children: [
-        Text(widget.question,
-            style: const TextStyle(
-                fontSize: 19,
-                fontWeight: FontWeight.w700,
-                color: Colors.white)),
+        Text(
+          widget.question,
+          style: const TextStyle(
+            fontSize: 19,
+            fontWeight: FontWeight.w700,
+            color: Colors.white,
+          ),
+        ),
         const SizedBox(height: 18),
-        ...widget.options
-            .where((o) => !widget.hiddenOptions.contains(o))
-            .map((option) {
+        ...widget.options.where((o) => !widget.hiddenOptions.contains(o)).map((
+          option,
+        ) {
           final isSelected = selected == option;
           final isCorrect = submitted && option == widget.correctAnswer;
           final isWrong = submitted && isSelected && !isCorrect;
@@ -50,24 +53,27 @@ class _MultipleChoiceEngineState extends State<MultipleChoiceEngine> {
                 backgroundColor: isCorrect
                     ? const Color(0xFF123536)
                     : isWrong
-                        ? const Color(0xFF3C202F)
-                        : isSelected
-                            ? const Color(0xFF34235D)
-                            : const Color(0xFF24233F),
+                    ? const Color(0xFF3C202F)
+                    : isSelected
+                    ? const Color(0xFF34235D)
+                    : const Color(0xFF24233F),
                 side: BorderSide(
                   color: isCorrect
                       ? const Color(0xFF22D3EE)
                       : isWrong
-                          ? const Color(0xFFFB7185)
-                          : isSelected
-                              ? const Color(0xFFA855F7)
-                              : const Color(0xFF454363),
+                      ? const Color(0xFFFB7185)
+                      : isSelected
+                      ? const Color(0xFFA855F7)
+                      : const Color(0xFF454363),
                 ),
               ),
-              onPressed:
-                  submitted ? null : () => setState(() => selected = option),
-              child: Text(option,
-                  style: const TextStyle(color: Colors.white, height: 1.35)),
+              onPressed: submitted
+                  ? null
+                  : () => setState(() => selected = option),
+              child: Text(
+                option,
+                style: const TextStyle(color: Colors.white, height: 1.35),
+              ),
             ),
           );
         }),

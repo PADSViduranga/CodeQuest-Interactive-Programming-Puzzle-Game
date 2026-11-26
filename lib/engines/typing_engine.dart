@@ -35,15 +35,20 @@ class _TypingEngineState extends State<TypingEngine> {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.stretch,
       children: [
-        Text(widget.question,
-            style: const TextStyle(
-                fontSize: 19,
-                fontWeight: FontWeight.w700,
-                color: Colors.white)),
+        Text(
+          widget.question,
+          style: const TextStyle(
+            fontSize: 19,
+            fontWeight: FontWeight.w700,
+            color: Colors.white,
+          ),
+        ),
         if (widget.hint != null) ...[
           const SizedBox(height: 10),
-          Text('Hint: ${widget.hint}',
-              style: const TextStyle(color: Color(0xFFA6A6BD))),
+          Text(
+            'Hint: ${widget.hint}',
+            style: const TextStyle(color: Color(0xFFA6A6BD)),
+          ),
         ],
         const SizedBox(height: 18),
         TextField(
@@ -52,10 +57,13 @@ class _TypingEngineState extends State<TypingEngine> {
           minLines: widget.multiline ? 3 : 1,
           maxLines: widget.multiline ? 5 : 1,
           style: const TextStyle(
-              color: Color(0xFF22D3EE), fontFamily: 'monospace'),
+            color: Color(0xFF22D3EE),
+            fontFamily: 'monospace',
+          ),
           decoration: InputDecoration(
-            labelText:
-                widget.multiline ? 'Write your code' : 'Type your answer',
+            labelText: widget.multiline
+                ? 'Write your code'
+                : 'Type your answer',
             border: const OutlineInputBorder(),
           ),
           onSubmitted: (_) => submit(),
@@ -71,7 +79,8 @@ class _TypingEngineState extends State<TypingEngine> {
 
   void submit() {
     if (controller.text.trim().isEmpty || submitted) return;
-    final correct = controller.text.trim().toLowerCase() ==
+    final correct =
+        controller.text.trim().toLowerCase() ==
         widget.correctAnswer.trim().toLowerCase();
     if (correct) {
       setState(() => submitted = true);

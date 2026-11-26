@@ -32,8 +32,7 @@ class GameCatalog {
       title: 'Big O Sprint',
       description: 'Spot the runtime before the clock runs out.',
       mode: GameMode.multipleChoice,
-      question:
-          'What is the time complexity of accessing an element by index in a typical array?',
+      question: 'What is the time complexity of accessing an element by index in a typical array?',
       options: ['O(1)', 'O(n)', 'O(n²)', 'O(log n)'],
       answer: 'O(1)',
       explanation:
@@ -65,8 +64,7 @@ class GameCatalog {
       mode: GameMode.dragBuckets,
       question: 'Drag each HTTP status code to its correct category.',
       answer: '',
-      explanation:
-          '2xx means success, 3xx redirection, 4xx client error and 5xx server error.',
+      explanation: '2xx means success, 3xx redirection, 4xx client error and 5xx server error.',
       pairs: [
         GamePair('200 OK', 'Success'),
         GamePair('201 Created', 'Success'),
@@ -82,8 +80,7 @@ class GameCatalog {
       title: 'Code Review Duel',
       description: 'Tap the line that could expose a user to risk.',
       mode: GameMode.codeLine,
-      question:
-          'Find the unsafe line: user text is inserted directly into a SQL query.',
+      question: 'Find the unsafe line: user text is inserted directly into a SQL query.',
       codeLines: [
         'final name = request.query["name"];',
         'final sql = "SELECT * FROM users WHERE name = \'\$name\'";',
@@ -91,8 +88,7 @@ class GameCatalog {
         '// Prefer a parameterized query instead.',
       ],
       answer: 'final sql = "SELECT * FROM users WHERE name = \'\$name\'";',
-      explanation:
-          'Interpolating untrusted text into SQL can allow injection. Use bound parameters.',
+      explanation: 'Interpolating untrusted text into SQL can allow injection. Use bound parameters.',
       category: 'Web',
       difficulty: 'Hard',
     ),
@@ -183,8 +179,7 @@ class GameCatalog {
       title: 'Syntax Speedrun',
       description: 'Complete a function before the timer expires.',
       mode: GameMode.typing,
-      question:
-          'Complete the Python function definition:\n\ngreet():\n    print("Hello")',
+      question: 'Complete the Python function definition:\n\ngreet():\n    print("Hello")',
       answer: 'def',
       explanation: 'Python uses the def keyword to define a function.',
       hint: 'It is a three-letter keyword used before a function name.',
@@ -215,8 +210,7 @@ class GameCatalog {
       mode: GameMode.dragBuckets,
       question: 'Drag each value to the correct data type.',
       answer: '',
-      explanation:
-          'Strings are text, integers are whole numbers and booleans are true/false values.',
+      explanation: 'Strings are text, integers are whole numbers and booleans are true/false values.',
       pairs: [
         GamePair('"Hello"', 'String'),
         GamePair('"42"', 'String'),
@@ -269,11 +263,10 @@ class GameCatalog {
         'Read number',
         'Is number % 2 == 0?',
         'Show even or odd',
-        'End'
+        'End',
       ],
       answer: 'Start|Read number|Is number % 2 == 0?|Show even or odd|End',
-      explanation:
-          'A flowchart starts, reads input, makes a decision, displays the result and ends.',
+      explanation: 'A flowchart starts, reads input, makes a decision, displays the result and ends.',
       category: 'Algorithms',
       difficulty: 'Medium',
     ),
@@ -308,13 +301,12 @@ class GameCatalog {
       title: 'Log Detective',
       description: 'Scan the log stream and identify the failure.',
       mode: GameMode.multipleChoice,
-      question:
-          'Which entry signals the payment request failed?\n\nINFO  startup complete\nDEBUG cache hit\nWARNING retrying connection\nERROR payment declined',
+      question: 'Which entry signals the payment request failed?\n\nINFO  startup complete\nDEBUG cache hit\nWARNING retrying connection\nERROR payment declined',
       options: [
         'INFO startup complete',
         'DEBUG cache hit',
         'WARNING retrying connection',
-        'ERROR payment declined'
+        'ERROR payment declined',
       ],
       answer: 'ERROR payment declined',
       explanation: 'ERROR marks a failed operation that needs attention.',
@@ -326,8 +318,7 @@ class GameCatalog {
       title: 'Code Maze',
       description: 'Order the commands to reach the exit tile.',
       mode: GameMode.ordering,
-      question:
-          'The exit is two tiles east, then one tile south. Arrange the commands.',
+      question: 'The exit is two tiles east, then one tile south. Arrange the commands.',
       sequence: ['Move east', 'Move east', 'Move south'],
       answer: 'Move east|Move east|Move south',
       explanation: 'Follow the route east, east, then south to reach the exit.',
@@ -353,8 +344,7 @@ class GameCatalog {
       mode: GameMode.sorting,
       question: 'Tap adjacent bars to swap them until the values are sorted.',
       answer: 'SORTED',
-      explanation:
-          'A sorting algorithm repeatedly compares and moves values into order.',
+      explanation: 'A sorting algorithm repeatedly compares and moves values into order.',
       sortValues: [5, 2, 8, 1, 4],
       category: 'Algorithms',
       difficulty: 'Medium',
@@ -369,7 +359,7 @@ class GameCatalog {
         'A base case',
         'A loop counter',
         'A global variable',
-        'A return type'
+        'A return type',
       ],
       answer: 'A base case',
       explanation:
@@ -382,8 +372,7 @@ class GameCatalog {
       title: 'Variable Tracer',
       description: 'Execute each assignment and report the final value.',
       mode: GameMode.typing,
-      question:
-          'Trace the code and enter the final value of total:\n\nvar total = 2;\ntotal = total + 3;\ntotal = total * 2;',
+      question: 'Trace the code and enter the final value of total:\n\nvar total = 2;\ntotal = total + 3;\ntotal = total * 2;',
       answer: '10',
       explanation: 'Start at 2, add 3 to get 5, then multiply by 2 to get 10.',
       hint: 'Follow the assignments from top to bottom.',
@@ -412,8 +401,7 @@ class GameCatalog {
       question: 'Arrange the nodes in in-order traversal: left, root, right.',
       sequence: ['2', '1', '3'],
       answer: '2|1|3',
-      explanation:
-          'In-order traversal visits the left subtree, root, then right subtree.',
+      explanation: 'In-order traversal visits the left subtree, root, then right subtree.',
       category: 'Algorithms',
       difficulty: 'Medium',
     ),
@@ -424,8 +412,7 @@ class GameCatalog {
       mode: GameMode.typing,
       question: 'Enter a regular expression that matches exactly three digits.',
       answer: r'^\d{3}$',
-      explanation:
-          r'\d matches a digit; {3} repeats it three times; anchors require a full-string match.',
+      explanation: r'\d matches a digit; {3} repeats it three times; anchors require a full-string match.',
       hint: r'Use ^, \d, {3}, and $.',
       category: 'Web',
       difficulty: 'Hard',
@@ -435,8 +422,7 @@ class GameCatalog {
       title: 'Write the Code',
       description: 'Complete a tiny coding task in the editor.',
       mode: GameMode.typing,
-      question:
-          'Write the Python statement that prints Hello. Match this exactly:\nprint("Hello")',
+      question: 'Write the Python statement that prints Hello. Match this exactly:\nprint("Hello")',
       answer: 'print("Hello")',
       explanation: 'The print function writes the supplied text to the output.',
       hint: 'Use print with the word Hello inside quotes.',

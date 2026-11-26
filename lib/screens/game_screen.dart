@@ -1,5 +1,7 @@
 import 'dart:async';
+
 import 'package:flutter/material.dart';
+
 import '../core/theme/game_theme.dart';
 import '../data/game_catalog.dart';
 import '../engines/drag_buckets_engine.dart';
@@ -59,8 +61,10 @@ class _GameScreenState extends State<GameScreen> {
       finished = true;
       if (correct) {
         combo++;
-        PlayerProgress.instance
-            .recordWin(widget.game.id, _xpReward(widget.game));
+        PlayerProgress.instance.recordWin(
+          widget.game.id,
+          _xpReward(widget.game),
+        );
       }
     });
   }
@@ -110,10 +114,11 @@ class _GameScreenState extends State<GameScreen> {
     }
     setState(() {
       powerUps.useFiftyFifty();
-      final wrong = widget.game.options
-          .where((option) => option != widget.game.answer)
-          .toList()
-        ..shuffle();
+      final wrong =
+          widget.game.options
+              .where((option) => option != widget.game.answer)
+              .toList()
+            ..shuffle();
       hiddenOptions = wrong.take(wrong.length > 2 ? 2 : wrong.length).toSet();
     });
   }
@@ -152,17 +157,23 @@ class _GameScreenState extends State<GameScreen> {
     final progress = secondsLeft / 60;
     return Scaffold(
       appBar: AppBar(
-        title: Text(game.title,
-            style: const TextStyle(fontWeight: FontWeight.w800)),
+        title: Text(
+          game.title,
+          style: const TextStyle(fontWeight: FontWeight.w800),
+        ),
         actions: [
           Padding(
             padding: const EdgeInsets.only(right: 16),
             child: Center(
-              child: Text('+${game.difficulty == 'Hard' ? 100 : 50} XP',
-                  style: const TextStyle(
-                      color: GameTheme.gold, fontWeight: FontWeight.w900)),
+              child: Text(
+                '+${game.difficulty == 'Hard' ? 100 : 50} XP',
+                style: const TextStyle(
+                  color: GameTheme.gold,
+                  fontWeight: FontWeight.w900,
+                ),
+              ),
             ),
-          )
+          ),
         ],
       ),
       body: SafeArea(
@@ -180,11 +191,13 @@ class _GameScreenState extends State<GameScreen> {
                     color: GameTheme.card,
                     borderRadius: BorderRadius.circular(24),
                     border: Border.all(
-                        color: GameTheme.neon.withValues(alpha: .25)),
+                      color: GameTheme.neon.withValues(alpha: .25),
+                    ),
                     boxShadow: [
                       BoxShadow(
-                          color: GameTheme.neon.withValues(alpha: .08),
-                          blurRadius: 24)
+                        color: GameTheme.neon.withValues(alpha: .08),
+                        blurRadius: 24,
+                      ),
                     ],
                   ),
                   child: Column(
@@ -192,16 +205,22 @@ class _GameScreenState extends State<GameScreen> {
                     children: [
                       Row(
                         children: [
-                          const Icon(Icons.terminal,
-                              color: GameTheme.cyan, size: 18),
+                          const Icon(
+                            Icons.terminal,
+                            color: GameTheme.cyan,
+                            size: 18,
+                          ),
                           const SizedBox(width: 8),
                           Expanded(
-                            child: Text(game.category.toUpperCase(),
-                                style: const TextStyle(
-                                    color: GameTheme.cyan,
-                                    fontSize: 11,
-                                    fontWeight: FontWeight.w900,
-                                    letterSpacing: 1.3)),
+                            child: Text(
+                              game.category.toUpperCase(),
+                              style: const TextStyle(
+                                color: GameTheme.cyan,
+                                fontSize: 11,
+                                fontWeight: FontWeight.w900,
+                                letterSpacing: 1.3,
+                              ),
+                            ),
                           ),
                           _difficultyBadge(game.difficulty),
                         ],
@@ -219,10 +238,7 @@ class _GameScreenState extends State<GameScreen> {
                     ],
                   ),
                 ),
-                if (!finished) ...[
-                  const SizedBox(height: 18),
-                  _powerUps(game),
-                ],
+                if (!finished) ...[const SizedBox(height: 18), _powerUps(game)],
               ],
             ),
           ),
@@ -232,83 +248,99 @@ class _GameScreenState extends State<GameScreen> {
   }
 
   Widget _sessionStatus(double progress) => Container(
-        padding: const EdgeInsets.all(15),
-        decoration: BoxDecoration(
-          color: GameTheme.secondary,
-          borderRadius: BorderRadius.circular(18),
-          border: Border.all(color: const Color(0xFF2D2E49)),
-        ),
-        child: Column(
+    padding: const EdgeInsets.all(15),
+    decoration: BoxDecoration(
+      color: GameTheme.secondary,
+      borderRadius: BorderRadius.circular(18),
+      border: Border.all(color: const Color(0xFF2D2E49)),
+    ),
+    child: Column(
+      children: [
+        Row(
           children: [
             Row(
-              children: [
-                Row(
-                  children: List.generate(
-                    powerUps.lives,
-                    (_) => const Padding(
-                      padding: EdgeInsets.only(right: 3),
-                      child: Icon(Icons.favorite,
-                          size: 18, color: GameTheme.heart),
-                    ),
-                  ),
+              children: List.generate(
+                powerUps.lives,
+                (_) => const Padding(
+                  padding: EdgeInsets.only(right: 3),
+                  child: Icon(Icons.favorite, size: 18, color: GameTheme.heart),
                 ),
-                const SizedBox(width: 6),
-                Text('${powerUps.lives}',
-                    style: const TextStyle(fontWeight: FontWeight.w800)),
-                const Spacer(),
-                const Icon(Icons.local_fire_department,
-                    size: 18, color: GameTheme.gold),
-                const SizedBox(width: 4),
-                Text('${combo}x COMBO',
-                    style: const TextStyle(
-                        color: GameTheme.gold,
-                        fontSize: 11,
-                        fontWeight: FontWeight.w900)),
-                const SizedBox(width: 18),
-                Icon(Icons.timer_outlined,
-                    size: 18,
-                    color:
-                        secondsLeft <= 10 ? GameTheme.heart : GameTheme.cyan),
-                const SizedBox(width: 5),
-                Text('${secondsLeft}s',
-                    style: TextStyle(
-                        color:
-                            secondsLeft <= 10 ? GameTheme.heart : Colors.white,
-                        fontWeight: FontWeight.w900)),
-                if (freezeMessage && !finished)
-                  IconButton(
-                    tooltip: 'Resume timer',
-                    onPressed: () => setState(() {
-                      powerUps.unfreeze();
-                      freezeMessage = false;
-                    }),
-                    icon: const Icon(Icons.play_arrow, color: GameTheme.cyan),
-                  ),
-              ],
-            ),
-            const SizedBox(height: 12),
-            ClipRRect(
-              borderRadius: BorderRadius.circular(8),
-              child: LinearProgressIndicator(
-                value: progress.clamp(0, 1),
-                minHeight: 7,
-                backgroundColor: const Color(0xFF292A42),
-                valueColor: AlwaysStoppedAnimation(
-                    secondsLeft <= 10 ? GameTheme.heart : GameTheme.neon),
               ),
             ),
+            const SizedBox(width: 6),
+            Text(
+              '${powerUps.lives}',
+              style: const TextStyle(fontWeight: FontWeight.w800),
+            ),
+            const Spacer(),
+            const Icon(
+              Icons.local_fire_department,
+              size: 18,
+              color: GameTheme.gold,
+            ),
+            const SizedBox(width: 4),
+            Text(
+              '${combo}x COMBO',
+              style: const TextStyle(
+                color: GameTheme.gold,
+                fontSize: 11,
+                fontWeight: FontWeight.w900,
+              ),
+            ),
+            const SizedBox(width: 18),
+            Icon(
+              Icons.timer_outlined,
+              size: 18,
+              color: secondsLeft <= 10 ? GameTheme.heart : GameTheme.cyan,
+            ),
+            const SizedBox(width: 5),
+            Text(
+              '${secondsLeft}s',
+              style: TextStyle(
+                color: secondsLeft <= 10 ? GameTheme.heart : Colors.white,
+                fontWeight: FontWeight.w900,
+              ),
+            ),
+            if (freezeMessage && !finished)
+              IconButton(
+                tooltip: 'Resume timer',
+                onPressed: () => setState(() {
+                  powerUps.unfreeze();
+                  freezeMessage = false;
+                }),
+                icon: const Icon(Icons.play_arrow, color: GameTheme.cyan),
+              ),
           ],
         ),
-      );
+        const SizedBox(height: 12),
+        ClipRRect(
+          borderRadius: BorderRadius.circular(8),
+          child: LinearProgressIndicator(
+            value: progress.clamp(0, 1),
+            minHeight: 7,
+            backgroundColor: const Color(0xFF292A42),
+            valueColor: AlwaysStoppedAnimation(
+              secondsLeft <= 10 ? GameTheme.heart : GameTheme.neon,
+            ),
+          ),
+        ),
+      ],
+    ),
+  );
 
   Widget _prompt(GameDefinition game) {
     final isOutputChallenge = game.id == 'predict_output';
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        Text(game.question,
-            style: const TextStyle(
-                fontSize: 19, height: 1.45, fontWeight: FontWeight.w800)),
+        Text(
+          game.question,
+          style: const TextStyle(
+            fontSize: 19,
+            height: 1.45,
+            fontWeight: FontWeight.w800,
+          ),
+        ),
         if (isOutputChallenge) ...[
           const SizedBox(height: 13),
           Container(
@@ -319,12 +351,15 @@ class _GameScreenState extends State<GameScreen> {
               borderRadius: BorderRadius.circular(15),
               border: Border.all(color: const Color(0xFF343651)),
             ),
-            child: const Text('print(2 + 3 * 2)',
-                style: TextStyle(
-                    color: GameTheme.cyan,
-                    fontSize: 15,
-                    fontFamily: 'monospace',
-                    height: 1.5)),
+            child: const Text(
+              'print(2 + 3 * 2)',
+              style: TextStyle(
+                color: GameTheme.cyan,
+                fontSize: 15,
+                fontFamily: 'monospace',
+                height: 1.5,
+              ),
+            ),
           ),
         ],
       ],
@@ -350,10 +385,7 @@ class _GameScreenState extends State<GameScreen> {
           onAnswered: answer,
         );
       case GameMode.dragBuckets:
-        return DragBucketsEngine(
-          pairs: game.pairs,
-          onCompleted: answer,
-        );
+        return DragBucketsEngine(pairs: game.pairs, onCompleted: answer);
       case GameMode.hangman:
         return HangmanEngine(
           word: game.answer,
@@ -367,10 +399,7 @@ class _GameScreenState extends State<GameScreen> {
           onAnswered: answer,
         );
       case GameMode.ordering:
-        return OrderingEngine(
-          correctOrder: game.sequence,
-          onCompleted: answer,
-        );
+        return OrderingEngine(correctOrder: game.sequence, onCompleted: answer);
       case GameMode.logicGate:
         return LogicGateEngine(
           gates: game.options,
@@ -403,8 +432,8 @@ class _GameScreenState extends State<GameScreen> {
           won
               ? Icons.emoji_events_rounded
               : skipped
-                  ? Icons.skip_next_rounded
-                  : Icons.sentiment_dissatisfied_rounded,
+              ? Icons.skip_next_rounded
+              : Icons.sentiment_dissatisfied_rounded,
           size: 68,
           color: won ? GameTheme.gold : GameTheme.heart,
         ),
@@ -413,11 +442,14 @@ class _GameScreenState extends State<GameScreen> {
           won
               ? 'CHALLENGE CLEARED!'
               : skipped
-                  ? 'RUN SKIPPED'
-                  : 'RUN OVER',
+              ? 'RUN SKIPPED'
+              : 'RUN OVER',
           textAlign: TextAlign.center,
           style: const TextStyle(
-              fontSize: 22, fontWeight: FontWeight.w900, letterSpacing: 1),
+            fontSize: 22,
+            fontWeight: FontWeight.w900,
+            letterSpacing: 1,
+          ),
         ),
         const SizedBox(height: 7),
         Text(
@@ -428,9 +460,11 @@ class _GameScreenState extends State<GameScreen> {
           style: const TextStyle(color: GameTheme.gold),
         ),
         const SizedBox(height: 8),
-        Text(game.explanation,
-            textAlign: TextAlign.center,
-            style: const TextStyle(color: GameTheme.muted, height: 1.4)),
+        Text(
+          game.explanation,
+          textAlign: TextAlign.center,
+          style: const TextStyle(color: GameTheme.muted, height: 1.4),
+        ),
         const SizedBox(height: 20),
         Wrap(
           alignment: WrapAlignment.center,
@@ -445,7 +479,8 @@ class _GameScreenState extends State<GameScreen> {
             FilledButton.icon(
               onPressed: () => Navigator.of(context).pushReplacement(
                 MaterialPageRoute<void>(
-                    builder: (_) => GameScreen(game: nextGame)),
+                  builder: (_) => GameScreen(game: nextGame),
+                ),
               ),
               icon: const Icon(Icons.arrow_forward),
               label: const Text('Next challenge'),
@@ -462,75 +497,94 @@ class _GameScreenState extends State<GameScreen> {
   }
 
   Widget _powerUps(GameDefinition game) => Container(
-        padding: const EdgeInsets.all(16),
-        decoration: BoxDecoration(
-          color: GameTheme.secondary,
-          borderRadius: BorderRadius.circular(18),
-          border: Border.all(color: const Color(0xFF2D2E49)),
+    padding: const EdgeInsets.all(16),
+    decoration: BoxDecoration(
+      color: GameTheme.secondary,
+      borderRadius: BorderRadius.circular(18),
+      border: Border.all(color: const Color(0xFF2D2E49)),
+    ),
+    child: Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        const Text(
+          'POWER-UPS',
+          style: TextStyle(
+            fontWeight: FontWeight.w900,
+            fontSize: 11,
+            letterSpacing: 1.2,
+          ),
         ),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
+        const SizedBox(height: 11),
+        Wrap(
+          spacing: 8,
+          runSpacing: 8,
           children: [
-            const Text('POWER-UPS',
-                style: TextStyle(
-                    fontWeight: FontWeight.w900,
-                    fontSize: 11,
-                    letterSpacing: 1.2)),
-            const SizedBox(height: 11),
-            Wrap(
-              spacing: 8,
-              runSpacing: 8,
-              children: [
-                _powerButton(
-                    'Skip', Icons.skip_next, powerUps.skipUsed, useSkip),
-                _powerButton(
-                    '50/50',
-                    Icons.filter_2,
-                    powerUps.fiftyFiftyUsed ||
-                        game.mode != GameMode.multipleChoice,
-                    useFiftyFifty),
-                _powerButton(
-                    'Freeze', Icons.ac_unit, powerUps.freezeUsed, useFreeze),
-                _powerButton('Extra life', Icons.favorite,
-                    powerUps.extraLifeUsed, useExtraLife),
-              ],
+            _powerButton('Skip', Icons.skip_next, powerUps.skipUsed, useSkip),
+            _powerButton(
+              '50/50',
+              Icons.filter_2,
+              powerUps.fiftyFiftyUsed || game.mode != GameMode.multipleChoice,
+              useFiftyFifty,
             ),
-            const SizedBox(height: 9),
-            const Text('Each boost can be used once per run.',
-                style: TextStyle(color: GameTheme.muted, fontSize: 11)),
+            _powerButton(
+              'Freeze',
+              Icons.ac_unit,
+              powerUps.freezeUsed,
+              useFreeze,
+            ),
+            _powerButton(
+              'Extra life',
+              Icons.favorite,
+              powerUps.extraLifeUsed,
+              useExtraLife,
+            ),
           ],
         ),
-      );
+        const SizedBox(height: 9),
+        const Text(
+          'Each boost can be used once per run.',
+          style: TextStyle(color: GameTheme.muted, fontSize: 11),
+        ),
+      ],
+    ),
+  );
 
   Widget _powerButton(
-          String label, IconData icon, bool disabled, VoidCallback action) =>
-      OutlinedButton.icon(
-        onPressed: disabled ? null : action,
-        icon: Icon(icon, size: 17),
-        label: Text(label),
-        style: OutlinedButton.styleFrom(
-          foregroundColor: GameTheme.cyan,
-          side: const BorderSide(color: Color(0xFF454363)),
-        ),
-      );
+    String label,
+    IconData icon,
+    bool disabled,
+    VoidCallback action,
+  ) => OutlinedButton.icon(
+    onPressed: disabled ? null : action,
+    icon: Icon(icon, size: 17),
+    label: Text(label),
+    style: OutlinedButton.styleFrom(
+      foregroundColor: GameTheme.cyan,
+      side: const BorderSide(color: Color(0xFF454363)),
+    ),
+  );
 
   Widget _difficultyBadge(String difficulty) {
     final color = difficulty == 'Hard'
         ? GameTheme.heart
         : difficulty == 'Medium'
-            ? GameTheme.gold
-            : const Color(0xFF34D399);
+        ? GameTheme.gold
+        : const Color(0xFF34D399);
     return Container(
       padding: const EdgeInsets.symmetric(horizontal: 9, vertical: 5),
       decoration: BoxDecoration(
-          color: color.withValues(alpha: .12),
-          borderRadius: BorderRadius.circular(30)),
-      child: Text(difficulty.toUpperCase(),
-          style: TextStyle(
-              color: color,
-              fontSize: 9,
-              fontWeight: FontWeight.w900,
-              letterSpacing: .5)),
+        color: color.withValues(alpha: .12),
+        borderRadius: BorderRadius.circular(30),
+      ),
+      child: Text(
+        difficulty.toUpperCase(),
+        style: TextStyle(
+          color: color,
+          fontSize: 9,
+          fontWeight: FontWeight.w900,
+          letterSpacing: .5,
+        ),
+      ),
     );
   }
 }
@@ -570,16 +624,19 @@ class _HangmanEngineState extends State<HangmanEngine> {
               .join(' '),
           textAlign: TextAlign.center,
           style: const TextStyle(
-              color: GameTheme.cyan,
-              fontSize: 28,
-              letterSpacing: 3,
-              fontWeight: FontWeight.w900,
-              fontFamily: 'monospace'),
+            color: GameTheme.cyan,
+            fontSize: 28,
+            letterSpacing: 3,
+            fontWeight: FontWeight.w900,
+            fontFamily: 'monospace',
+          ),
         ),
         const SizedBox(height: 8),
-        Text('MISSES  $mistakes / $maxMistakes',
-            textAlign: TextAlign.center,
-            style: const TextStyle(color: GameTheme.heart)),
+        Text(
+          'MISSES  $mistakes / $maxMistakes',
+          textAlign: TextAlign.center,
+          style: const TextStyle(color: GameTheme.heart),
+        ),
         const SizedBox(height: 14),
         Wrap(
           alignment: WrapAlignment.center,

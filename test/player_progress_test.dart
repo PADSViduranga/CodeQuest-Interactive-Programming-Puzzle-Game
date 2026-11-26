@@ -1,5 +1,5 @@
 import 'package:flutter_test/flutter_test.dart';
-import 'package:member4_minigames/services/player_progress.dart';
+import 'package:codequest/services/player_progress.dart';
 
 void main() {
   test('game rewards update XP, coins, level and cleared-game progress', () {

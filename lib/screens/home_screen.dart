@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+
 import '../core/theme/game_theme.dart';
 import '../data/game_catalog.dart';
 import '../models/game_definition.dart';
@@ -33,15 +34,16 @@ class _GameHomeScreenState extends State<GameHomeScreen> {
   }
 
   List<GameDefinition> get filteredGames => GameCatalog.games.where((game) {
-        final matchesCategory =
-            selectedCategory == 'All' || game.category == selectedCategory;
-        final search = query.trim().toLowerCase();
-        final matchesSearch = search.isEmpty ||
-            game.title.toLowerCase().contains(search) ||
-            game.description.toLowerCase().contains(search) ||
-            game.category.toLowerCase().contains(search);
-        return matchesCategory && matchesSearch;
-      }).toList();
+    final matchesCategory =
+        selectedCategory == 'All' || game.category == selectedCategory;
+    final search = query.trim().toLowerCase();
+    final matchesSearch =
+        search.isEmpty ||
+        game.title.toLowerCase().contains(search) ||
+        game.description.toLowerCase().contains(search) ||
+        game.category.toLowerCase().contains(search);
+    return matchesCategory && matchesSearch;
+  }).toList();
 
   @override
   Widget build(BuildContext context) {
@@ -54,7 +56,7 @@ class _GameHomeScreenState extends State<GameHomeScreen> {
             colors: [
               Color(0xFF15132A),
               GameTheme.background,
-              GameTheme.background
+              GameTheme.background,
             ],
             stops: [0, .35, 1],
           ),
@@ -87,18 +89,24 @@ class _GameHomeScreenState extends State<GameHomeScreen> {
                       child: Row(
                         children: [
                           const Expanded(
-                            child: Text('CHOOSE YOUR NEXT RUN',
-                                style: TextStyle(
-                                    color: GameTheme.muted,
-                                    fontSize: 12,
-                                    fontWeight: FontWeight.w800,
-                                    letterSpacing: 1.4)),
+                            child: Text(
+                              'CHOOSE YOUR NEXT RUN',
+                              style: TextStyle(
+                                color: GameTheme.muted,
+                                fontSize: 12,
+                                fontWeight: FontWeight.w800,
+                                letterSpacing: 1.4,
+                              ),
+                            ),
                           ),
-                          Text('${filteredGames.length} GAMES',
-                              style: const TextStyle(
-                                  color: GameTheme.cyan,
-                                  fontSize: 12,
-                                  fontWeight: FontWeight.bold)),
+                          Text(
+                            '${filteredGames.length} GAMES',
+                            style: const TextStyle(
+                              color: GameTheme.cyan,
+                              fontSize: 12,
+                              fontWeight: FontWeight.bold,
+                            ),
+                          ),
                         ],
                       ),
                     ),
@@ -107,8 +115,11 @@ class _GameHomeScreenState extends State<GameHomeScreen> {
                     const SliverFillRemaining(
                       hasScrollBody: false,
                       child: Center(
-                          child: Text('No games match that search.',
-                              style: TextStyle(color: GameTheme.muted))),
+                        child: Text(
+                          'No games match that search.',
+                          style: TextStyle(color: GameTheme.muted),
+                        ),
+                      ),
                     )
                   else
                     SliverPadding(
@@ -119,10 +130,10 @@ class _GameHomeScreenState extends State<GameHomeScreen> {
                           final columns = width >= 980
                               ? 4
                               : width >= 650
-                                  ? 3
-                                  : width >= 390
-                                      ? 2
-                                      : 1;
+                              ? 3
+                              : width >= 390
+                              ? 2
+                              : 1;
                           return SliverGrid(
                             delegate: SliverChildBuilderDelegate(
                               (context, index) =>
@@ -131,11 +142,11 @@ class _GameHomeScreenState extends State<GameHomeScreen> {
                             ),
                             gridDelegate:
                                 SliverGridDelegateWithFixedCrossAxisCount(
-                              crossAxisCount: columns,
-                              crossAxisSpacing: 14,
-                              mainAxisSpacing: 14,
-                              mainAxisExtent: 194,
-                            ),
+                                  crossAxisCount: columns,
+                                  crossAxisSpacing: 14,
+                                  mainAxisSpacing: 14,
+                                  mainAxisExtent: 194,
+                                ),
                           );
                         },
                       ),
@@ -150,279 +161,320 @@ class _GameHomeScreenState extends State<GameHomeScreen> {
   }
 
   Widget _header() => Row(
-        children: [
-          Container(
-            width: 46,
-            height: 46,
-            decoration: BoxDecoration(
-              gradient: const LinearGradient(
-                  colors: [GameTheme.purple, GameTheme.neon]),
-              borderRadius: BorderRadius.circular(15),
-              boxShadow: [
-                BoxShadow(
-                  color: GameTheme.neon.withValues(alpha: .28),
-                  blurRadius: 18,
-                )
-              ],
-            ),
-            child: const Icon(Icons.code_rounded, color: Colors.white),
-          ),
-          const SizedBox(width: 12),
-          const Expanded(
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Text('CODE QUEST',
-                    style: TextStyle(
-                        color: Colors.white,
-                        fontSize: 17,
-                        fontWeight: FontWeight.w900,
-                        letterSpacing: 1.5)),
-                Text('ARCADE  /  PLAYER HUB',
-                    style: TextStyle(
-                        color: GameTheme.muted,
-                        fontSize: 10,
-                        letterSpacing: 1.3)),
-              ],
-            ),
-          ),
-          IconButton(
-            tooltip: 'Daily challenges',
-            onPressed: () => _openGame(GameCatalog.games[1]),
-            icon: const Icon(Icons.calendar_month_outlined),
-            color: GameTheme.cyan,
-          ),
-          const CircleAvatar(
-            backgroundColor: Color(0xFF34235D),
-            child: Icon(Icons.person, color: Color(0xFFC9A7FF)),
-          ),
-        ],
-      );
-
-  Widget _profilePanel() => Container(
-        padding: const EdgeInsets.all(20),
+    children: [
+      Container(
+        width: 46,
+        height: 46,
         decoration: BoxDecoration(
           gradient: const LinearGradient(
-            colors: [Color(0xFF29204A), Color(0xFF1C1B35)],
-            begin: Alignment.topLeft,
-            end: Alignment.bottomRight,
+            colors: [GameTheme.purple, GameTheme.neon],
           ),
-          borderRadius: BorderRadius.circular(24),
-          border: Border.all(color: GameTheme.neon.withValues(alpha: .3)),
+          borderRadius: BorderRadius.circular(15),
           boxShadow: [
             BoxShadow(
-                color: GameTheme.neon.withValues(alpha: .1), blurRadius: 28)
+              color: GameTheme.neon.withValues(alpha: .28),
+              blurRadius: 18,
+            ),
           ],
         ),
-        child: AnimatedBuilder(
-          animation: PlayerProgress.instance,
-          builder: (context, _) => LayoutBuilder(
-            builder: (context, constraints) {
-              final player = PlayerProgress.instance;
-              final compact = constraints.maxWidth < 570;
-              final identity = Row(
-                children: [
-                  Container(
-                    width: 58,
-                    height: 58,
-                    decoration: BoxDecoration(
-                      shape: BoxShape.circle,
-                      color: GameTheme.purple.withValues(alpha: .42),
-                      border: Border.all(color: GameTheme.neon, width: 2),
-                    ),
-                    child: const Icon(Icons.terminal,
-                        size: 29, color: GameTheme.cyan),
-                  ),
-                  const SizedBox(width: 14),
-                  const Expanded(
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Text('PLAYER 01',
-                            style: TextStyle(
-                                color: GameTheme.muted,
-                                fontSize: 11,
-                                letterSpacing: 1.2)),
-                        SizedBox(height: 3),
-                        Text('Code Explorer',
-                            style: TextStyle(
-                                fontSize: 19, fontWeight: FontWeight.w800)),
-                      ],
-                    ),
-                  ),
-                  const Spacer(),
-                  _stat(Icons.bolt, 'LVL ${player.level}', GameTheme.neon),
-                ],
-              );
-              final progress = Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Row(
-                    children: [
-                      const Expanded(
-                          child: Text('NEXT LEVEL',
-                              style: TextStyle(
-                                  color: GameTheme.muted,
-                                  fontWeight: FontWeight.bold,
-                                  fontSize: 10,
-                                  letterSpacing: 1))),
-                      if (!compact)
-                        Text('${player.xp} / ${PlayerProgress.xpPerLevel} XP',
-                            style: const TextStyle(
-                                color: Colors.white,
-                                fontSize: 11,
-                                fontWeight: FontWeight.bold)),
-                      const SizedBox(width: 12),
-                      _stat(Icons.monetization_on, '${player.coins}',
-                          GameTheme.gold),
-                    ],
-                  ),
-                  if (compact) ...[
-                    const SizedBox(height: 5),
-                    Align(
-                      alignment: Alignment.centerRight,
-                      child: Text(
-                          '${player.xp} / ${PlayerProgress.xpPerLevel} XP',
-                          style: const TextStyle(
-                              color: Colors.white,
-                              fontSize: 11,
-                              fontWeight: FontWeight.bold)),
-                    ),
-                  ],
-                  const SizedBox(height: 9),
-                  ClipRRect(
-                    borderRadius: BorderRadius.circular(20),
-                    child: LinearProgressIndicator(
-                      value: player.levelProgress,
-                      minHeight: 8,
-                      backgroundColor: const Color(0xFF131426),
-                      valueColor: const AlwaysStoppedAnimation(GameTheme.neon),
-                    ),
-                  ),
-                  const SizedBox(height: 10),
-                  Row(
-                    children: [
-                      const Expanded(
-                        child: Text('CHALLENGES CLEARED',
-                            style: TextStyle(
-                                color: GameTheme.muted,
-                                fontWeight: FontWeight.bold,
-                                fontSize: 10,
-                                letterSpacing: 1)),
-                      ),
-                      Text(
-                          '${player.completedGames.length} / ${GameCatalog.games.length}',
-                          style: const TextStyle(
-                              color: GameTheme.cyan,
-                              fontWeight: FontWeight.w900,
-                              fontSize: 11)),
-                    ],
-                  ),
-                ],
-              );
-              return Column(
-                children: [
-                  identity,
-                  SizedBox(height: compact ? 17 : 20),
-                  progress,
-                ],
-              );
-            },
-          ),
-        ),
-      );
-
-  Widget _featuredChallenge() => InkWell(
-        borderRadius: BorderRadius.circular(22),
-        onTap: () => _openGame(GameCatalog.games[2]),
-        child: Container(
-          padding: const EdgeInsets.all(20),
-          decoration: BoxDecoration(
-            gradient: const LinearGradient(
-              colors: [Color(0xFF40216E), Color(0xFF232043)],
-              begin: Alignment.topLeft,
-              end: Alignment.bottomRight,
+        child: const Icon(Icons.code_rounded, color: Colors.white),
+      ),
+      const SizedBox(width: 12),
+      const Expanded(
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Text(
+              'CODE QUEST',
+              style: TextStyle(
+                color: Colors.white,
+                fontSize: 17,
+                fontWeight: FontWeight.w900,
+                letterSpacing: 1.5,
+              ),
             ),
-            borderRadius: BorderRadius.circular(22),
-          ),
-          child: Row(
+            Text(
+              'ARCADE  /  PLAYER HUB',
+              style: TextStyle(
+                color: GameTheme.muted,
+                fontSize: 10,
+                letterSpacing: 1.3,
+              ),
+            ),
+          ],
+        ),
+      ),
+      IconButton(
+        tooltip: 'Daily challenges',
+        onPressed: () => _openGame(GameCatalog.games[1]),
+        icon: const Icon(Icons.calendar_month_outlined),
+        color: GameTheme.cyan,
+      ),
+      const CircleAvatar(
+        backgroundColor: Color(0xFF34235D),
+        child: Icon(Icons.person, color: Color(0xFFC9A7FF)),
+      ),
+    ],
+  );
+
+  Widget _profilePanel() => Container(
+    padding: const EdgeInsets.all(20),
+    decoration: BoxDecoration(
+      gradient: const LinearGradient(
+        colors: [Color(0xFF29204A), Color(0xFF1C1B35)],
+        begin: Alignment.topLeft,
+        end: Alignment.bottomRight,
+      ),
+      borderRadius: BorderRadius.circular(24),
+      border: Border.all(color: GameTheme.neon.withValues(alpha: .3)),
+      boxShadow: [
+        BoxShadow(color: GameTheme.neon.withValues(alpha: .1), blurRadius: 28),
+      ],
+    ),
+    child: AnimatedBuilder(
+      animation: PlayerProgress.instance,
+      builder: (context, _) => LayoutBuilder(
+        builder: (context, constraints) {
+          final player = PlayerProgress.instance;
+          final compact = constraints.maxWidth < 570;
+          final identity = Row(
             children: [
               Container(
-                width: 50,
-                height: 50,
+                width: 58,
+                height: 58,
                 decoration: BoxDecoration(
-                  color: GameTheme.gold.withValues(alpha: .13),
-                  borderRadius: BorderRadius.circular(15),
+                  shape: BoxShape.circle,
+                  color: GameTheme.purple.withValues(alpha: .42),
+                  border: Border.all(color: GameTheme.neon, width: 2),
                 ),
-                child: const Icon(Icons.local_fire_department,
-                    color: GameTheme.gold, size: 28),
+                child: const Icon(
+                  Icons.terminal,
+                  size: 29,
+                  color: GameTheme.cyan,
+                ),
               ),
               const SizedBox(width: 14),
               const Expanded(
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    Text('DAILY CHALLENGE  •  +80 XP',
-                        style: TextStyle(
-                            color: GameTheme.gold,
-                            fontSize: 10,
-                            fontWeight: FontWeight.w900,
-                            letterSpacing: .9)),
-                    SizedBox(height: 5),
-                    Text('Big O Sprint',
-                        style: TextStyle(
-                            fontSize: 18, fontWeight: FontWeight.w800)),
-                    Text('Can you spot the runtime?',
-                        style: TextStyle(color: GameTheme.muted, fontSize: 12)),
+                    Text(
+                      'PLAYER 01',
+                      style: TextStyle(
+                        color: GameTheme.muted,
+                        fontSize: 11,
+                        letterSpacing: 1.2,
+                      ),
+                    ),
+                    SizedBox(height: 3),
+                    Text(
+                      'Code Explorer',
+                      style: TextStyle(
+                        fontSize: 19,
+                        fontWeight: FontWeight.w800,
+                      ),
+                    ),
                   ],
                 ),
               ),
-              const Icon(Icons.arrow_forward_rounded, color: Colors.white),
+              const Spacer(),
+              _stat(Icons.bolt, 'LVL ${player.level}', GameTheme.neon),
             ],
-          ),
+          );
+          final progress = Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Row(
+                children: [
+                  const Expanded(
+                    child: Text(
+                      'NEXT LEVEL',
+                      style: TextStyle(
+                        color: GameTheme.muted,
+                        fontWeight: FontWeight.bold,
+                        fontSize: 10,
+                        letterSpacing: 1,
+                      ),
+                    ),
+                  ),
+                  if (!compact)
+                    Text(
+                      '${player.xp} / ${PlayerProgress.xpPerLevel} XP',
+                      style: const TextStyle(
+                        color: Colors.white,
+                        fontSize: 11,
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
+                  const SizedBox(width: 12),
+                  _stat(
+                    Icons.monetization_on,
+                    '${player.coins}',
+                    GameTheme.gold,
+                  ),
+                ],
+              ),
+              if (compact) ...[
+                const SizedBox(height: 5),
+                Align(
+                  alignment: Alignment.centerRight,
+                  child: Text(
+                    '${player.xp} / ${PlayerProgress.xpPerLevel} XP',
+                    style: const TextStyle(
+                      color: Colors.white,
+                      fontSize: 11,
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ),
+                ),
+              ],
+              const SizedBox(height: 9),
+              ClipRRect(
+                borderRadius: BorderRadius.circular(20),
+                child: LinearProgressIndicator(
+                  value: player.levelProgress,
+                  minHeight: 8,
+                  backgroundColor: const Color(0xFF131426),
+                  valueColor: const AlwaysStoppedAnimation(GameTheme.neon),
+                ),
+              ),
+              const SizedBox(height: 10),
+              Row(
+                children: [
+                  const Expanded(
+                    child: Text(
+                      'CHALLENGES CLEARED',
+                      style: TextStyle(
+                        color: GameTheme.muted,
+                        fontWeight: FontWeight.bold,
+                        fontSize: 10,
+                        letterSpacing: 1,
+                      ),
+                    ),
+                  ),
+                  Text(
+                    '${player.completedGames.length} / ${GameCatalog.games.length}',
+                    style: const TextStyle(
+                      color: GameTheme.cyan,
+                      fontWeight: FontWeight.w900,
+                      fontSize: 11,
+                    ),
+                  ),
+                ],
+              ),
+            ],
+          );
+          return Column(
+            children: [
+              identity,
+              SizedBox(height: compact ? 17 : 20),
+              progress,
+            ],
+          );
+        },
+      ),
+    ),
+  );
+
+  Widget _featuredChallenge() => InkWell(
+    borderRadius: BorderRadius.circular(22),
+    onTap: () => _openGame(GameCatalog.games[2]),
+    child: Container(
+      padding: const EdgeInsets.all(20),
+      decoration: BoxDecoration(
+        gradient: const LinearGradient(
+          colors: [Color(0xFF40216E), Color(0xFF232043)],
+          begin: Alignment.topLeft,
+          end: Alignment.bottomRight,
         ),
-      );
+        borderRadius: BorderRadius.circular(22),
+      ),
+      child: Row(
+        children: [
+          Container(
+            width: 50,
+            height: 50,
+            decoration: BoxDecoration(
+              color: GameTheme.gold.withValues(alpha: .13),
+              borderRadius: BorderRadius.circular(15),
+            ),
+            child: const Icon(
+              Icons.local_fire_department,
+              color: GameTheme.gold,
+              size: 28,
+            ),
+          ),
+          const SizedBox(width: 14),
+          const Expanded(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text(
+                  'DAILY CHALLENGE  •  +80 XP',
+                  style: TextStyle(
+                    color: GameTheme.gold,
+                    fontSize: 10,
+                    fontWeight: FontWeight.w900,
+                    letterSpacing: .9,
+                  ),
+                ),
+                SizedBox(height: 5),
+                Text(
+                  'Big O Sprint',
+                  style: TextStyle(fontSize: 18, fontWeight: FontWeight.w800),
+                ),
+                Text(
+                  'Can you spot the runtime?',
+                  style: TextStyle(color: GameTheme.muted, fontSize: 12),
+                ),
+              ],
+            ),
+          ),
+          const Icon(Icons.arrow_forward_rounded, color: Colors.white),
+        ],
+      ),
+    ),
+  );
 
   Widget _searchAndCategories() => Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          TextField(
-            controller: searchController,
-            onChanged: (value) => setState(() => query = value),
-            decoration: const InputDecoration(
-              hintText: 'Search games, concepts...',
-              prefixIcon: Icon(Icons.search, color: GameTheme.cyan),
-            ),
-          ),
-          const SizedBox(height: 13),
-          SingleChildScrollView(
-            scrollDirection: Axis.horizontal,
-            child: Row(
-              children: categories.map((category) {
-                final selected = selectedCategory == category;
-                return Padding(
-                  padding: const EdgeInsets.only(right: 8),
-                  child: ChoiceChip(
-                    label: Text(category),
-                    selected: selected,
-                    onSelected: (_) =>
-                        setState(() => selectedCategory = category),
-                    selectedColor: GameTheme.purple,
-                    backgroundColor: GameTheme.card,
-                    side: BorderSide(
-                        color: selected
-                            ? GameTheme.neon
-                            : const Color(0xFF343651)),
-                    labelStyle: TextStyle(
-                        color: selected ? Colors.white : GameTheme.muted,
-                        fontWeight: FontWeight.w700),
-                  ),
-                );
-              }).toList(),
-            ),
-          ),
-        ],
-      );
+    crossAxisAlignment: CrossAxisAlignment.start,
+    children: [
+      TextField(
+        controller: searchController,
+        onChanged: (value) => setState(() => query = value),
+        decoration: const InputDecoration(
+          hintText: 'Search games, concepts...',
+          prefixIcon: Icon(Icons.search, color: GameTheme.cyan),
+        ),
+      ),
+      const SizedBox(height: 13),
+      SingleChildScrollView(
+        scrollDirection: Axis.horizontal,
+        child: Row(
+          children: categories.map((category) {
+            final selected = selectedCategory == category;
+            return Padding(
+              padding: const EdgeInsets.only(right: 8),
+              child: ChoiceChip(
+                label: Text(category),
+                selected: selected,
+                onSelected: (_) => setState(() => selectedCategory = category),
+                selectedColor: GameTheme.purple,
+                backgroundColor: GameTheme.card,
+                side: BorderSide(
+                  color: selected ? GameTheme.neon : const Color(0xFF343651),
+                ),
+                labelStyle: TextStyle(
+                  color: selected ? Colors.white : GameTheme.muted,
+                  fontWeight: FontWeight.w700,
+                ),
+              ),
+            );
+          }).toList(),
+        ),
+      ),
+    ],
+  );
 
   Widget _gameCard(GameDefinition game, int index) {
     final accent = accents[index % accents.length];
@@ -436,7 +488,7 @@ class _GameHomeScreenState extends State<GameHomeScreen> {
           borderRadius: BorderRadius.circular(20),
           border: Border.all(color: accent.withValues(alpha: .25)),
           boxShadow: [
-            BoxShadow(color: accent.withValues(alpha: .06), blurRadius: 17)
+            BoxShadow(color: accent.withValues(alpha: .06), blurRadius: 17),
           ],
         ),
         child: Column(
@@ -455,51 +507,71 @@ class _GameHomeScreenState extends State<GameHomeScreen> {
                 ),
                 const Spacer(),
                 Container(
-                  padding:
-                      const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
+                  padding: const EdgeInsets.symmetric(
+                    horizontal: 8,
+                    vertical: 4,
+                  ),
                   decoration: BoxDecoration(
                     color: _difficultyColor(game.difficulty)
                         .withValues(alpha: .13),
                     borderRadius: BorderRadius.circular(30),
                   ),
-                  child: Text(game.difficulty.toUpperCase(),
-                      style: TextStyle(
-                          color: _difficultyColor(game.difficulty),
-                          fontSize: 9,
-                          fontWeight: FontWeight.w900,
-                          letterSpacing: .5)),
+                  child: Text(
+                    game.difficulty.toUpperCase(),
+                    style: TextStyle(
+                      color: _difficultyColor(game.difficulty),
+                      fontSize: 9,
+                      fontWeight: FontWeight.w900,
+                      letterSpacing: .5,
+                    ),
+                  ),
                 ),
               ],
             ),
             const Spacer(),
-            Text(game.title,
-                maxLines: 1,
-                overflow: TextOverflow.ellipsis,
-                style:
-                    const TextStyle(fontSize: 15, fontWeight: FontWeight.w800)),
+            Text(
+              game.title,
+              maxLines: 1,
+              overflow: TextOverflow.ellipsis,
+              style: const TextStyle(fontSize: 15, fontWeight: FontWeight.w800),
+            ),
             const SizedBox(height: 5),
-            Text(game.description,
-                maxLines: 2,
-                overflow: TextOverflow.ellipsis,
-                style: const TextStyle(
-                    color: GameTheme.muted, fontSize: 11, height: 1.35)),
+            Text(
+              game.description,
+              maxLines: 2,
+              overflow: TextOverflow.ellipsis,
+              style: const TextStyle(
+                color: GameTheme.muted,
+                fontSize: 11,
+                height: 1.35,
+              ),
+            ),
             const SizedBox(height: 10),
             Row(
               children: [
-                Text(game.category.toUpperCase(),
-                    style: TextStyle(
-                        color: accent,
-                        fontSize: 9,
-                        fontWeight: FontWeight.w800,
-                        letterSpacing: .8)),
+                Text(
+                  game.category.toUpperCase(),
+                  style: TextStyle(
+                    color: accent,
+                    fontSize: 9,
+                    fontWeight: FontWeight.w800,
+                    letterSpacing: .8,
+                  ),
+                ),
                 const Spacer(),
-                const Icon(Icons.play_arrow_rounded,
-                    color: Colors.white70, size: 17),
-                const Text(' PLAY',
-                    style: TextStyle(
-                        color: Colors.white70,
-                        fontSize: 10,
-                        fontWeight: FontWeight.bold)),
+                const Icon(
+                  Icons.play_arrow_rounded,
+                  color: Colors.white70,
+                  size: 17,
+                ),
+                const Text(
+                  ' PLAY',
+                  style: TextStyle(
+                    color: Colors.white70,
+                    fontSize: 10,
+                    fontWeight: FontWeight.bold,
+                  ),
+                ),
               ],
             ),
           ],
@@ -509,15 +581,20 @@ class _GameHomeScreenState extends State<GameHomeScreen> {
   }
 
   Widget _stat(IconData icon, String label, Color color) => Row(
-        mainAxisSize: MainAxisSize.min,
-        children: [
-          Icon(icon, size: 17, color: color),
-          const SizedBox(width: 4),
-          Text(label,
-              style: TextStyle(
-                  color: color, fontSize: 12, fontWeight: FontWeight.w900)),
-        ],
-      );
+    mainAxisSize: MainAxisSize.min,
+    children: [
+      Icon(icon, size: 17, color: color),
+      const SizedBox(width: 4),
+      Text(
+        label,
+        style: TextStyle(
+          color: color,
+          fontSize: 12,
+          fontWeight: FontWeight.w900,
+        ),
+      ),
+    ],
+  );
 
   Color _difficultyColor(String difficulty) {
     switch (difficulty) {
