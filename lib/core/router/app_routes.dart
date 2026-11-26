@@ -21,6 +21,7 @@ class AppRoutes {
   static const lesson = '/lesson/:stageId';
   static String lessonPath(String stageId) => '/lesson/$stageId';
   static const play = '/play/:stageId';
+  static const editProfile = '/edit-profile';
   static const stageComplete = '/stage-complete';
   static const levelUp = '/level-up';
   static const badge = '/badge';

@@ -5,6 +5,7 @@ import 'package:go_router/go_router.dart';
 import '../../../../core/theme/app_colors.dart';
 import '../../../auth/presentation/providers/auth_provider.dart';
 import '../providers/profile_provider.dart';
+import '../widgets/avatar_circle.dart';
 
 class ProfileScreen extends ConsumerWidget {
   const ProfileScreen({super.key});
@@ -22,23 +23,9 @@ class ProfileScreen extends ConsumerWidget {
         padding: const EdgeInsets.all(20),
         children: [
           Center(
-            child: Container(
-              width: 92,
-              height: 92,
-              decoration: BoxDecoration(
-                shape: BoxShape.circle,
-                gradient: AppColors.brandGradient,
-                boxShadow: AppColors.glow(AppColors.primary),
-              ),
-              alignment: Alignment.center,
-              child: Text(
-                name.isEmpty ? '?' : name[0].toUpperCase(),
-                style: const TextStyle(
-                  fontSize: 40,
-                  fontWeight: FontWeight.w800,
-                  color: Colors.white,
-                ),
-              ),
+            child: AvatarCircle(
+              avatarId: profile?.avatarId ?? 'mito_1',
+              size: 92,
             ),
           ),
           const SizedBox(height: 12),
@@ -92,6 +79,17 @@ class ProfileScreen extends ConsumerWidget {
                 onTap: () => context.push('/register'),
               ),
             ),
+          Card(
+            child: ListTile(
+              leading: const Icon(
+                Icons.edit_outlined,
+                color: AppColors.primaryLight,
+              ),
+              title: const Text('Edit profile'),
+              trailing: const Icon(Icons.chevron_right),
+              onTap: () => context.push('/edit-profile'),
+            ),
+          ),
           Card(
             child: ListTile(
               leading: const Icon(
