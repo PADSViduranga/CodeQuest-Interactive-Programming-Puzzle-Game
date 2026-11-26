@@ -39,6 +39,12 @@ const secrets = {
     explanation: 'len() counts the items in the list, and the list has 3 numbers.',
     hints: ['Which function counts items?', 'sum adds, max and min pick one number.'],
   },
+  demo_ty_1: {
+    type: 'typing',
+    answer: ['len(nums)'],
+    explanation: 'len(nums) counts the items, and the list has 3 numbers.',
+    hints: ['Which function counts items?', 'Put the list name in the brackets.'],
+  },
 };
 
 (async () => {

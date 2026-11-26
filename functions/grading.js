@@ -5,6 +5,11 @@ function sameList(a, b) {
 }
 
 /** secret = { type, answer }, answer = what the player sent. */
+/** Trimmed, with runs of spaces collapsed to one. */
+function normalize(text) {
+  return String(text).trim().replace(/\s+/g, ' ');
+}
+
 function checkAnswer(secret, answer) {
   if (!secret || !answer) return false;
   switch (secret.type) {
@@ -20,6 +25,12 @@ function checkAnswer(secret, answer) {
         Array.isArray(secret.answer) &&
         sameList(answer.order, secret.answer)
       );
+    case 'typing': {
+      if (typeof answer.text !== 'string') return false;
+      const accepted = Array.isArray(secret.answer) ? secret.answer : [secret.answer];
+      const given = normalize(answer.text);
+      return accepted.some((a) => normalize(a) === given);
+    }
     default:
       return false;
   }

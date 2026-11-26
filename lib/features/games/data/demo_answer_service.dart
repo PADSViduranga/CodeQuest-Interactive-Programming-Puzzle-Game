@@ -42,6 +42,11 @@ class DemoAnswerService implements AnswerService {
         'sum adds, max and min pick one number.',
       ],
     ),
+    'demo_ty_1': _Demo(
+      'len(nums)',
+      'len(nums) counts the items, and the list has 3 numbers.',
+      ['Which function counts items?', 'Put the list name in the brackets.'],
+    ),
   };
 
   final _combo = <String, int>{};
@@ -50,7 +55,12 @@ class DemoAnswerService implements AnswerService {
   bool _isCorrect(_Demo? entry, Map<String, dynamic> answer) {
     if (entry == null) return false;
     final expected = entry.answer;
-    if (expected is String) return answer['selectedOptionId'] == expected;
+    if (expected is String) {
+      if (answer.containsKey('text')) {
+        return (answer['text'] as String?)?.trim() == expected;
+      }
+      return answer['selectedOptionId'] == expected;
+    }
     final given = answer['order'];
     if (expected is List && given is List && given.length == expected.length) {
       for (var i = 0; i < expected.length; i++) {

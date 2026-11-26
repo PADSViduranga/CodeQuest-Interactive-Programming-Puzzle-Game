@@ -32,3 +32,10 @@ test('level rises every 100 XP', () => {
   assert.strictEqual(levelForXp(100), 2);
   assert.strictEqual(levelForXp(250), 3);
 });
+
+test('typing ignores extra spaces and accepts alternatives', () => {
+  const secret = { type: 'typing', answer: ['len(nums)', 'len( nums )'] };
+  assert.strictEqual(checkAnswer(secret, { text: '  len(nums)  ' }), true);
+  assert.strictEqual(checkAnswer(secret, { text: 'LEN(nums)' }), false);
+  assert.strictEqual(checkAnswer(secret, { text: 5 }), false);
+});

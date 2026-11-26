@@ -88,6 +88,21 @@ class SamplePuzzleRepository implements PuzzleRepository {
         xpReward: 20,
         maxHints: 2,
       ),
+      Puzzle(
+        id: 'demo_ty_1',
+        type: GameType.typing,
+        language: 'python',
+        level: 'beginner',
+        title: 'Type it',
+        prompt: 'Type the missing code so it prints 3.',
+        payload: {
+          'code': ['nums = [4, 8, 15]', 'print(____)'],
+          'placeholder': 'Type the missing code',
+        },
+        difficulty: 1,
+        xpReward: 20,
+        maxHints: 2,
+      ),
     ];
   }
 }
