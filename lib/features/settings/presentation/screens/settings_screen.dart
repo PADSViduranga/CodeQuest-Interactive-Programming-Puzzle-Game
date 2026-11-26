@@ -42,6 +42,11 @@ class SettingsScreen extends ConsumerWidget {
           const SizedBox(height: 12),
           const _Section('Account'),
           _TapRow(
+            title: 'Terms of service',
+            icon: Icons.chevron_right,
+            onTap: () => context.push('/terms'),
+          ),
+          _TapRow(
             title: 'Privacy policy',
             icon: Icons.chevron_right,
             onTap: () => context.push('/privacy'),

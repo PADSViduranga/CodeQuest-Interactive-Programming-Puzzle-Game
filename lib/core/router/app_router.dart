@@ -24,6 +24,7 @@ import '../../features/rewards/presentation/screens/level_up_screen.dart';
 import '../../features/rewards/presentation/screens/stage_complete_screen.dart';
 import '../../features/settings/presentation/screens/delete_account_screen.dart';
 import '../../features/settings/presentation/screens/privacy_policy_screen.dart';
+import '../../features/settings/presentation/screens/terms_screen.dart';
 import '../../features/settings/presentation/screens/settings_screen.dart';
 import 'app_routes.dart';
 
@@ -196,6 +197,7 @@ final routerProvider = Provider<GoRouter>((ref) {
         path: AppRoutes.privacy,
         builder: (_, _) => const PrivacyPolicyScreen(),
       ),
+      GoRoute(path: AppRoutes.terms, builder: (_, _) => const TermsScreen()),
       GoRoute(
         path: AppRoutes.deleteAccount,
         builder: (_, _) => const DeleteAccountScreen(),

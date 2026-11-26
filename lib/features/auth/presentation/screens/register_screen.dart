@@ -165,6 +165,21 @@ class _RegisterScreenState extends ConsumerState<RegisterScreen> {
                         ),
                       ),
                     ),
+                    Align(
+                      alignment: Alignment.centerLeft,
+                      child: Wrap(
+                        children: [
+                          TextButton(
+                            onPressed: () => context.push('/terms'),
+                            child: const Text('Read Terms'),
+                          ),
+                          TextButton(
+                            onPressed: () => context.push('/privacy'),
+                            child: const Text('Read Privacy Policy'),
+                          ),
+                        ],
+                      ),
+                    ),
                     if (_error != null) ...[
                       Container(
                         padding: const EdgeInsets.all(12),

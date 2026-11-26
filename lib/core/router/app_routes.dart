@@ -27,5 +27,6 @@ class AppRoutes {
   static const badge = '/badge';
   static const settings = '/settings';
   static const privacy = '/privacy';
+  static const terms = '/terms';
   static const deleteAccount = '/delete-account';
 }
