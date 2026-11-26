@@ -12,6 +12,14 @@ class Lesson {
   final List<String> example;
   final List<String> output;
   final String tip;
+
+  factory Lesson.fromMap(Map<String, dynamic> m) => Lesson(
+    title: (m['title'] as String?) ?? '',
+    explanation: (m['explanation'] as String?) ?? '',
+    example: (m['example'] as List?)?.cast<String>() ?? const [],
+    output: (m['output'] as List?)?.cast<String>() ?? const [],
+    tip: (m['tip'] as String?) ?? '',
+  );
 }
 
 /// Sample Python lessons until lessons are loaded from Firestore.

@@ -14,6 +14,14 @@ class Stage {
   final String subtitle;
   final int unlockXp;
   final bool isBoss;
+
+  factory Stage.fromMap(String id, Map<String, dynamic> m) => Stage(
+    id: id,
+    title: (m['title'] as String?) ?? '',
+    subtitle: (m['subtitle'] as String?) ?? '',
+    unlockXp: (m['unlockXp'] as num?)?.toInt() ?? 0,
+    isBoss: (m['isBoss'] as bool?) ?? false,
+  );
 }
 
 /// Sample stages until worlds are loaded from Firestore.

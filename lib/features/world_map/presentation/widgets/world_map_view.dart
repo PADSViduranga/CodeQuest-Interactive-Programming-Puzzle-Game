@@ -1,11 +1,13 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 
 import '../../../../core/theme/app_colors.dart';
 import '../../domain/stage.dart';
+import '../providers/world_provider.dart';
 
-class WorldMapView extends StatelessWidget {
+class WorldMapView extends ConsumerWidget {
   const WorldMapView({super.key, required this.totalXp});
 
   final int totalXp;
@@ -13,13 +15,17 @@ class WorldMapView extends StatelessWidget {
   static const _offsets = [0.0, -0.55, 0.0, 0.55];
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
+    final stages = ref.watch(stagesProvider).value;
+    if (stages == null) {
+      return const Center(child: CircularProgressIndicator());
+    }
     return ListView.builder(
       padding: const EdgeInsets.symmetric(vertical: 8),
-      itemCount: sampleStages.length,
+      itemCount: stages.length,
       itemBuilder: (context, i) {
-        final stage = sampleStages[i];
-        final state = stageStateFor(totalXp, sampleStages, i);
+        final stage = stages[i];
+        final state = stageStateFor(totalXp, stages, i);
         return Padding(
           padding: const EdgeInsets.symmetric(vertical: 12),
           child: Align(

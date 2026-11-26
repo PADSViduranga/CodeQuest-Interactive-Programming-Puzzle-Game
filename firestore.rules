@@ -35,6 +35,17 @@ service cloud.firestore {
       allow delete: if isOwner(uid);
     }
 
+    // The world: stages and lessons. Signed-in players can read them.
+    // Nobody can change them from the app.
+    match /stages/{stageId} {
+      allow read: if request.auth != null;
+      allow write: if false;
+    }
+    match /lessons/{stageId} {
+      allow read: if request.auth != null;
+      allow write: if false;
+    }
+
     // Everything else is closed until a later branch opens it on purpose.
     match /{document=**} {
       allow read, write: if false;

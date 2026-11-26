@@ -1,17 +1,20 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 
 import '../../../../core/theme/app_colors.dart';
+import '../../../world_map/presentation/providers/world_provider.dart';
 import '../../domain/lesson.dart';
 
-class LessonScreen extends StatelessWidget {
+class LessonScreen extends ConsumerWidget {
   const LessonScreen({super.key, required this.stageId});
 
   final String stageId;
 
   @override
-  Widget build(BuildContext context) {
-    final lesson = sampleLessons[stageId];
+  Widget build(BuildContext context, WidgetRef ref) {
+    final lessonAsync = ref.watch(lessonProvider(stageId));
+    final lesson = lessonAsync.value;
 
     return Scaffold(
       appBar: AppBar(
@@ -21,7 +24,9 @@ class LessonScreen extends StatelessWidget {
           onPressed: () => context.pop(),
         ),
       ),
-      body: lesson == null
+      body: lessonAsync.isLoading
+          ? const Center(child: CircularProgressIndicator())
+          : lesson == null
           ? const Center(child: Text('This lesson is not ready yet.'))
           : ListView(
               padding: const EdgeInsets.all(20),
