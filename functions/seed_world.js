@@ -1,6 +1,8 @@
 // Fills the LOCAL emulator with the world: stages and lessons.
 // Run only while the emulators are running: node seed_world.js
-process.env.FIRESTORE_EMULATOR_HOST = '127.0.0.1:8080';
+const PROD = process.argv.includes('--prod');
+if (!PROD) process.env.FIRESTORE_EMULATOR_HOST = '127.0.0.1:8080';
+console.log(PROD ? 'Writing to the REAL project codequest-puzzle-game' : 'Writing to the local emulator');
 
 const { initializeApp } = require('firebase-admin/app');
 const { getFirestore } = require('firebase-admin/firestore');
