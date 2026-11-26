@@ -1,3 +1,4 @@
+import '../../../core/firebase/emulator.dart';
 import '../core/game_type.dart';
 import '../domain/puzzle.dart';
 
@@ -49,6 +50,124 @@ class SamplePuzzleRepository implements PuzzleRepository {
         ['name = "Mito"', 'print(name.upper())'],
         ['Mito', 'MITO', 'mito', '"MITO"'],
       ),
+      Puzzle(
+        id: 'demo_do_1',
+        type: GameType.dragOrder,
+        language: 'python',
+        level: 'beginner',
+        title: 'Drag to order',
+        prompt: 'Put the lines in order so the code prints 6.',
+        payload: {
+          'items': [
+            {'id': 'c', 'text': '    total = total + n'},
+            {'id': 'a', 'text': 'total = 0'},
+            {'id': 'd', 'text': 'print(total)'},
+            {'id': 'b', 'text': 'for n in [1, 2, 3]:'},
+          ],
+        },
+        difficulty: 1,
+        xpReward: 20,
+        maxHints: 2,
+      ),
+      Puzzle(
+        id: 'demo_fb_1',
+        type: GameType.fillBlank,
+        language: 'python',
+        level: 'beginner',
+        title: 'Fill in the blank',
+        prompt: 'Fill the blank so the code prints 3.',
+        payload: {
+          'code': ['nums = [4, 8, 15]', 'print(____(nums))'],
+          'options': [
+            {'id': 'a', 'text': 'sum'},
+            {'id': 'b', 'text': 'len'},
+            {'id': 'c', 'text': 'max'},
+            {'id': 'd', 'text': 'min'},
+          ],
+        },
+        difficulty: 1,
+        xpReward: 20,
+        maxHints: 2,
+      ),
+      Puzzle(
+        id: 'demo_ty_1',
+        type: GameType.typing,
+        language: 'python',
+        level: 'beginner',
+        title: 'Type it',
+        prompt: 'Type the missing code so it prints 3.',
+        payload: {
+          'code': ['nums = [4, 8, 15]', 'print(____)'],
+          'placeholder': 'Type the missing code',
+        },
+        difficulty: 1,
+        xpReward: 20,
+        maxHints: 2,
+      ),
+      Puzzle(
+        id: 'demo_gr_1',
+        type: GameType.grid,
+        language: 'python',
+        level: 'beginner',
+        title: 'Pick them all',
+        prompt: 'Tap every valid Python variable name.',
+        payload: {
+          'columns': 2,
+          'cells': [
+            {'id': 'c1', 'text': 'my_name'},
+            {'id': 'c2', 'text': '2cool'},
+            {'id': 'c3', 'text': 'total_1'},
+            {'id': 'c4', 'text': 'class'},
+            {'id': 'c5', 'text': 'score'},
+            {'id': 'c6', 'text': 'first-name'},
+          ],
+        },
+        difficulty: 1,
+        xpReward: 20,
+        maxHints: 2,
+      ),
+      // Only the server can run code, so these appear with the emulators on.
+      if (useEmulator) ...[
+        Puzzle(
+          id: 'demo_wc_1',
+          type: GameType.writeCode,
+          language: 'python',
+          level: 'beginner',
+          title: 'Write the code',
+          prompt: 'Read a number n and print n times 2.',
+          payload: {
+            'starter': '# Read n, then print n * 2\n',
+            'examples': [
+              {'input': '4', 'output': '8'},
+            ],
+          },
+          difficulty: 1,
+          xpReward: 20,
+          maxHints: 2,
+        ),
+        Puzzle(
+          id: 'demo_fx_1',
+          type: GameType.fixTheBug,
+          language: 'python',
+          level: 'beginner',
+          title: 'Fix the bug',
+          prompt: 'This should print the sum of 1 to n, but it prints the wrong number. Fix it.',
+          payload: {
+            'starter':
+                'n = int(input())\n'
+                'total = 0\n'
+                'for i in range(n):\n'
+                '    total = total + i\n'
+                'print(total)\n',
+            'examples': [
+              {'input': '3', 'output': '6'},
+            ],
+          },
+          difficulty: 1,
+          xpReward: 20,
+          maxHints: 2,
+        ),
+      ],
     ];
   }
 }

@@ -49,16 +49,30 @@ class _GamePlayScreenState extends ConsumerState<GamePlayScreen> {
   ) async {
     _locked = true;
     final session = ref.read(gameSessionProvider);
-    final result = await ref
-        .read(answerServiceProvider)
-        .submitAnswer(
-          puzzleId: puzzle.id,
-          sessionId: session.sessionId,
-          submissionId: '${session.sessionId}_${puzzle.id}_${session.answered}',
-          answer: answer,
-          timeTakenMs: session.elapsed.inMilliseconds,
-          hintsUsed: session.hintsUsed,
+    final AnswerResult result;
+    try {
+      result = await ref
+          .read(answerServiceProvider)
+          .submitAnswer(
+            puzzleId: puzzle.id,
+            sessionId: session.sessionId,
+            submissionId:
+                '${session.sessionId}_${puzzle.id}_${session.answered}',
+            answer: answer,
+            timeTakenMs: session.elapsed.inMilliseconds,
+            hintsUsed: session.hintsUsed,
+          );
+    } catch (_) {
+      _locked = false;
+      if (mounted) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          const SnackBar(
+            content: Text('Could not check your answer. Try again.'),
+          ),
         );
+      }
+      rethrow;
+    }
     ref.read(gameSessionProvider.notifier).recordResult(result);
     // Return first so the game can colour the answer, then show feedback.
     Future.microtask(() => _afterResult(result, total));
