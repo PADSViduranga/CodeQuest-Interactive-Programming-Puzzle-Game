@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+
 import '../models/game_definition.dart';
 
 class DragBucketsEngine extends StatefulWidget {
@@ -34,15 +35,20 @@ class _DragBucketsEngineState extends State<DragBucketsEngine> {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.stretch,
       children: [
-        const Text('Drag each item into the correct bucket.',
-            style: TextStyle(
-                fontWeight: FontWeight.w600, color: Color(0xFFA6A6BD))),
+        const Text(
+          'Drag each item into the correct bucket.',
+          style: TextStyle(
+            fontWeight: FontWeight.w600,
+            color: Color(0xFFA6A6BD),
+          ),
+        ),
         const SizedBox(height: 12),
         Wrap(
           spacing: 8,
           runSpacing: 8,
-          children:
-              remaining.where((p) => !placed.containsKey(p.item)).map((p) {
+          children: remaining.where((p) => !placed.containsKey(p.item)).map((
+            p,
+          ) {
             return Draggable<String>(
               data: p.item,
               feedback: Material(
@@ -75,8 +81,9 @@ class _DragBucketsEngineState extends State<DragBucketsEngine> {
               onAcceptWithDetails: (details) {
                 setState(() => placed[details.data] = category);
                 if (placed.length == widget.pairs.length) {
-                  final correct =
-                      widget.pairs.every((p) => placed[p.item] == p.category);
+                  final correct = widget.pairs.every(
+                    (p) => placed[p.item] == p.category,
+                  );
                   completed = correct;
                   if (!correct) {
                     placed.clear();
@@ -99,24 +106,33 @@ class _DragBucketsEngineState extends State<DragBucketsEngine> {
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    Text(category,
-                        style: const TextStyle(
-                            fontWeight: FontWeight.bold,
-                            color: Color(0xFF22D3EE))),
+                    Text(
+                      category,
+                      style: const TextStyle(
+                        fontWeight: FontWeight.bold,
+                        color: Color(0xFF22D3EE),
+                      ),
+                    ),
                     const SizedBox(height: 6),
                     if (items.isEmpty)
-                      const Text('Drop items here',
-                          style: TextStyle(color: Color(0xFFA6A6BD)))
+                      const Text(
+                        'Drop items here',
+                        style: TextStyle(color: Color(0xFFA6A6BD)),
+                      )
                     else
                       Wrap(
-                          spacing: 6,
-                          children: items
-                              .map((item) => Chip(
-                                    label: Text(item),
-                                    labelStyle:
-                                        const TextStyle(color: Colors.white),
-                                  ))
-                              .toList()),
+                        spacing: 6,
+                        children: items
+                            .map(
+                              (item) => Chip(
+                                label: Text(item),
+                                labelStyle: const TextStyle(
+                                  color: Colors.white,
+                                ),
+                              ),
+                            )
+                            .toList(),
+                      ),
                   ],
                 ),
               ),

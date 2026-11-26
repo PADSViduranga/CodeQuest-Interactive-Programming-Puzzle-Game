@@ -1,11 +1,11 @@
 {
-    "name": "Code Quest Arcade",
-    "short_name": "Code Quest",
+    "name": "codequest",
+    "short_name": "codequest",
     "start_url": ".",
     "display": "standalone",
-    "background_color": "#0D0F1C",
-    "theme_color": "#7139C5",
-    "description": "Play programming mini-games in Code Quest Arcade.",
+    "background_color": "#0175C2",
+    "theme_color": "#0175C2",
+    "description": "A new Flutter project.",
     "orientation": "portrait-primary",
     "prefer_related_applications": false,
     "icons": [
