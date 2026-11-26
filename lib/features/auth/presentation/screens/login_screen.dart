@@ -4,6 +4,7 @@ import 'package:go_router/go_router.dart';
 
 import '../../../../core/error/failures.dart';
 import '../../../../core/theme/app_colors.dart';
+import '../../../../core/widgets/mito_logo.dart';
 import '../providers/auth_provider.dart';
 
 class LoginScreen extends ConsumerStatefulWidget {
@@ -82,22 +83,7 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
                   mainAxisSize: MainAxisSize.min,
                   crossAxisAlignment: CrossAxisAlignment.stretch,
                   children: [
-                    Center(
-                      child: Container(
-                        width: 76,
-                        height: 76,
-                        decoration: BoxDecoration(
-                          gradient: AppColors.brandGradient,
-                          borderRadius: BorderRadius.circular(24),
-                          boxShadow: AppColors.glow(AppColors.primary),
-                        ),
-                        child: const Icon(
-                          Icons.bolt_rounded,
-                          size: 44,
-                          color: Colors.white,
-                        ),
-                      ),
-                    ),
+                    const Center(child: MitoLogo(size: 88)),
                     const SizedBox(height: 16),
                     ShaderMask(
                       shaderCallback: (r) =>
