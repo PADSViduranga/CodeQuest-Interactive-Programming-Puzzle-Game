@@ -1,3 +1,4 @@
+import '../../../core/firebase/emulator.dart';
 import '../core/game_type.dart';
 import '../domain/puzzle.dart';
 
@@ -125,6 +126,48 @@ class SamplePuzzleRepository implements PuzzleRepository {
         xpReward: 20,
         maxHints: 2,
       ),
+      // Only the server can run code, so these appear with the emulators on.
+      if (useEmulator) ...[
+        Puzzle(
+          id: 'demo_wc_1',
+          type: GameType.writeCode,
+          language: 'python',
+          level: 'beginner',
+          title: 'Write the code',
+          prompt: 'Read a number n and print n times 2.',
+          payload: {
+            'starter': '# Read n, then print n * 2\n',
+            'examples': [
+              {'input': '4', 'output': '8'},
+            ],
+          },
+          difficulty: 1,
+          xpReward: 20,
+          maxHints: 2,
+        ),
+        Puzzle(
+          id: 'demo_fx_1',
+          type: GameType.fixTheBug,
+          language: 'python',
+          level: 'beginner',
+          title: 'Fix the bug',
+          prompt: 'This should print the sum of 1 to n, but it prints the wrong number. Fix it.',
+          payload: {
+            'starter':
+                'n = int(input())\n'
+                'total = 0\n'
+                'for i in range(n):\n'
+                '    total = total + i\n'
+                'print(total)\n',
+            'examples': [
+              {'input': '3', 'output': '6'},
+            ],
+          },
+          difficulty: 1,
+          xpReward: 20,
+          maxHints: 2,
+        ),
+      ],
     ];
   }
 }

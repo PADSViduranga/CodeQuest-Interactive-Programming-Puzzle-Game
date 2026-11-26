@@ -51,6 +51,26 @@ const secrets = {
     explanation: 'Names cannot start with a digit, cannot be a keyword like class, and cannot contain a dash.',
     hints: ['One name starts with a number.', 'class is a reserved word.'],
   },
+  demo_wc_1: {
+    type: 'write_code',
+    tests: [
+      { stdin: '4', expected: '8' },
+      { stdin: '10', expected: '20' },
+      { stdin: '-3', expected: '-6' },
+    ],
+    explanation: 'Read the number with int(input()) and print it times 2.',
+    hints: ['Use int(input()) to read a number.', 'print(n * 2)'],
+  },
+  demo_fx_1: {
+    type: 'fix_the_bug',
+    tests: [
+      { stdin: '3', expected: '6' },
+      { stdin: '5', expected: '15' },
+      { stdin: '1', expected: '1' },
+    ],
+    explanation: 'range(n) starts at 0 and stops before n. Use range(1, n + 1) to add 1 up to n.',
+    hints: ['Look at where the loop starts.', 'range(n) never reaches n.'],
+  },
 };
 
 (async () => {

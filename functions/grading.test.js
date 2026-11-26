@@ -1,6 +1,6 @@
 const test = require('node:test');
 const assert = require('node:assert');
-const { checkAnswer, comboXp, levelForXp } = require('./grading');
+const { checkAnswer, gradeCodeRuns, isCodeType, comboXp, levelForXp } = require('./grading');
 
 test('option games compare the selected option id', () => {
   const secret = { type: 'predict_output', answer: 'a' };
@@ -46,4 +46,17 @@ test('grid needs exactly the right cells, in any order', () => {
   assert.strictEqual(checkAnswer(secret, { selected: ['x1'] }), false);
   assert.strictEqual(checkAnswer(secret, { selected: ['x1', 'x3', 'x2'] }), false);
   assert.strictEqual(checkAnswer(secret, { selected: ['x1', 'x1'] }), false);
+});
+
+test('code runs pass only when every test matches', () => {
+  assert.strictEqual(isCodeType('write_code'), true);
+  assert.strictEqual(isCodeType('typing'), false);
+  const tests = [{ expected: '6' }, { expected: '10' }];
+  const ok = { status: 3, stdout: '6\n' };
+  assert.deepStrictEqual(gradeCodeRuns(tests, [ok, { status: 3, stdout: '10\r\n' }]), {
+    correct: true, passed: 2, total: 2,
+  });
+  assert.strictEqual(gradeCodeRuns(tests, [ok, { status: 3, stdout: '11' }]).correct, false);
+  assert.strictEqual(gradeCodeRuns(tests, [ok, { status: 11, stdout: '10' }]).passed, 1);
+  assert.strictEqual(gradeCodeRuns([], []).correct, false);
 });

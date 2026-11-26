@@ -61,4 +61,26 @@ function levelForXp(totalXp) {
   return Math.floor(totalXp / 100) + 1;
 }
 
-module.exports = { checkAnswer, comboXp, levelForXp };
+/** Types that are graded by running the player's code. */
+function isCodeType(type) {
+  return type === 'write_code' || type === 'fix_the_bug';
+}
+
+/**
+ * Compares the output of each test run with what the test expects.
+ * runs = [{ stdout, status }], tests = [{ expected }]. Status 3 means it ran without error.
+ */
+function gradeCodeRuns(tests, runs) {
+  const total = tests.length;
+  let passed = 0;
+  for (let i = 0; i < total; i++) {
+    const run = runs[i];
+    if (!run || run.status !== 3) continue;
+    const out = String(run.stdout || '').replace(/\r\n/g, '\n').trim();
+    const want = String(tests[i].expected).replace(/\r\n/g, '\n').trim();
+    if (out === want) passed++;
+  }
+  return { correct: total > 0 && passed === total, passed, total };
+}
+
+module.exports = { checkAnswer, gradeCodeRuns, isCodeType, comboXp, levelForXp };
