@@ -131,4 +131,8 @@ exports.getHint = onCall(async (request) => {
   if (!ID.test(puzzleId || '') || !Number.isInteger(hintNumber)) {
     throw new HttpsError('invalid-argument', 'Bad hint request.');
   }
-
+  const snap = await db.collection('puzzleSecrets').doc(puzzleId).get();
+  if (!snap.exists) throw new HttpsError('not-found', 'Unknown puzzle.');
+  const hints = snap.data().hints || [];
+  return { hint: hints[hintNumber - 1] || null };
+});
