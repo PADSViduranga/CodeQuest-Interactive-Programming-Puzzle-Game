@@ -1,12 +1,21 @@
-import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'core/theme/game_theme.dart';
+import 'screens/home_screen.dart';
 
-import 'app.dart';
-import 'firebase_options.dart';
+void main() {
+  runApp(const Member4MiniGamesApp());
+}
 
-Future<void> main() async {
-  WidgetsFlutterBinding.ensureInitialized();
-  await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
-  runApp(const ProviderScope(child: CodeQuestApp()));
+class Member4MiniGamesApp extends StatelessWidget {
+  const Member4MiniGamesApp({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return MaterialApp(
+      title: 'Code Quest Arcade',
+      debugShowCheckedModeBanner: false,
+      theme: GameTheme.dark,
+      home: const GameHomeScreen(),
+    );
+  }
 }
