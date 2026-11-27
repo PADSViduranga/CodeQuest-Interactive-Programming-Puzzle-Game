@@ -141,7 +141,8 @@ exports.awardMiniGameXp = onCall(async (request) => {
   const day = new Date().toISOString().slice(0, 10);
   const playRef = db.doc(`users/${uid}/miniGames/${gameId}_${day}`);
 
-  return db.runTransaction(async (tx) => {
+  try {
+  return await db.runTransaction(async (tx) => {
     const [userSnap, playSnap] = await Promise.all([tx.get(userRef), tx.get(playRef)]);
     const user = userSnap.exists ? userSnap.data() : {};
     const oldXp = user.totalXp || 0;
@@ -153,6 +154,11 @@ exports.awardMiniGameXp = onCall(async (request) => {
     tx.set(userRef, { totalXp, level }, { merge: true });
     return { xpAwarded: MINI_GAME_XP, totalXp, level };
   });
+  } catch (e) {
+    if (e instanceof HttpsError) throw e;
+    console.error('awardMiniGameXp failed', e);
+    throw new HttpsError('internal', String((e && e.message) || e).slice(0, 100));
+  }
 });
 
 exports.getHint = onCall(async (request) => {

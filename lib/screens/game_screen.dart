@@ -68,7 +68,14 @@ class _GameScreenState extends State<GameScreen> {
         );
       }
     });
-    if (correct) MiniGameRewards.award(widget.game.id);
+    if (correct) _awardOnServer();
+  }
+
+  Future<void> _awardOnServer() async {
+    final message = await MiniGameRewards.award(widget.game.id);
+    if (!mounted) return;
+    ScaffoldMessenger.of(context)
+        .showSnackBar(SnackBar(content: Text(message)));
   }
 
   int _xpReward(GameDefinition game) {
