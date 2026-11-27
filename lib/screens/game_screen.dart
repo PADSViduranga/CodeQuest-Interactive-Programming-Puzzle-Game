@@ -10,6 +10,7 @@ import '../engines/special_game_engines.dart';
 import '../engines/typing_engine.dart';
 import '../models/game_definition.dart';
 import '../powerups/power_up_controller.dart';
+import '../services/mini_game_rewards.dart';
 import '../services/player_progress.dart';
 
 class GameScreen extends StatefulWidget {
@@ -67,6 +68,7 @@ class _GameScreenState extends State<GameScreen> {
         );
       }
     });
+    if (correct) MiniGameRewards.award(widget.game.id);
   }
 
   int _xpReward(GameDefinition game) {

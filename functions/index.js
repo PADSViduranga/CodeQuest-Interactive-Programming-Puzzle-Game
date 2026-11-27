@@ -125,6 +125,36 @@ exports.submitAnswer = onCall({ timeoutSeconds: 60 }, async (request) => {
 });
 
 /** Returns hint number [hintNumber] (1 based) for a puzzle, or null. */
+const MINI_GAME_XP = 50;
+
+// Mini-games are graded in the app, so the server cannot verify a win.
+// It bounds the reward instead: a flat amount, once per game per day.
+exports.awardMiniGameXp = onCall(async (request) => {
+  if (!request.auth) throw new HttpsError('unauthenticated', 'Sign in first.');
+  const gameId = request.data && request.data.gameId;
+  if (typeof gameId !== 'string' || !/^[a-z0-9_]{1,40}$/.test(gameId)) {
+    throw new HttpsError('invalid-argument', 'Bad game id.');
+  }
+  const db = getFirestore();
+  const uid = request.auth.uid;
+  const userRef = db.doc(`users/${uid}`);
+  const day = new Date().toISOString().slice(0, 10);
+  const playRef = db.doc(`users/${uid}/miniGames/${gameId}_${day}`);
+
+  return db.runTransaction(async (tx) => {
+    const [userSnap, playSnap] = await Promise.all([tx.get(userRef), tx.get(playRef)]);
+    const user = userSnap.exists ? userSnap.data() : {};
+    const oldXp = user.totalXp || 0;
+    const oldLevel = user.level || 1;
+    if (playSnap.exists) return { xpAwarded: 0, totalXp: oldXp, level: oldLevel };
+    const totalXp = oldXp + MINI_GAME_XP;
+    const level = Math.max(oldLevel, levelForXp(totalXp));
+    tx.set(playRef, { gameId, xpAwarded: MINI_GAME_XP, createdAt: FieldValue.serverTimestamp() });
+    tx.set(userRef, { totalXp, level }, { merge: true });
+    return { xpAwarded: MINI_GAME_XP, totalXp, level };
+  });
+});
+
 exports.getHint = onCall(async (request) => {
   requireUid(request);
   const { puzzleId, hintNumber } = request.data || {};
