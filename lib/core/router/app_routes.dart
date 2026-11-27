@@ -2,6 +2,7 @@ class AppRoutes {
   AppRoutes._();
 
   // Auth
+  static const welcome = '/welcome';
   static const login = '/login';
   static const register = '/register';
   static const resetPassword = '/reset-password';

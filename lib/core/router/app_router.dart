@@ -7,6 +7,7 @@ import 'package:go_router/go_router.dart';
 
 import '../../features/auth/presentation/providers/auth_provider.dart';
 import '../../features/auth/presentation/screens/login_screen.dart';
+import '../../features/auth/presentation/screens/welcome_screen.dart';
 import '../../features/auth/presentation/screens/register_screen.dart';
 import '../../features/auth/presentation/screens/reset_password_screen.dart';
 import '../../features/daily_challenge/presentation/screens/daily_challenge_screen.dart';
@@ -37,6 +38,7 @@ final routerProvider = Provider<GoRouter>((ref) {
   ref.onDispose(refresh.dispose);
 
   const authPages = {
+    AppRoutes.welcome,
     AppRoutes.login,
     AppRoutes.register,
     AppRoutes.resetPassword,
@@ -44,7 +46,7 @@ final routerProvider = Provider<GoRouter>((ref) {
   const setupPages = {AppRoutes.chooseLanguage, AppRoutes.chooseLevel};
 
   return GoRouter(
-    initialLocation: AppRoutes.login,
+    initialLocation: AppRoutes.welcome,
     refreshListenable: refresh,
     redirect: (context, state) {
       final auth = ref.read(authStateProvider);
@@ -54,8 +56,8 @@ final routerProvider = Provider<GoRouter>((ref) {
       final location = state.matchedLocation;
       final onAuthPage = authPages.contains(location);
 
-      // Logged out: only the auth pages are allowed.
-      if (user == null) return onAuthPage ? null : AppRoutes.login;
+      // Logged out: only the welcome and auth pages are allowed.
+      if (user == null) return onAuthPage ? null : AppRoutes.welcome;
 
       // A guest may open Register to upgrade their account.
       final guestRegistering = user.isGuest && location == AppRoutes.register;
@@ -77,6 +79,10 @@ final routerProvider = Provider<GoRouter>((ref) {
       return null;
     },
     routes: [
+      GoRoute(
+        path: AppRoutes.welcome,
+        builder: (_, _) => const WelcomeScreen(),
+      ),
       GoRoute(path: AppRoutes.login, builder: (_, _) => const LoginScreen()),
       GoRoute(
         path: AppRoutes.register,
