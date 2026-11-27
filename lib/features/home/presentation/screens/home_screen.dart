@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../../../core/theme/app_colors.dart';
@@ -51,6 +52,12 @@ class HomeScreen extends ConsumerWidget {
                         ),
                       ],
                     ),
+                  ),
+                  IconButton(
+                    tooltip: 'Mini-games',
+                    onPressed: () => context.push('/minigames'),
+                    icon: const Icon(Icons.sports_esports_rounded),
+                    color: AppColors.primary,
                   ),
                   _Chip(
                     icon: Icons.local_fire_department_rounded,

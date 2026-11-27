@@ -28,5 +28,6 @@ class AppRoutes {
   static const settings = '/settings';
   static const privacy = '/privacy';
   static const terms = '/terms';
+  static const miniGames = '/minigames';
   static const deleteAccount = '/delete-account';
 }

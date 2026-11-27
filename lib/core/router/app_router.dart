@@ -1,3 +1,5 @@
+import '../../screens/home_screen.dart';
+
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -198,6 +200,10 @@ final routerProvider = Provider<GoRouter>((ref) {
         builder: (_, _) => const PrivacyPolicyScreen(),
       ),
       GoRoute(path: AppRoutes.terms, builder: (_, _) => const TermsScreen()),
+      GoRoute(
+        path: AppRoutes.miniGames,
+        builder: (_, _) => const GameHomeScreen(),
+      ),
       GoRoute(
         path: AppRoutes.deleteAccount,
         builder: (_, _) => const DeleteAccountScreen(),
