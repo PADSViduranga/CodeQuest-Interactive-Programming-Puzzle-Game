@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:codequest/core/theme/game_theme.dart';
 import 'package:codequest/data/game_catalog.dart';
+import 'package:codequest/features/profile/presentation/providers/profile_provider.dart';
 import 'package:codequest/screens/home_screen.dart';
 
 void main() {
@@ -49,7 +51,12 @@ void main() {
     tester,
   ) async {
     await tester.pumpWidget(
-      MaterialApp(theme: GameTheme.dark, home: const GameHomeScreen()),
+      ProviderScope(
+        overrides: [
+          playerProfileProvider.overrideWith((ref) => Stream.value(null)),
+        ],
+        child: MaterialApp(theme: GameTheme.dark, home: const GameHomeScreen()),
+      ),
     );
 
     expect(find.text('CODE QUEST'), findsOneWidget);
@@ -71,7 +78,12 @@ void main() {
     addTearDown(tester.view.resetDevicePixelRatio);
 
     await tester.pumpWidget(
-      MaterialApp(theme: GameTheme.dark, home: const GameHomeScreen()),
+      ProviderScope(
+        overrides: [
+          playerProfileProvider.overrideWith((ref) => Stream.value(null)),
+        ],
+        child: MaterialApp(theme: GameTheme.dark, home: const GameHomeScreen()),
+      ),
     );
 
     expect(tester.takeException(), isNull);

@@ -1,19 +1,21 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../core/theme/game_theme.dart';
 import '../data/game_catalog.dart';
 import '../models/game_definition.dart';
 import '../integration/game_module_adapter.dart';
+import '../features/profile/presentation/providers/profile_provider.dart';
 import '../services/player_progress.dart';
 
-class GameHomeScreen extends StatefulWidget {
+class GameHomeScreen extends ConsumerStatefulWidget {
   const GameHomeScreen({super.key});
 
   @override
-  State<GameHomeScreen> createState() => _GameHomeScreenState();
+  ConsumerState<GameHomeScreen> createState() => _GameHomeScreenState();
 }
 
-class _GameHomeScreenState extends State<GameHomeScreen> {
+class _GameHomeScreenState extends ConsumerState<GameHomeScreen> {
   final TextEditingController searchController = TextEditingController();
   String selectedCategory = 'All';
   String query = '';
@@ -26,6 +28,15 @@ class _GameHomeScreenState extends State<GameHomeScreen> {
     GameTheme.heart,
     Color(0xFF34D399),
   ];
+
+  @override
+  void initState() {
+    super.initState();
+    final profile = ref.read(playerProfileProvider).value;
+    if (profile != null) {
+      PlayerProgress.instance.sync(profile.totalXp, profile.level);
+    }
+  }
 
   @override
   void dispose() {
@@ -47,6 +58,12 @@ class _GameHomeScreenState extends State<GameHomeScreen> {
 
   @override
   Widget build(BuildContext context) {
+    ref.listen(playerProfileProvider, (_, next) {
+      final profile = next.value;
+      if (profile != null) {
+        PlayerProgress.instance.sync(profile.totalXp, profile.level);
+      }
+    });
     return Scaffold(
       body: DecoratedBox(
         decoration: const BoxDecoration(
