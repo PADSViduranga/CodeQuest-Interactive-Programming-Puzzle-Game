@@ -73,11 +73,11 @@ class _CodeEditorViewState extends State<CodeEditorView> {
       children: [
         Text(
           puzzle.title.toUpperCase(),
-          style: const TextStyle(
+          style: TextStyle(
             fontSize: 11,
             fontWeight: FontWeight.w800,
             letterSpacing: 1.2,
-            color: AppColors.cyan,
+            color: AppColors.cyanInk,
           ),
         ),
         const SizedBox(height: 6),
@@ -100,7 +100,7 @@ class _CodeEditorViewState extends State<CodeEditorView> {
             ),
             child: Text(
               'Example ${i + 1}\nInput:  ${examples[i]['input']}\nOutput: ${examples[i]['output']}',
-              style: const TextStyle(
+              style: TextStyle(
                 fontFamily: 'monospace',
                 fontSize: 12,
                 height: 1.5,

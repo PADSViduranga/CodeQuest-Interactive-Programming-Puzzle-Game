@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 
+import '../core/theme/app_colors.dart';
+
 class CodeLineEngine extends StatelessWidget {
   final List<String> lines;
   final String answer;
@@ -23,9 +25,9 @@ class CodeLineEngine extends StatelessWidget {
             style: OutlinedButton.styleFrom(
               alignment: Alignment.centerLeft,
               padding: const EdgeInsets.all(14),
-              backgroundColor: const Color(0xFF101322),
-              foregroundColor: const Color(0xFFB9F3FF),
-              side: const BorderSide(color: Color(0xFF343651)),
+              backgroundColor: AppColors.background,
+              foregroundColor: AppColors.primaryLight,
+              side: BorderSide(color: AppColors.border),
             ),
             onPressed: () => onAnswered(line == answer),
             child: Text(line, style: const TextStyle(fontFamily: 'monospace')),
@@ -86,26 +88,26 @@ class _OrderingEngineState extends State<OrderingEngine> {
           margin: const EdgeInsets.only(bottom: 8),
           padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
           decoration: BoxDecoration(
-            color: const Color(0xFF24233F),
+            color: AppColors.surfaceRaised,
             borderRadius: BorderRadius.circular(14),
-            border: Border.all(color: const Color(0xFF343651)),
+            border: Border.all(color: AppColors.border),
           ),
           child: Row(
             children: [
               CircleAvatar(
                 radius: 15,
-                backgroundColor: const Color(0xFF7139C5),
+                backgroundColor: AppColors.primaryDark,
                 child: Text(
                   '${index + 1}',
-                  style: const TextStyle(color: Colors.white),
+                  style: TextStyle(color: AppColors.textPrimary),
                 ),
               ),
               const SizedBox(width: 10),
               Expanded(
                 child: Text(
                   item,
-                  style: const TextStyle(
-                    color: Colors.white,
+                  style: TextStyle(
+                    color: AppColors.textPrimary,
                     fontFamily: 'monospace',
                   ),
                 ),
@@ -225,17 +227,17 @@ class _LogicGateEngineState extends State<LogicGateEngine> {
       Container(
         padding: const EdgeInsets.all(16),
         decoration: BoxDecoration(
-          color: output ? const Color(0xFF123536) : const Color(0xFF24233F),
+          color: output ? AppColors.greenTint : AppColors.surfaceRaised,
           borderRadius: BorderRadius.circular(14),
           border: Border.all(
-            color: output ? const Color(0xFF22D3EE) : const Color(0xFF454363),
+            color: output ? AppColors.cyanInk : AppColors.border,
           ),
         ),
         child: Text(
           'LIVE OUTPUT   ${output ? 1 : 0}',
           textAlign: TextAlign.center,
-          style: const TextStyle(
-            color: Color(0xFF22D3EE),
+          style: TextStyle(
+            color: AppColors.cyanInk,
             fontWeight: FontWeight.w800,
             letterSpacing: 1.4,
           ),
@@ -312,8 +314,8 @@ class _SortingEngineState extends State<SortingEngine> {
                     children: [
                       Text(
                         '$value',
-                        style: const TextStyle(
-                          color: Colors.white,
+                        style: TextStyle(
+                          color: AppColors.textPrimary,
                           fontWeight: FontWeight.bold,
                         ),
                       ),
@@ -323,8 +325,8 @@ class _SortingEngineState extends State<SortingEngine> {
                         height: value * 16.0,
                         decoration: BoxDecoration(
                           color: selectedIndex == index
-                              ? const Color(0xFFFBBF24)
-                              : const Color(0xFFA855F7),
+                              ? AppColors.yellowInk
+                              : AppColors.primary,
                           borderRadius: const BorderRadius.vertical(
                             top: Radius.circular(8),
                           ),
@@ -339,9 +341,9 @@ class _SortingEngineState extends State<SortingEngine> {
         ),
       ),
       const SizedBox(height: 12),
-      const Text(
+      Text(
         'Select two adjacent bars to swap them.',
-        style: TextStyle(color: Color(0xFFA6A6BD)),
+        style: TextStyle(color: AppColors.textSecondary),
       ),
       const SizedBox(height: 8),
       FilledButton.icon(
@@ -387,15 +389,15 @@ class _StackEngineState extends State<StackEngine> {
         height: 170,
         padding: const EdgeInsets.all(12),
         decoration: BoxDecoration(
-          color: const Color(0xFF101322),
+          color: AppColors.background,
           borderRadius: BorderRadius.circular(16),
-          border: Border.all(color: const Color(0xFFA855F7)),
+          border: Border.all(color: AppColors.primary),
         ),
         child: stack.isEmpty
-            ? const Center(
+            ? Center(
                 child: Text(
                   'STACK EMPTY',
-                  style: TextStyle(color: Color(0xFFA6A6BD)),
+                  style: TextStyle(color: AppColors.textSecondary),
                 ),
               )
             : Column(
@@ -407,13 +409,13 @@ class _StackEngineState extends State<StackEngine> {
                         margin: const EdgeInsets.only(top: 5),
                         padding: const EdgeInsets.all(8),
                         decoration: BoxDecoration(
-                          color: const Color(0xFF7139C5),
+                          color: AppColors.primaryDark,
                           borderRadius: BorderRadius.circular(8),
                         ),
                         child: Text(
                           '$value',
                           textAlign: TextAlign.center,
-                          style: const TextStyle(color: Colors.white),
+                          style: TextStyle(color: AppColors.textPrimary),
                         ),
                       ),
                     )

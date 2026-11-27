@@ -27,7 +27,7 @@ class LevelOption {
   final Color color;
 }
 
-const languageOptions = [
+final languageOptions = [
   LanguageOption('python', 'Python', 'Py', AppColors.yellow),
   LanguageOption('javascript', 'JavaScript', 'JS', AppColors.yellow),
   LanguageOption('java', 'Java', 'Jv', AppColors.pink),

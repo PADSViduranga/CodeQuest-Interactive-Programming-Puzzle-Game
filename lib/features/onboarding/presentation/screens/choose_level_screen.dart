@@ -47,7 +47,7 @@ class _ChooseLevelScreenState extends ConsumerState<ChooseLevelScreen> {
           padding: const EdgeInsets.fromLTRB(20, 0, 20, 20),
           child: Column(
             children: [
-              const Align(
+              Align(
                 alignment: Alignment.centerLeft,
                 child: Text(
                   'Step 2 of 2 · unlocks matching puzzles',
@@ -131,7 +131,7 @@ class _LevelCard extends StatelessWidget {
                   const SizedBox(height: 2),
                   Text(
                     option.description,
-                    style: const TextStyle(
+                    style: TextStyle(
                       fontSize: 12,
                       color: AppColors.textSecondary,
                     ),

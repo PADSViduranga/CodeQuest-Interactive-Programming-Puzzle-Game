@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 
+import '../../../../core/theme/app_colors.dart';
+
 /// One of the Mito avatars a player can pick.
 class AvatarOption {
   const AvatarOption(this.id, this.icon, this.colors);
@@ -10,20 +12,20 @@ class AvatarOption {
 }
 
 const avatarOptions = [
-  AvatarOption('mito_1', Icons.bolt, [Color(0xFF9F5CFF), Color(0xFFFF4FA3)]),
+  AvatarOption('mito_1', Icons.bolt, [Color(0xFF2DD4BF), Color(0xFF5CC8F5)]),
   AvatarOption('mito_2', Icons.rocket_launch, [
     Color(0xFF22D3EE),
     Color(0xFF6366F1),
   ]),
   AvatarOption('mito_3', Icons.pets, [Color(0xFFFFC857), Color(0xFFFF7A45)]),
-  AvatarOption('mito_4', Icons.code, [Color(0xFF34D399), Color(0xFF22D3EE)]),
+  AvatarOption('mito_4', Icons.code, [Color(0xFF8BE04E), Color(0xFF2DD4BF)]),
   AvatarOption('mito_5', Icons.sports_esports, [
     Color(0xFFFF4FA3),
     Color(0xFFFF7A45),
   ]),
   AvatarOption('mito_6', Icons.auto_awesome, [
-    Color(0xFFFFC857),
-    Color(0xFF9F5CFF),
+    Color(0xFFFFE14D),
+    Color(0xFFFF8FA3),
   ]),
 ];
 
@@ -59,7 +61,9 @@ class AvatarCircle extends StatelessWidget {
           begin: Alignment.topLeft,
           end: Alignment.bottomRight,
         ),
-        border: selected ? Border.all(color: Colors.white, width: 3) : null,
+        border: selected
+            ? Border.all(color: AppColors.textPrimary, width: 3)
+            : null,
         boxShadow: [
           BoxShadow(
             color: a.colors.last.withValues(alpha: 0.45),

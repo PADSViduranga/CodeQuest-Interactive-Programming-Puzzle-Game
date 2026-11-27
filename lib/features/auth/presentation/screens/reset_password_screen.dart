@@ -76,7 +76,7 @@ class _ResetPasswordScreenState extends ConsumerState<ResetPasswordScreen> {
                           border: Border.all(color: AppColors.primary),
                           boxShadow: AppColors.glow(AppColors.primary),
                         ),
-                        child: const Icon(
+                        child: Icon(
                           Icons.mail_outline_rounded,
                           size: 38,
                           color: AppColors.primaryLight,
@@ -84,7 +84,7 @@ class _ResetPasswordScreenState extends ConsumerState<ResetPasswordScreen> {
                       ),
                     ),
                     const SizedBox(height: 18),
-                    const Text(
+                    Text(
                       'Enter your email and we will send you a link to reset your password.',
                       textAlign: TextAlign.center,
                       style: TextStyle(color: AppColors.textSecondary),
@@ -111,14 +111,14 @@ class _ResetPasswordScreenState extends ConsumerState<ResetPasswordScreen> {
                             color: AppColors.green.withValues(alpha: 0.6),
                           ),
                         ),
-                        child: const Row(
+                        child: Row(
                           children: [
                             Icon(Icons.check_circle, color: AppColors.green),
                             SizedBox(width: 10),
                             Expanded(
                               child: Text(
                                 'Link sent. Check your inbox, and your spam folder too.',
-                                style: TextStyle(color: AppColors.green),
+                                style: TextStyle(color: AppColors.greenInk),
                               ),
                             ),
                           ],

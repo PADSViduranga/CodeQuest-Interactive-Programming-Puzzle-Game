@@ -81,7 +81,7 @@ class CodeCard extends StatelessWidget {
             top: 0,
             child: IconButton(
               onPressed: onCopy,
-              icon: const Icon(
+              icon: Icon(
                 Icons.copy_rounded,
                 size: 18,
                 color: AppColors.textSecondary,

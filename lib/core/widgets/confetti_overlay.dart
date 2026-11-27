@@ -18,7 +18,7 @@ class ConfettiOverlay extends StatelessWidget {
               padding: const EdgeInsets.only(top: 28),
               child: Wrap(
                 spacing: 18,
-                children: const [
+                children: [
                   Icon(Icons.star, color: AppColors.yellow),
                   Icon(Icons.circle, color: AppColors.cyan),
                   Icon(Icons.square, color: AppColors.green),

@@ -48,7 +48,7 @@ class PrivacyPolicyScreen extends StatelessWidget {
                   children: [
                     Text(
                       title,
-                      style: const TextStyle(
+                      style: TextStyle(
                         fontWeight: FontWeight.w700,
                         color: AppColors.primaryLight,
                       ),
@@ -56,7 +56,7 @@ class PrivacyPolicyScreen extends StatelessWidget {
                     const SizedBox(height: 6),
                     Text(
                       body,
-                      style: const TextStyle(
+                      style: TextStyle(
                         color: AppColors.textSecondary,
                         height: 1.5,
                       ),
@@ -65,7 +65,7 @@ class PrivacyPolicyScreen extends StatelessWidget {
                 ),
               ),
             ),
-          const Center(
+          Center(
             child: Text(
               'Last updated 25 Nov 2026',
               style: TextStyle(color: AppColors.textMuted, fontSize: 12),

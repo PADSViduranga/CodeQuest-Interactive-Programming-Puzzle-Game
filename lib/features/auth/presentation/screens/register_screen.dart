@@ -62,7 +62,7 @@ class _RegisterScreenState extends ConsumerState<RegisterScreen> {
     padding: const EdgeInsets.only(bottom: 6),
     child: Text(
       text.toUpperCase(),
-      style: const TextStyle(
+      style: TextStyle(
         fontSize: 11,
         fontWeight: FontWeight.w700,
         letterSpacing: 1.2,
@@ -92,7 +92,7 @@ class _RegisterScreenState extends ConsumerState<RegisterScreen> {
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.stretch,
                   children: [
-                    const Text(
+                    Text(
                       'Save your progress and join the ranks',
                       style: TextStyle(color: AppColors.textSecondary),
                     ),
@@ -157,7 +157,7 @@ class _RegisterScreenState extends ConsumerState<RegisterScreen> {
                       value: _agreed,
                       activeColor: AppColors.primary,
                       onChanged: (v) => setState(() => _agreed = v ?? false),
-                      title: const Text(
+                      title: Text(
                         'I agree to the Terms and Privacy Policy',
                         style: TextStyle(
                           fontSize: 13,
@@ -211,7 +211,7 @@ class _RegisterScreenState extends ConsumerState<RegisterScreen> {
                     Row(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
-                        const Text(
+                        Text(
                           'Already playing?',
                           style: TextStyle(color: AppColors.textSecondary),
                         ),

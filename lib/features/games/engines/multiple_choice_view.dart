@@ -44,11 +44,11 @@ class _MultipleChoiceViewState extends State<MultipleChoiceView> {
       children: [
         Text(
           puzzle.title.toUpperCase(),
-          style: const TextStyle(
+          style: TextStyle(
             fontSize: 11,
             fontWeight: FontWeight.w800,
             letterSpacing: 1.2,
-            color: AppColors.cyan,
+            color: AppColors.cyanInk,
           ),
         ),
         const SizedBox(height: 6),
@@ -116,7 +116,7 @@ class _CodeBox extends StatelessWidget {
                 width: 22,
                 child: Text(
                   '${i + 1}',
-                  style: const TextStyle(
+                  style: TextStyle(
                     fontFamily: 'monospace',
                     fontSize: 12,
                     height: 1.7,
@@ -194,7 +194,7 @@ class _OptionTile extends StatelessWidget {
               alignment: Alignment.center,
               child: Text(
                 letter,
-                style: const TextStyle(
+                style: TextStyle(
                   fontSize: 12,
                   fontWeight: FontWeight.w800,
                   color: AppColors.textSecondary,

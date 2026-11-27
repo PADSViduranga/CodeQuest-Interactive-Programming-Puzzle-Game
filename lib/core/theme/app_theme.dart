@@ -5,14 +5,23 @@ import 'app_colors.dart';
 class AppTheme {
   AppTheme._();
 
-  static ThemeData get dark {
-    const scheme = ColorScheme.dark(
+  static ThemeData get dark => _build(Brightness.dark);
+  static ThemeData get light => _build(Brightness.light);
+
+  static ThemeData _build(Brightness brightness) {
+    // Tell AppColors which palette to hand out before any color is read.
+    AppColors.isDark = brightness == Brightness.dark;
+
+    final scheme = ColorScheme(
+      brightness: brightness,
       primary: AppColors.primary,
-      onPrimary: AppColors.textPrimary,
+      onPrimary: AppColors.onPrimary,
       secondary: AppColors.cyan,
+      onSecondary: AppColors.onPrimary,
+      error: AppColors.danger,
+      onError: Colors.white,
       surface: AppColors.surface,
       onSurface: AppColors.textPrimary,
-      error: AppColors.danger,
     );
 
     OutlineInputBorder border(Color c, [double w = 1]) => OutlineInputBorder(
@@ -21,15 +30,16 @@ class AppTheme {
     );
 
     final buttonShape = RoundedRectangleBorder(
-      borderRadius: BorderRadius.circular(13),
+      borderRadius: BorderRadius.circular(18),
     );
-    const buttonText = TextStyle(fontSize: 15, fontWeight: FontWeight.w600);
+    const buttonText = TextStyle(fontSize: 15, fontWeight: FontWeight.w800);
 
     return ThemeData(
       useMaterial3: true,
+      brightness: brightness,
       colorScheme: scheme,
       scaffoldBackgroundColor: AppColors.background,
-      appBarTheme: const AppBarTheme(
+      appBarTheme: AppBarTheme(
         backgroundColor: AppColors.background,
         foregroundColor: AppColors.textPrimary,
         elevation: 0,
@@ -45,13 +55,13 @@ class AppTheme {
         elevation: 0,
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(16),
-          side: const BorderSide(color: AppColors.border),
+          side: BorderSide(color: AppColors.border),
         ),
       ),
       inputDecorationTheme: InputDecorationTheme(
         filled: true,
         fillColor: AppColors.surface,
-        hintStyle: const TextStyle(color: AppColors.textMuted),
+        hintStyle: TextStyle(color: AppColors.textMuted),
         contentPadding: const EdgeInsets.symmetric(
           horizontal: 14,
           vertical: 14,
@@ -65,7 +75,7 @@ class AppTheme {
       filledButtonTheme: FilledButtonThemeData(
         style: FilledButton.styleFrom(
           backgroundColor: AppColors.primary,
-          foregroundColor: AppColors.textPrimary,
+          foregroundColor: AppColors.onPrimary,
           minimumSize: const Size.fromHeight(48),
           textStyle: buttonText,
           shape: buttonShape,

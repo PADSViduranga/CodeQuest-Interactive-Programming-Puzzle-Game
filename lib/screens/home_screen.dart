@@ -1,4 +1,7 @@
 import 'package:flutter/material.dart';
+
+import '../core/theme/app_colors.dart';
+
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../core/theme/game_theme.dart';
@@ -21,12 +24,12 @@ class _GameHomeScreenState extends ConsumerState<GameHomeScreen> {
   String query = '';
 
   static const categories = ['All', 'Code', 'Algorithms', 'Web', 'Tools'];
-  static const accents = [
+  static List<Color> get accents => [
     GameTheme.cyan,
     GameTheme.neon,
     GameTheme.gold,
     GameTheme.heart,
-    Color(0xFF34D399),
+    AppColors.greenInk,
   ];
 
   @override
@@ -66,12 +69,12 @@ class _GameHomeScreenState extends ConsumerState<GameHomeScreen> {
     });
     return Scaffold(
       body: DecoratedBox(
-        decoration: const BoxDecoration(
+        decoration: BoxDecoration(
           gradient: LinearGradient(
             begin: Alignment.topCenter,
             end: Alignment.bottomCenter,
             colors: [
-              Color(0xFF15132A),
+              AppColors.background,
               GameTheme.background,
               GameTheme.background,
             ],
@@ -105,7 +108,7 @@ class _GameHomeScreenState extends ConsumerState<GameHomeScreen> {
                     sliver: SliverToBoxAdapter(
                       child: Row(
                         children: [
-                          const Expanded(
+                          Expanded(
                             child: Text(
                               'CHOOSE YOUR NEXT RUN',
                               style: TextStyle(
@@ -118,7 +121,7 @@ class _GameHomeScreenState extends ConsumerState<GameHomeScreen> {
                           ),
                           Text(
                             '${filteredGames.length} GAMES',
-                            style: const TextStyle(
+                            style: TextStyle(
                               color: GameTheme.cyan,
                               fontSize: 12,
                               fontWeight: FontWeight.bold,
@@ -129,7 +132,7 @@ class _GameHomeScreenState extends ConsumerState<GameHomeScreen> {
                     ),
                   ),
                   if (filteredGames.isEmpty)
-                    const SliverFillRemaining(
+                    SliverFillRemaining(
                       hasScrollBody: false,
                       child: Center(
                         child: Text(
@@ -183,9 +186,7 @@ class _GameHomeScreenState extends ConsumerState<GameHomeScreen> {
         width: 46,
         height: 46,
         decoration: BoxDecoration(
-          gradient: const LinearGradient(
-            colors: [GameTheme.purple, GameTheme.neon],
-          ),
+          gradient: LinearGradient(colors: [GameTheme.purple, GameTheme.neon]),
           borderRadius: BorderRadius.circular(15),
           boxShadow: [
             BoxShadow(
@@ -194,17 +195,17 @@ class _GameHomeScreenState extends ConsumerState<GameHomeScreen> {
             ),
           ],
         ),
-        child: const Icon(Icons.code_rounded, color: Colors.white),
+        child: Icon(Icons.code_rounded, color: AppColors.textPrimary),
       ),
       const SizedBox(width: 12),
-      const Expanded(
+      Expanded(
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Text(
               'CODE QUEST',
               style: TextStyle(
-                color: Colors.white,
+                color: AppColors.textPrimary,
                 fontSize: 17,
                 fontWeight: FontWeight.w900,
                 letterSpacing: 1.5,
@@ -227,9 +228,9 @@ class _GameHomeScreenState extends ConsumerState<GameHomeScreen> {
         icon: const Icon(Icons.calendar_month_outlined),
         color: GameTheme.cyan,
       ),
-      const CircleAvatar(
-        backgroundColor: Color(0xFF34235D),
-        child: Icon(Icons.person, color: Color(0xFFC9A7FF)),
+      CircleAvatar(
+        backgroundColor: AppColors.primaryTint,
+        child: Icon(Icons.person, color: AppColors.primaryLight),
       ),
     ],
   );
@@ -237,8 +238,8 @@ class _GameHomeScreenState extends ConsumerState<GameHomeScreen> {
   Widget _profilePanel() => Container(
     padding: const EdgeInsets.all(20),
     decoration: BoxDecoration(
-      gradient: const LinearGradient(
-        colors: [Color(0xFF29204A), Color(0xFF1C1B35)],
+      gradient: LinearGradient(
+        colors: [AppColors.surfaceRaised, AppColors.surface],
         begin: Alignment.topLeft,
         end: Alignment.bottomRight,
       ),
@@ -264,14 +265,10 @@ class _GameHomeScreenState extends ConsumerState<GameHomeScreen> {
                   color: GameTheme.purple.withValues(alpha: .42),
                   border: Border.all(color: GameTheme.neon, width: 2),
                 ),
-                child: const Icon(
-                  Icons.terminal,
-                  size: 29,
-                  color: GameTheme.cyan,
-                ),
+                child: Icon(Icons.terminal, size: 29, color: GameTheme.cyan),
               ),
               const SizedBox(width: 14),
-              const Expanded(
+              Expanded(
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
@@ -303,7 +300,7 @@ class _GameHomeScreenState extends ConsumerState<GameHomeScreen> {
             children: [
               Row(
                 children: [
-                  const Expanded(
+                  Expanded(
                     child: Text(
                       'NEXT LEVEL',
                       style: TextStyle(
@@ -317,8 +314,8 @@ class _GameHomeScreenState extends ConsumerState<GameHomeScreen> {
                   if (!compact)
                     Text(
                       '${player.xp} / ${PlayerProgress.xpPerLevel} XP',
-                      style: const TextStyle(
-                        color: Colors.white,
+                      style: TextStyle(
+                        color: AppColors.textPrimary,
                         fontSize: 11,
                         fontWeight: FontWeight.bold,
                       ),
@@ -337,8 +334,8 @@ class _GameHomeScreenState extends ConsumerState<GameHomeScreen> {
                   alignment: Alignment.centerRight,
                   child: Text(
                     '${player.xp} / ${PlayerProgress.xpPerLevel} XP',
-                    style: const TextStyle(
-                      color: Colors.white,
+                    style: TextStyle(
+                      color: AppColors.textPrimary,
                       fontSize: 11,
                       fontWeight: FontWeight.bold,
                     ),
@@ -351,14 +348,14 @@ class _GameHomeScreenState extends ConsumerState<GameHomeScreen> {
                 child: LinearProgressIndicator(
                   value: player.levelProgress,
                   minHeight: 8,
-                  backgroundColor: const Color(0xFF131426),
-                  valueColor: const AlwaysStoppedAnimation(GameTheme.neon),
+                  backgroundColor: AppColors.surface,
+                  valueColor: AlwaysStoppedAnimation(GameTheme.neon),
                 ),
               ),
               const SizedBox(height: 10),
               Row(
                 children: [
-                  const Expanded(
+                  Expanded(
                     child: Text(
                       'CHALLENGES CLEARED',
                       style: TextStyle(
@@ -371,7 +368,7 @@ class _GameHomeScreenState extends ConsumerState<GameHomeScreen> {
                   ),
                   Text(
                     '${player.completedGames.length} / ${GameCatalog.games.length}',
-                    style: const TextStyle(
+                    style: TextStyle(
                       color: GameTheme.cyan,
                       fontWeight: FontWeight.w900,
                       fontSize: 11,
@@ -399,8 +396,8 @@ class _GameHomeScreenState extends ConsumerState<GameHomeScreen> {
     child: Container(
       padding: const EdgeInsets.all(20),
       decoration: BoxDecoration(
-        gradient: const LinearGradient(
-          colors: [Color(0xFF40216E), Color(0xFF232043)],
+        gradient: LinearGradient(
+          colors: [AppColors.primaryTint, AppColors.surface],
           begin: Alignment.topLeft,
           end: Alignment.bottomRight,
         ),
@@ -415,14 +412,14 @@ class _GameHomeScreenState extends ConsumerState<GameHomeScreen> {
               color: GameTheme.gold.withValues(alpha: .13),
               borderRadius: BorderRadius.circular(15),
             ),
-            child: const Icon(
+            child: Icon(
               Icons.local_fire_department,
               color: GameTheme.gold,
               size: 28,
             ),
           ),
           const SizedBox(width: 14),
-          const Expanded(
+          Expanded(
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
@@ -447,7 +444,7 @@ class _GameHomeScreenState extends ConsumerState<GameHomeScreen> {
               ],
             ),
           ),
-          const Icon(Icons.arrow_forward_rounded, color: Colors.white),
+          Icon(Icons.arrow_forward_rounded, color: AppColors.textPrimary),
         ],
       ),
     ),
@@ -459,7 +456,7 @@ class _GameHomeScreenState extends ConsumerState<GameHomeScreen> {
       TextField(
         controller: searchController,
         onChanged: (value) => setState(() => query = value),
-        decoration: const InputDecoration(
+        decoration: InputDecoration(
           hintText: 'Search games, concepts...',
           prefixIcon: Icon(Icons.search, color: GameTheme.cyan),
         ),
@@ -479,10 +476,10 @@ class _GameHomeScreenState extends ConsumerState<GameHomeScreen> {
                 selectedColor: GameTheme.purple,
                 backgroundColor: GameTheme.card,
                 side: BorderSide(
-                  color: selected ? GameTheme.neon : const Color(0xFF343651),
+                  color: selected ? GameTheme.neon : AppColors.border,
                 ),
                 labelStyle: TextStyle(
-                  color: selected ? Colors.white : GameTheme.muted,
+                  color: selected ? AppColors.onPrimary : GameTheme.muted,
                   fontWeight: FontWeight.w700,
                 ),
               ),
@@ -557,7 +554,7 @@ class _GameHomeScreenState extends ConsumerState<GameHomeScreen> {
               game.description,
               maxLines: 2,
               overflow: TextOverflow.ellipsis,
-              style: const TextStyle(
+              style: TextStyle(
                 color: GameTheme.muted,
                 fontSize: 11,
                 height: 1.35,
@@ -576,15 +573,15 @@ class _GameHomeScreenState extends ConsumerState<GameHomeScreen> {
                   ),
                 ),
                 const Spacer(),
-                const Icon(
+                Icon(
                   Icons.play_arrow_rounded,
-                  color: Colors.white70,
+                  color: AppColors.textSecondary,
                   size: 17,
                 ),
-                const Text(
+                Text(
                   ' PLAY',
                   style: TextStyle(
-                    color: Colors.white70,
+                    color: AppColors.textSecondary,
                     fontSize: 10,
                     fontWeight: FontWeight.bold,
                   ),
@@ -620,7 +617,7 @@ class _GameHomeScreenState extends ConsumerState<GameHomeScreen> {
       case 'Medium':
         return GameTheme.gold;
       default:
-        return const Color(0xFF34D399);
+        return AppColors.greenInk;
     }
   }
 

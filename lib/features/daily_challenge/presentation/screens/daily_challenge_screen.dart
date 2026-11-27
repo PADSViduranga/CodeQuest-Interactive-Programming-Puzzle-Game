@@ -55,7 +55,7 @@ class _DailyChallengeScreenState extends ConsumerState<DailyChallengeScreen> {
             padding: const EdgeInsets.all(22),
             decoration: BoxDecoration(
               borderRadius: BorderRadius.circular(22),
-              gradient: const LinearGradient(
+              gradient: LinearGradient(
                 colors: [AppColors.yellowTint, AppColors.surface],
                 begin: Alignment.topLeft,
                 end: Alignment.bottomRight,
@@ -66,13 +66,13 @@ class _DailyChallengeScreenState extends ConsumerState<DailyChallengeScreen> {
             ),
             child: Column(
               children: [
-                const Text(
+                Text(
                   "TODAY'S CHALLENGE",
                   style: TextStyle(
                     fontSize: 11,
                     fontWeight: FontWeight.w800,
                     letterSpacing: 1.4,
-                    color: AppColors.yellow,
+                    color: AppColors.yellowInk,
                   ),
                 ),
                 const SizedBox(height: 8),
@@ -81,20 +81,20 @@ class _DailyChallengeScreenState extends ConsumerState<DailyChallengeScreen> {
                   style: TextStyle(fontSize: 26, fontWeight: FontWeight.w900),
                 ),
                 const SizedBox(height: 2),
-                const Text(
+                Text(
                   'Find the line with the bug',
                   style: TextStyle(color: AppColors.textSecondary),
                 ),
                 const SizedBox(height: 14),
-                const Text(
+                Text(
                   '+150 XP',
                   style: TextStyle(
                     fontSize: 40,
                     fontWeight: FontWeight.w900,
-                    color: AppColors.yellow,
+                    color: AppColors.yellowInk,
                   ),
                 ),
-                const Text(
+                Text(
                   'bonus for today only',
                   style: TextStyle(
                     fontSize: 12,
@@ -105,7 +105,7 @@ class _DailyChallengeScreenState extends ConsumerState<DailyChallengeScreen> {
             ),
           ),
           const SizedBox(height: 16),
-          const Text(
+          Text(
             'RESETS IN',
             style: TextStyle(
               fontSize: 11,
@@ -139,8 +139,8 @@ class _DailyChallengeScreenState extends ConsumerState<DailyChallengeScreen> {
                       ),
                       Text(
                         '$streak day streak',
-                        style: const TextStyle(
-                          color: AppColors.pink,
+                        style: TextStyle(
+                          color: AppColors.pinkInk,
                           fontWeight: FontWeight.w700,
                         ),
                       ),
@@ -191,15 +191,15 @@ class _Time extends StatelessWidget {
       children: [
         Text(
           value,
-          style: const TextStyle(
+          style: TextStyle(
             fontSize: 26,
             fontWeight: FontWeight.w800,
-            color: AppColors.cyan,
+            color: AppColors.cyanInk,
           ),
         ),
         Text(
           label,
-          style: const TextStyle(fontSize: 11, color: AppColors.textSecondary),
+          style: TextStyle(fontSize: 11, color: AppColors.textSecondary),
         ),
       ],
     ),

@@ -42,7 +42,7 @@ class LessonScreen extends ConsumerWidget {
                 const SizedBox(height: 10),
                 Text(
                   lesson.explanation,
-                  style: const TextStyle(
+                  style: TextStyle(
                     fontSize: 15,
                     height: 1.55,
                     color: AppColors.textSecondary,
@@ -74,7 +74,7 @@ class LessonScreen extends ConsumerWidget {
                       Expanded(
                         child: Text(
                           lesson.tip,
-                          style: const TextStyle(color: AppColors.yellow),
+                          style: TextStyle(color: AppColors.yellowInk),
                         ),
                       ),
                     ],
@@ -116,7 +116,7 @@ class _CodeBox extends StatelessWidget {
                 width: 22,
                 child: Text(
                   '${i + 1}',
-                  style: const TextStyle(
+                  style: TextStyle(
                     fontFamily: 'monospace',
                     fontSize: 12,
                     height: 1.7,
@@ -158,13 +158,13 @@ class _OutputBox extends StatelessWidget {
     child: Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        const Text(
+        Text(
           'OUTPUT',
           style: TextStyle(
             fontSize: 11,
             fontWeight: FontWeight.w700,
             letterSpacing: 1.2,
-            color: AppColors.green,
+            color: AppColors.greenInk,
           ),
         ),
         const SizedBox(height: 6),

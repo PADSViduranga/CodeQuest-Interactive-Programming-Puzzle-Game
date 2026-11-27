@@ -17,10 +17,7 @@ class ComingSoon extends StatelessWidget {
         children: [
           Icon(icon, size: 64, color: AppColors.primaryLight),
           const SizedBox(height: 12),
-          const Text(
-            'Coming soon',
-            style: TextStyle(color: AppColors.textSecondary),
-          ),
+          Text('Coming soon', style: TextStyle(color: AppColors.textSecondary)),
         ],
       ),
     ),

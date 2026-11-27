@@ -38,7 +38,7 @@ class ProfileScreen extends ConsumerWidget {
           Text(
             isGuest ? 'Guest player' : (user?.email ?? ''),
             textAlign: TextAlign.center,
-            style: const TextStyle(color: AppColors.textSecondary),
+            style: TextStyle(color: AppColors.textSecondary),
           ),
           const SizedBox(height: 20),
           Row(
@@ -81,10 +81,7 @@ class ProfileScreen extends ConsumerWidget {
             ),
           Card(
             child: ListTile(
-              leading: const Icon(
-                Icons.edit_outlined,
-                color: AppColors.primaryLight,
-              ),
+              leading: Icon(Icons.edit_outlined, color: AppColors.primaryLight),
               title: const Text('Edit profile'),
               trailing: const Icon(Icons.chevron_right),
               onTap: () => context.push('/edit-profile'),
@@ -92,7 +89,7 @@ class ProfileScreen extends ConsumerWidget {
           ),
           Card(
             child: ListTile(
-              leading: const Icon(
+              leading: Icon(
                 Icons.settings_outlined,
                 color: AppColors.primaryLight,
               ),
@@ -103,7 +100,7 @@ class ProfileScreen extends ConsumerWidget {
           ),
           Card(
             child: ListTile(
-              leading: const Icon(Icons.logout, color: AppColors.primaryLight),
+              leading: Icon(Icons.logout, color: AppColors.primaryLight),
               title: const Text('Log out'),
               onTap: () => ref.read(authRepositoryProvider).signOut(),
             ),
@@ -138,10 +135,7 @@ class _Stat extends StatelessWidget {
           const SizedBox(height: 2),
           Text(
             label,
-            style: const TextStyle(
-              fontSize: 11,
-              color: AppColors.textSecondary,
-            ),
+            style: TextStyle(fontSize: 11, color: AppColors.textSecondary),
           ),
         ],
       ),

@@ -44,7 +44,7 @@ Future<void> showGuestLimitDialog(
                 style: TextStyle(fontSize: 22, fontWeight: FontWeight.w800),
               ),
               const SizedBox(height: 8),
-              const Text(
+              Text(
                 'Your 10 free guest minutes are used. Create an account to keep your XP and keep playing.',
                 textAlign: TextAlign.center,
                 style: TextStyle(color: AppColors.textSecondary),

@@ -47,11 +47,11 @@ class _SelectGridViewState extends State<SelectGridView> {
       children: [
         Text(
           puzzle.title.toUpperCase(),
-          style: const TextStyle(
+          style: TextStyle(
             fontSize: 11,
             fontWeight: FontWeight.w800,
             letterSpacing: 1.2,
-            color: AppColors.cyan,
+            color: AppColors.cyanInk,
           ),
         ),
         const SizedBox(height: 6),
@@ -64,7 +64,7 @@ class _SelectGridViewState extends State<SelectGridView> {
           ),
         ),
         const SizedBox(height: 6),
-        const Text(
+        Text(
           'Tap every cell that fits, then check.',
           style: TextStyle(color: AppColors.textSecondary, fontSize: 13),
         ),

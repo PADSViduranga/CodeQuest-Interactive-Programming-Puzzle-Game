@@ -62,11 +62,11 @@ class _TypingViewState extends State<TypingView> {
       children: [
         Text(
           puzzle.title.toUpperCase(),
-          style: const TextStyle(
+          style: TextStyle(
             fontSize: 11,
             fontWeight: FontWeight.w800,
             letterSpacing: 1.2,
-            color: AppColors.cyan,
+            color: AppColors.cyanInk,
           ),
         ),
         const SizedBox(height: 6),

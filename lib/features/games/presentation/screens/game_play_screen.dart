@@ -165,9 +165,9 @@ class _GamePlayScreenState extends ConsumerState<GamePlayScreen> {
                 if (r.correct)
                   Text(
                     '+${r.xpAwarded} XP',
-                    style: const TextStyle(
+                    style: TextStyle(
                       fontWeight: FontWeight.w800,
-                      color: AppColors.yellow,
+                      color: AppColors.yellowInk,
                     ),
                   ),
               ],
@@ -176,7 +176,7 @@ class _GamePlayScreenState extends ConsumerState<GamePlayScreen> {
               const SizedBox(height: 10),
               Text(
                 r.explanation!,
-                style: const TextStyle(color: AppColors.textSecondary),
+                style: TextStyle(color: AppColors.textSecondary),
               ),
             ],
             const SizedBox(height: 18),

@@ -39,6 +39,12 @@ class SettingsScreen extends ConsumerWidget {
             value: settings.haptics,
             onChanged: notifier.setHaptics,
           ),
+          _SwitchRow(
+            title: 'Dark mode',
+            subtitle: 'Switch between dark and light',
+            value: settings.darkMode,
+            onChanged: notifier.setDarkMode,
+          ),
           const SizedBox(height: 12),
           const _Section('Account'),
           _TapRow(
@@ -79,7 +85,7 @@ class _Section extends StatelessWidget {
     padding: const EdgeInsets.only(bottom: 8),
     child: Text(
       text.toUpperCase(),
-      style: const TextStyle(
+      style: TextStyle(
         fontSize: 11,
         fontWeight: FontWeight.w700,
         letterSpacing: 1.2,
@@ -109,7 +115,7 @@ class _SwitchRow extends StatelessWidget {
       title: Text(title, style: const TextStyle(fontWeight: FontWeight.w600)),
       subtitle: Text(
         subtitle,
-        style: const TextStyle(color: AppColors.textSecondary, fontSize: 12),
+        style: TextStyle(color: AppColors.textSecondary, fontSize: 12),
       ),
       value: value,
       onChanged: onChanged,
@@ -148,10 +154,7 @@ class _TapRow extends StatelessWidget {
             ? null
             : Text(
                 subtitle!,
-                style: const TextStyle(
-                  color: AppColors.textSecondary,
-                  fontSize: 12,
-                ),
+                style: TextStyle(color: AppColors.textSecondary, fontSize: 12),
               ),
         trailing: Icon(
           icon,

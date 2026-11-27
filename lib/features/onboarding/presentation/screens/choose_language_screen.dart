@@ -42,7 +42,7 @@ class _ChooseLanguageScreenState extends ConsumerState<ChooseLanguageScreen> {
           padding: const EdgeInsets.fromLTRB(20, 0, 20, 20),
           child: Column(
             children: [
-              const Align(
+              Align(
                 alignment: Alignment.centerLeft,
                 child: Text(
                   'Step 1 of 2 · you can change it later',

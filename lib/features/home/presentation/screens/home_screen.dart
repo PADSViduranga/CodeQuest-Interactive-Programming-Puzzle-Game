@@ -3,6 +3,7 @@ import 'package:go_router/go_router.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../../../core/theme/app_colors.dart';
+import '../../../../core/widgets/mode_toggle_button.dart';
 import '../../../auth/presentation/providers/auth_provider.dart';
 import '../../../auth/presentation/providers/guest_timer_provider.dart';
 import '../../../profile/presentation/providers/profile_provider.dart';
@@ -38,7 +39,7 @@ class HomeScreen extends ConsumerWidget {
                       children: [
                         Text(
                           'Hi $name',
-                          style: const TextStyle(
+                          style: TextStyle(
                             fontSize: 12,
                             color: AppColors.textSecondary,
                           ),
@@ -53,6 +54,8 @@ class HomeScreen extends ConsumerWidget {
                       ],
                     ),
                   ),
+                  const ModeToggleButton(),
+                  const SizedBox(width: 6),
                   IconButton(
                     tooltip: 'Mini-games',
                     onPressed: () => context.push('/minigames'),
@@ -84,7 +87,7 @@ class HomeScreen extends ConsumerWidget {
               const SizedBox(height: 16),
               Text(
                 sampleWorldTitle.toUpperCase(),
-                style: const TextStyle(
+                style: TextStyle(
                   fontSize: 11,
                   fontWeight: FontWeight.w700,
                   letterSpacing: 1.2,

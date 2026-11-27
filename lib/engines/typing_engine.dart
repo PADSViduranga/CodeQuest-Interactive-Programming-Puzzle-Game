@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 
+import '../core/theme/app_colors.dart';
+
 class TypingEngine extends StatefulWidget {
   final String question;
   final String correctAnswer;
@@ -37,17 +39,17 @@ class _TypingEngineState extends State<TypingEngine> {
       children: [
         Text(
           widget.question,
-          style: const TextStyle(
+          style: TextStyle(
             fontSize: 19,
             fontWeight: FontWeight.w700,
-            color: Colors.white,
+            color: AppColors.textPrimary,
           ),
         ),
         if (widget.hint != null) ...[
           const SizedBox(height: 10),
           Text(
             'Hint: ${widget.hint}',
-            style: const TextStyle(color: Color(0xFFA6A6BD)),
+            style: TextStyle(color: AppColors.textSecondary),
           ),
         ],
         const SizedBox(height: 18),
@@ -56,10 +58,7 @@ class _TypingEngineState extends State<TypingEngine> {
           enabled: !submitted,
           minLines: widget.multiline ? 3 : 1,
           maxLines: widget.multiline ? 5 : 1,
-          style: const TextStyle(
-            color: Color(0xFF22D3EE),
-            fontFamily: 'monospace',
-          ),
+          style: TextStyle(color: AppColors.cyanInk, fontFamily: 'monospace'),
           decoration: InputDecoration(
             labelText: widget.multiline
                 ? 'Write your code'

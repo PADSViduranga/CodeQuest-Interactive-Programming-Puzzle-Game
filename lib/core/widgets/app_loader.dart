@@ -9,7 +9,7 @@ class AppLoader extends StatelessWidget {
   Widget build(BuildContext context) => SizedBox(
     height: size,
     width: size,
-    child: const CircularProgressIndicator(
+    child: CircularProgressIndicator(
       strokeWidth: 2,
       color: AppColors.primaryLight,
     ),

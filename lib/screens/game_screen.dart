@@ -1,5 +1,7 @@
 import 'dart:async';
 
+import '../core/theme/app_colors.dart';
+
 import 'package:flutter/material.dart';
 
 import '../core/theme/game_theme.dart';
@@ -176,7 +178,7 @@ class _GameScreenState extends State<GameScreen> {
             child: Center(
               child: Text(
                 '+${game.difficulty == 'Hard' ? 100 : 50} XP',
-                style: const TextStyle(
+                style: TextStyle(
                   color: GameTheme.gold,
                   fontWeight: FontWeight.w900,
                 ),
@@ -214,16 +216,12 @@ class _GameScreenState extends State<GameScreen> {
                     children: [
                       Row(
                         children: [
-                          const Icon(
-                            Icons.terminal,
-                            color: GameTheme.cyan,
-                            size: 18,
-                          ),
+                          Icon(Icons.terminal, color: GameTheme.cyan, size: 18),
                           const SizedBox(width: 8),
                           Expanded(
                             child: Text(
                               game.category.toUpperCase(),
-                              style: const TextStyle(
+                              style: TextStyle(
                                 color: GameTheme.cyan,
                                 fontSize: 11,
                                 fontWeight: FontWeight.w900,
@@ -261,7 +259,7 @@ class _GameScreenState extends State<GameScreen> {
     decoration: BoxDecoration(
       color: GameTheme.secondary,
       borderRadius: BorderRadius.circular(18),
-      border: Border.all(color: const Color(0xFF2D2E49)),
+      border: Border.all(color: AppColors.border),
     ),
     child: Column(
       children: [
@@ -282,15 +280,11 @@ class _GameScreenState extends State<GameScreen> {
               style: const TextStyle(fontWeight: FontWeight.w800),
             ),
             const Spacer(),
-            const Icon(
-              Icons.local_fire_department,
-              size: 18,
-              color: GameTheme.gold,
-            ),
+            Icon(Icons.local_fire_department, size: 18, color: GameTheme.gold),
             const SizedBox(width: 4),
             Text(
               '${combo}x COMBO',
-              style: const TextStyle(
+              style: TextStyle(
                 color: GameTheme.gold,
                 fontSize: 11,
                 fontWeight: FontWeight.w900,
@@ -306,7 +300,9 @@ class _GameScreenState extends State<GameScreen> {
             Text(
               '${secondsLeft}s',
               style: TextStyle(
-                color: secondsLeft <= 10 ? GameTheme.heart : Colors.white,
+                color: secondsLeft <= 10
+                    ? GameTheme.heart
+                    : AppColors.textPrimary,
                 fontWeight: FontWeight.w900,
               ),
             ),
@@ -317,7 +313,7 @@ class _GameScreenState extends State<GameScreen> {
                   powerUps.unfreeze();
                   freezeMessage = false;
                 }),
-                icon: const Icon(Icons.play_arrow, color: GameTheme.cyan),
+                icon: Icon(Icons.play_arrow, color: GameTheme.cyan),
               ),
           ],
         ),
@@ -327,7 +323,7 @@ class _GameScreenState extends State<GameScreen> {
           child: LinearProgressIndicator(
             value: progress.clamp(0, 1),
             minHeight: 7,
-            backgroundColor: const Color(0xFF292A42),
+            backgroundColor: AppColors.surfaceRaised,
             valueColor: AlwaysStoppedAnimation(
               secondsLeft <= 10 ? GameTheme.heart : GameTheme.neon,
             ),
@@ -356,11 +352,11 @@ class _GameScreenState extends State<GameScreen> {
             width: double.infinity,
             padding: const EdgeInsets.all(15),
             decoration: BoxDecoration(
-              color: const Color(0xFF101322),
+              color: AppColors.background,
               borderRadius: BorderRadius.circular(15),
-              border: Border.all(color: const Color(0xFF343651)),
+              border: Border.all(color: AppColors.border),
             ),
-            child: const Text(
+            child: Text(
               'print(2 + 3 * 2)',
               style: TextStyle(
                 color: GameTheme.cyan,
@@ -466,13 +462,13 @@ class _GameScreenState extends State<GameScreen> {
               ? 'You earned ${_xpReward(game)} XP'
               : 'Correct answer: ${game.answer.isEmpty ? 'review the explanation' : game.answer}',
           textAlign: TextAlign.center,
-          style: const TextStyle(color: GameTheme.gold),
+          style: TextStyle(color: GameTheme.gold),
         ),
         const SizedBox(height: 8),
         Text(
           game.explanation,
           textAlign: TextAlign.center,
-          style: const TextStyle(color: GameTheme.muted, height: 1.4),
+          style: TextStyle(color: GameTheme.muted, height: 1.4),
         ),
         const SizedBox(height: 20),
         Wrap(
@@ -510,7 +506,7 @@ class _GameScreenState extends State<GameScreen> {
     decoration: BoxDecoration(
       color: GameTheme.secondary,
       borderRadius: BorderRadius.circular(18),
-      border: Border.all(color: const Color(0xFF2D2E49)),
+      border: Border.all(color: AppColors.border),
     ),
     child: Column(
       crossAxisAlignment: CrossAxisAlignment.start,
@@ -550,7 +546,7 @@ class _GameScreenState extends State<GameScreen> {
           ],
         ),
         const SizedBox(height: 9),
-        const Text(
+        Text(
           'Each boost can be used once per run.',
           style: TextStyle(color: GameTheme.muted, fontSize: 11),
         ),
@@ -569,7 +565,7 @@ class _GameScreenState extends State<GameScreen> {
     label: Text(label),
     style: OutlinedButton.styleFrom(
       foregroundColor: GameTheme.cyan,
-      side: const BorderSide(color: Color(0xFF454363)),
+      side: BorderSide(color: AppColors.border),
     ),
   );
 
@@ -578,7 +574,7 @@ class _GameScreenState extends State<GameScreen> {
         ? GameTheme.heart
         : difficulty == 'Medium'
         ? GameTheme.gold
-        : const Color(0xFF34D399);
+        : AppColors.greenInk;
     return Container(
       padding: const EdgeInsets.symmetric(horizontal: 9, vertical: 5),
       decoration: BoxDecoration(
@@ -632,7 +628,7 @@ class _HangmanEngineState extends State<HangmanEngine> {
               .map((letter) => guessed.contains(letter) ? letter : '_')
               .join(' '),
           textAlign: TextAlign.center,
-          style: const TextStyle(
+          style: TextStyle(
             color: GameTheme.cyan,
             fontSize: 28,
             letterSpacing: 3,
@@ -660,7 +656,7 @@ class _HangmanEngineState extends State<HangmanEngine> {
                     style: FilledButton.styleFrom(
                       padding: EdgeInsets.zero,
                       backgroundColor: guessed.contains(letter)
-                          ? const Color(0xFF343651)
+                          ? AppColors.border
                           : GameTheme.purple,
                     ),
                     onPressed: guessed.contains(letter) || ended

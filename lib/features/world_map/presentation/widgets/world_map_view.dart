@@ -71,13 +71,13 @@ class WorldMapView extends ConsumerWidget {
             const SizedBox(height: 4),
             Text(
               stage.subtitle,
-              style: const TextStyle(color: AppColors.textSecondary),
+              style: TextStyle(color: AppColors.textSecondary),
             ),
             const SizedBox(height: 20),
             if (state == StageState.locked)
               Text(
                 'Earn ${stage.unlockXp - totalXp} more XP to unlock this stage.',
-                style: const TextStyle(color: AppColors.yellow),
+                style: TextStyle(color: AppColors.yellowInk),
               )
             else ...[
               OutlinedButton(

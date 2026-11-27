@@ -91,7 +91,7 @@ class ProgressScreen extends ConsumerWidget {
                                 padding: const EdgeInsets.only(top: 6),
                                 child: Text(
                                   _weekDays[value.toInt()],
-                                  style: const TextStyle(
+                                  style: TextStyle(
                                     fontSize: 11,
                                     color: AppColors.textMuted,
                                   ),
@@ -142,7 +142,7 @@ class ProgressScreen extends ConsumerWidget {
                         Text(name, style: const TextStyle(fontSize: 13)),
                         Text(
                           '$pct%',
-                          style: const TextStyle(
+                          style: TextStyle(
                             fontSize: 12,
                             color: AppColors.textSecondary,
                           ),
@@ -165,7 +165,7 @@ class ProgressScreen extends ConsumerWidget {
             ),
           ),
           const SizedBox(height: 12),
-          const Center(
+          Center(
             child: Text(
               'Chart and topics are sample data for now',
               style: TextStyle(color: AppColors.textMuted, fontSize: 12),
@@ -205,7 +205,7 @@ class _Stat extends StatelessWidget {
         const SizedBox(height: 2),
         Text(
           label,
-          style: const TextStyle(fontSize: 11, color: AppColors.textSecondary),
+          style: TextStyle(fontSize: 11, color: AppColors.textSecondary),
         ),
       ],
     ),

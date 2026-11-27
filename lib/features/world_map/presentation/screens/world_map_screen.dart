@@ -24,7 +24,7 @@ class WorldMapScreen extends StatelessWidget {
           padding: const EdgeInsets.fromLTRB(20, 22, 20, 18),
           child: Row(
             children: [
-              const Expanded(
+              Expanded(
                 child: Text('Your learning world', style: AppTextStyles.title),
               ),
               Container(
@@ -36,7 +36,7 @@ class WorldMapScreen extends StatelessWidget {
                   color: AppColors.yellowTint,
                   borderRadius: BorderRadius.circular(12),
                 ),
-                child: const Row(
+                child: Row(
                   children: [
                     Icon(
                       Icons.local_fire_department,
@@ -47,7 +47,7 @@ class WorldMapScreen extends StatelessWidget {
                     Text(
                       '7',
                       style: TextStyle(
-                        color: AppColors.yellow,
+                        color: AppColors.yellowInk,
                         fontWeight: FontWeight.bold,
                       ),
                     ),
@@ -67,7 +67,7 @@ class WorldMapScreen extends StatelessWidget {
               mood: MitoMood.happy,
             ),
             const SizedBox(height: 24),
-            const SectionTitle(
+            SectionTitle(
               'Python Valley',
               action: Text(
                 '1 / 8',
@@ -93,7 +93,7 @@ class _StagePath extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    const stages = [
+    final stages = [
       ('01', 'Variables & values', 'Completed', AppColors.green, true),
       (
         '02',

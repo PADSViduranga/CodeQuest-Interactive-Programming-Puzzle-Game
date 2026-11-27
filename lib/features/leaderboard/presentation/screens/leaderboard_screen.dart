@@ -14,7 +14,7 @@ class _Entry {
 }
 
 /// Sample players until the real weekly leaderboard comes from Firestore.
-const _samplePlayers = [
+final _samplePlayers = [
   _Entry('Mia', 2340, AppColors.yellow),
   _Entry('Ravi', 2010, AppColors.cyan),
   _Entry('Kai', 1880, AppColors.pink),
@@ -70,7 +70,7 @@ class _LeaderboardScreenState extends ConsumerState<LeaderboardScreen> {
                       fontWeight: FontWeight.w700,
                       color: _tab == i ? Colors.white : AppColors.textSecondary,
                     ),
-                    side: const BorderSide(color: AppColors.border),
+                    side: BorderSide(color: AppColors.border),
                     showCheckmark: false,
                   ),
                 ),
@@ -89,7 +89,7 @@ class _LeaderboardScreenState extends ConsumerState<LeaderboardScreen> {
           for (var i = 3; i < entries.length; i++)
             _Row(rank: i + 1, entry: entries[i]),
           const SizedBox(height: 8),
-          const Center(
+          Center(
             child: Text(
               'Sample players for now',
               style: TextStyle(color: AppColors.textMuted, fontSize: 12),
@@ -137,7 +137,7 @@ class _Podium extends StatelessWidget {
         ),
         Text(
           '${entry.xp} XP',
-          style: const TextStyle(fontSize: 11, color: AppColors.textSecondary),
+          style: TextStyle(fontSize: 11, color: AppColors.textSecondary),
         ),
         const SizedBox(height: 6),
         Container(
@@ -190,7 +190,7 @@ class _Row extends StatelessWidget {
           width: 24,
           child: Text(
             '$rank',
-            style: const TextStyle(
+            style: TextStyle(
               fontWeight: FontWeight.w700,
               color: AppColors.textSecondary,
             ),
@@ -217,9 +217,9 @@ class _Row extends StatelessWidget {
         ),
         Text(
           '${entry.xp}',
-          style: const TextStyle(
+          style: TextStyle(
             fontWeight: FontWeight.w800,
-            color: AppColors.cyan,
+            color: AppColors.cyanInk,
           ),
         ),
       ],

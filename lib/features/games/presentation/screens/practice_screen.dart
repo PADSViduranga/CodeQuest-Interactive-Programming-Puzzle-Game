@@ -17,12 +17,9 @@ class PracticeScreen extends StatelessWidget {
     body: ListView(
       padding: const EdgeInsets.all(20),
       children: [
-        const Text('Choose a challenge', style: AppTextStyles.title),
+        Text('Choose a challenge', style: AppTextStyles.title),
         const SizedBox(height: 8),
-        const Text(
-          'Put your new skills to the test.',
-          style: AppTextStyles.body,
-        ),
+        Text('Put your new skills to the test.', style: AppTextStyles.body),
         const SizedBox(height: 22),
         _GameCard(
           title: 'Code Maze',
@@ -317,7 +314,7 @@ class _LogicGatesGameState extends State<LogicGatesGame> {
             ],
           ),
           const SizedBox(height: 28),
-          const Icon(Icons.arrow_downward, color: AppColors.textMuted),
+          Icon(Icons.arrow_downward, color: AppColors.textMuted),
           const SizedBox(height: 12),
           Container(
             padding: const EdgeInsets.all(20),
@@ -330,7 +327,7 @@ class _LogicGatesGameState extends State<LogicGatesGame> {
             ),
             child: Column(
               children: [
-                const Text('AND GATE', style: AppTextStyles.label),
+                Text('AND GATE', style: AppTextStyles.label),
                 const SizedBox(height: 8),
                 Text(
                   a && b ? 'TRUE' : 'FALSE',
@@ -435,8 +432,8 @@ class _SortShowdownGameState extends State<SortShowdownGame> {
             child: Center(
               child: Text(
                 '$value',
-                style: const TextStyle(
-                  color: AppColors.yellow,
+                style: TextStyle(
+                  color: AppColors.yellowInk,
                   fontSize: 20,
                   fontWeight: FontWeight.bold,
                 ),

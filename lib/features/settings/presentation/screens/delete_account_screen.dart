@@ -108,7 +108,7 @@ class _DeleteAccountScreenState extends ConsumerState<DeleteAccountScreen> {
                       ),
                     ),
                     const SizedBox(height: 8),
-                    const Text(
+                    Text(
                       'This permanently removes your XP, streak, badges and progress. It cannot be undone.',
                       textAlign: TextAlign.center,
                       style: TextStyle(color: AppColors.textSecondary),
@@ -132,7 +132,7 @@ class _DeleteAccountScreenState extends ConsumerState<DeleteAccountScreen> {
                       activeColor: AppColors.danger,
                       onChanged: (v) =>
                           setState(() => _understood = v ?? false),
-                      title: const Text(
+                      title: Text(
                         'I understand this is permanent',
                         style: TextStyle(color: AppColors.textSecondary),
                       ),

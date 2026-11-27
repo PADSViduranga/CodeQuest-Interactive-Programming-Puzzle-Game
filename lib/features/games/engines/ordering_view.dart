@@ -60,11 +60,11 @@ class _OrderingViewState extends State<OrderingView> {
       children: [
         Text(
           puzzle.title.toUpperCase(),
-          style: const TextStyle(
+          style: TextStyle(
             fontSize: 11,
             fontWeight: FontWeight.w800,
             letterSpacing: 1.2,
-            color: AppColors.cyan,
+            color: AppColors.cyanInk,
           ),
         ),
         const SizedBox(height: 6),
@@ -77,7 +77,7 @@ class _OrderingViewState extends State<OrderingView> {
           ),
         ),
         const SizedBox(height: 6),
-        const Text(
+        Text(
           'Hold and drag the lines into the right order.',
           style: TextStyle(color: AppColors.textSecondary, fontSize: 13),
         ),
@@ -111,7 +111,7 @@ class _OrderingViewState extends State<OrderingView> {
                   children: [
                     Text(
                       '${i + 1}',
-                      style: const TextStyle(
+                      style: TextStyle(
                         fontSize: 12,
                         fontWeight: FontWeight.w800,
                         color: AppColors.textMuted,
@@ -128,10 +128,7 @@ class _OrderingViewState extends State<OrderingView> {
                         ),
                       ),
                     ),
-                    const Icon(
-                      Icons.drag_indicator,
-                      color: AppColors.textMuted,
-                    ),
+                    Icon(Icons.drag_indicator, color: AppColors.textMuted),
                   ],
                 ),
               ),

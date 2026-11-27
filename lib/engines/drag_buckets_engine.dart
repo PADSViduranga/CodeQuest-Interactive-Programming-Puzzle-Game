@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 
+import '../core/theme/app_colors.dart';
+
 import '../models/game_definition.dart';
 
 class DragBucketsEngine extends StatefulWidget {
@@ -35,11 +37,11 @@ class _DragBucketsEngineState extends State<DragBucketsEngine> {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.stretch,
       children: [
-        const Text(
+        Text(
           'Drag each item into the correct bucket.',
           style: TextStyle(
             fontWeight: FontWeight.w600,
-            color: Color(0xFFA6A6BD),
+            color: AppColors.textSecondary,
           ),
         ),
         const SizedBox(height: 12),
@@ -62,8 +64,8 @@ class _DragBucketsEngineState extends State<DragBucketsEngine> {
               child: Chip(
                 avatar: const Icon(Icons.drag_indicator, size: 18),
                 label: Text(p.item),
-                backgroundColor: const Color(0xFFECEAFF),
-                labelStyle: const TextStyle(color: Color(0xFF17162A)),
+                backgroundColor: AppColors.primaryTint,
+                labelStyle: TextStyle(color: AppColors.textPrimary),
               ),
             );
           }).toList(),
@@ -98,9 +100,9 @@ class _DragBucketsEngineState extends State<DragBucketsEngine> {
                 padding: const EdgeInsets.all(12),
                 decoration: BoxDecoration(
                   color: candidates.isNotEmpty
-                      ? const Color(0xFF34235D)
-                      : const Color(0xFF15172A),
-                  border: Border.all(color: const Color(0xFF454363)),
+                      ? AppColors.primaryTint
+                      : AppColors.surfaceRaised,
+                  border: Border.all(color: AppColors.border),
                   borderRadius: BorderRadius.circular(14),
                 ),
                 child: Column(
@@ -108,16 +110,16 @@ class _DragBucketsEngineState extends State<DragBucketsEngine> {
                   children: [
                     Text(
                       category,
-                      style: const TextStyle(
+                      style: TextStyle(
                         fontWeight: FontWeight.bold,
-                        color: Color(0xFF22D3EE),
+                        color: AppColors.cyanInk,
                       ),
                     ),
                     const SizedBox(height: 6),
                     if (items.isEmpty)
-                      const Text(
+                      Text(
                         'Drop items here',
-                        style: TextStyle(color: Color(0xFFA6A6BD)),
+                        style: TextStyle(color: AppColors.textSecondary),
                       )
                     else
                       Wrap(
@@ -126,8 +128,8 @@ class _DragBucketsEngineState extends State<DragBucketsEngine> {
                             .map(
                               (item) => Chip(
                                 label: Text(item),
-                                labelStyle: const TextStyle(
-                                  color: Colors.white,
+                                labelStyle: TextStyle(
+                                  color: AppColors.textPrimary,
                                 ),
                               ),
                             )

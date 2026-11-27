@@ -12,7 +12,7 @@ class EmptyState extends StatelessWidget {
     child: Column(
       mainAxisSize: MainAxisSize.min,
       children: [
-        const Icon(Icons.auto_awesome, color: AppColors.primaryLight, size: 42),
+        Icon(Icons.auto_awesome, color: AppColors.primaryLight, size: 42),
         const SizedBox(height: 12),
         Text(title, style: AppTextStyles.heading),
         if (message != null) ...[

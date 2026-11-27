@@ -20,7 +20,7 @@ class LockedFeatureBanner extends StatelessWidget {
     ),
     child: Row(
       children: [
-        const Icon(Icons.lock_outline, color: AppColors.textMuted),
+        Icon(Icons.lock_outline, color: AppColors.textMuted),
         const SizedBox(width: 12),
         Expanded(
           child: Column(
@@ -29,10 +29,7 @@ class LockedFeatureBanner extends StatelessWidget {
               Text(title, style: const TextStyle(fontWeight: FontWeight.w700)),
               Text(
                 subtitle,
-                style: const TextStyle(
-                  color: AppColors.textMuted,
-                  fontSize: 12,
-                ),
+                style: TextStyle(color: AppColors.textMuted, fontSize: 12),
               ),
             ],
           ),

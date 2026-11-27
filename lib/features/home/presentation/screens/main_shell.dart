@@ -1,4 +1,7 @@
 import 'package:flutter/material.dart';
+
+import '../../../../core/theme/app_colors.dart';
+
 import 'package:go_router/go_router.dart';
 
 import '../../../auth/presentation/widgets/guest_time_limit_guard.dart';
@@ -18,6 +21,8 @@ class MainShell extends StatelessWidget {
         child: Scaffold(
           body: navigationShell,
           bottomNavigationBar: NavigationBar(
+            backgroundColor: AppColors.surface,
+            indicatorColor: AppColors.primary,
             selectedIndex: navigationShell.currentIndex,
             onDestinationSelected: (i) => navigationShell.goBranch(
               i,

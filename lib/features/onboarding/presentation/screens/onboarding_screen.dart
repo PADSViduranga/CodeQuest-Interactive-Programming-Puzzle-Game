@@ -57,7 +57,7 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  const Text(
+                  Text(
                     'CODEQUEST',
                     style: TextStyle(
                       color: AppColors.primaryLight,
@@ -191,14 +191,14 @@ class _ToolkitAndLevelPage extends StatelessWidget {
   Widget build(BuildContext context) => ListView(
     padding: const EdgeInsets.only(top: 18),
     children: [
-      const Text('Choose your toolkit', style: AppTextStyles.title),
+      Text('Choose your toolkit', style: AppTextStyles.title),
       const SizedBox(height: 8),
-      const Text(
+      Text(
         'Pick a language to shape your first quests.',
         style: AppTextStyles.body,
       ),
       const SizedBox(height: 22),
-      const Text('LANGUAGES', style: AppTextStyles.label),
+      Text('LANGUAGES', style: AppTextStyles.label),
       const SizedBox(height: 10),
       _ChoiceCard(
         label: 'Python',
@@ -217,7 +217,7 @@ class _ToolkitAndLevelPage extends StatelessWidget {
         disabled: true,
       ),
       const SizedBox(height: 10),
-      const Text('FRAMEWORKS', style: AppTextStyles.label),
+      Text('FRAMEWORKS', style: AppTextStyles.label),
       const SizedBox(height: 10),
       _ChoiceCard(
         label: 'Dart & Flutter',
@@ -228,7 +228,7 @@ class _ToolkitAndLevelPage extends StatelessWidget {
         disabled: true,
       ),
       const SizedBox(height: 24),
-      const Text('YOUR LEVEL', style: AppTextStyles.label),
+      Text('YOUR LEVEL', style: AppTextStyles.label),
       const SizedBox(height: 10),
       ...['Beginner', 'Intermediate', 'Advanced'].map(
         (item) => Padding(
@@ -308,14 +308,14 @@ class _ChoiceCard extends StatelessWidget {
             ),
           ),
           if (disabled)
-            const Chip(
+            Chip(
               label: Text(
                 'COMING SOON',
                 style: TextStyle(fontSize: 9, color: AppColors.textMuted),
               ),
             )
           else if (selected)
-            const Icon(Icons.check_circle, color: AppColors.primaryLight),
+            Icon(Icons.check_circle, color: AppColors.primaryLight),
         ],
       ),
     ),

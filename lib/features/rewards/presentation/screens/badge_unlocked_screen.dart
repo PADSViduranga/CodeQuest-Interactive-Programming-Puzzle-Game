@@ -49,13 +49,13 @@ class BadgeUnlockedScreen extends StatelessWidget {
             ),
           ),
           const SizedBox(height: 28),
-          const Text(
+          Text(
             'BADGE UNLOCKED',
             style: TextStyle(
               fontSize: 12,
               fontWeight: FontWeight.w800,
               letterSpacing: 1.6,
-              color: AppColors.yellow,
+              color: AppColors.yellowInk,
             ),
           ),
           const SizedBox(height: 6),
@@ -67,7 +67,7 @@ class BadgeUnlockedScreen extends StatelessWidget {
           Text(
             description,
             textAlign: TextAlign.center,
-            style: const TextStyle(color: AppColors.textSecondary),
+            style: TextStyle(color: AppColors.textSecondary),
           ),
           const Spacer(),
           FilledButton(

@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 
+import '../core/theme/app_colors.dart';
+
 class MultipleChoiceEngine extends StatefulWidget {
   final String question;
   final List<String> options;
@@ -31,10 +33,10 @@ class _MultipleChoiceEngineState extends State<MultipleChoiceEngine> {
       children: [
         Text(
           widget.question,
-          style: const TextStyle(
+          style: TextStyle(
             fontSize: 19,
             fontWeight: FontWeight.w700,
-            color: Colors.white,
+            color: AppColors.textPrimary,
           ),
         ),
         const SizedBox(height: 18),
@@ -51,20 +53,20 @@ class _MultipleChoiceEngineState extends State<MultipleChoiceEngine> {
                 padding: const EdgeInsets.all(15),
                 alignment: Alignment.centerLeft,
                 backgroundColor: isCorrect
-                    ? const Color(0xFF123536)
+                    ? AppColors.greenTint
                     : isWrong
-                    ? const Color(0xFF3C202F)
+                    ? AppColors.dangerTint
                     : isSelected
-                    ? const Color(0xFF34235D)
-                    : const Color(0xFF24233F),
+                    ? AppColors.primaryTint
+                    : AppColors.surfaceRaised,
                 side: BorderSide(
                   color: isCorrect
-                      ? const Color(0xFF22D3EE)
+                      ? AppColors.cyanInk
                       : isWrong
-                      ? const Color(0xFFFB7185)
+                      ? AppColors.danger
                       : isSelected
-                      ? const Color(0xFFA855F7)
-                      : const Color(0xFF454363),
+                      ? AppColors.primary
+                      : AppColors.border,
                 ),
               ),
               onPressed: submitted
@@ -72,7 +74,7 @@ class _MultipleChoiceEngineState extends State<MultipleChoiceEngine> {
                   : () => setState(() => selected = option),
               child: Text(
                 option,
-                style: const TextStyle(color: Colors.white, height: 1.35),
+                style: TextStyle(color: AppColors.textPrimary, height: 1.35),
               ),
             ),
           );
