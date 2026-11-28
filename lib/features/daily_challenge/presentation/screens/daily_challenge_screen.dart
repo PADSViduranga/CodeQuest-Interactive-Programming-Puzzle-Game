@@ -2,9 +2,13 @@ import 'dart:async';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:go_router/go_router.dart';
 
 import '../../../../core/theme/app_colors.dart';
 import '../../../profile/presentation/providers/profile_provider.dart';
+import '../../../rewards/domain/reward_chain.dart';
+import '../../data/daily_bonus_service.dart';
+import '../../domain/daily_bonus.dart';
 
 class DailyChallengeScreen extends ConsumerStatefulWidget {
   const DailyChallengeScreen({super.key});
@@ -16,19 +20,14 @@ class DailyChallengeScreen extends ConsumerStatefulWidget {
 
 class _DailyChallengeScreenState extends ConsumerState<DailyChallengeScreen> {
   Timer? _timer;
-  Duration _left = _untilMidnight();
-
-  static Duration _untilMidnight() {
-    final now = DateTime.now();
-    final midnight = DateTime(now.year, now.month, now.day + 1);
-    return midnight.difference(now);
-  }
+  Duration _left = untilNextUtcDay(DateTime.now());
+  bool _claiming = false;
 
   @override
   void initState() {
     super.initState();
     _timer = Timer.periodic(const Duration(seconds: 1), (_) {
-      if (mounted) setState(() => _left = _untilMidnight());
+      if (mounted) setState(() => _left = untilNextUtcDay(DateTime.now()));
     });
   }
 
@@ -40,11 +39,72 @@ class _DailyChallengeScreenState extends ConsumerState<DailyChallengeScreen> {
 
   String _two(int n) => n.toString().padLeft(2, '0');
 
+  Future<void> _claim() async {
+    if (_claiming) return;
+    final oldLevel = ref.read(playerProfileProvider).value?.level ?? 1;
+    setState(() => _claiming = true);
+    try {
+      final r = await claimDailyBonus();
+      if (!mounted) return;
+      final chain = buildRewardChain(
+        badges: r.newBadges,
+        leveledUpTo: r.level > oldLevel ? r.level : null,
+      );
+      if (chain != null) {
+        context.push(chain);
+      } else {
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(
+            content: Text(
+              r.xpAwarded > 0
+                  ? '+${r.xpAwarded} XP added to your profile'
+                  : 'Nothing to claim right now',
+            ),
+          ),
+        );
+      }
+    } catch (e) {
+      if (!mounted) return;
+      final text = e.toString();
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(
+          content: Text(
+            'Could not claim the bonus: '
+            '${text.length > 100 ? text.substring(0, 100) : text}',
+          ),
+        ),
+      );
+    } finally {
+      if (mounted) setState(() => _claiming = false);
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
-    final streak = ref.watch(playerProfileProvider).value?.currentStreak ?? 0;
-    final todayIndex = DateTime.now().weekday - 1; // Monday = 0
+    final profile = ref.watch(playerProfileProvider).value;
+    final now = DateTime.now();
+    final today = dayKeyUtc(now);
+    final streak = profile?.currentStreak ?? 0;
+    final status = computeDailyBonusStatus(
+      lastStreakDay: profile?.lastStreakDay,
+      lastDailyBonusDay: profile?.lastDailyBonusDay,
+      today: today,
+    );
+    final week = weekDayKeys(now);
+    final recent = profile?.recentDays ?? const <String>[];
+    final todayIndex = week.indexOf(today);
     const days = ['M', 'T', 'W', 'T', 'F', 'S', 'S'];
+
+    final subtitle = switch (status) {
+      DailyBonusStatus.locked => 'Win any puzzle or mini-game today',
+      DailyBonusStatus.ready => 'You earned it. Claim your bonus!',
+      DailyBonusStatus.claimed => 'Completed today. See you tomorrow!',
+    };
+    final caption = switch (status) {
+      DailyBonusStatus.locked => 'unlocks after your first win today',
+      DailyBonusStatus.ready => 'ready to claim',
+      DailyBonusStatus.claimed => 'bonus collected',
+    };
 
     return Scaffold(
       appBar: AppBar(title: const Text('Daily challenge')),
@@ -67,7 +127,7 @@ class _DailyChallengeScreenState extends ConsumerState<DailyChallengeScreen> {
             child: Column(
               children: [
                 Text(
-                  "TODAY'S CHALLENGE",
+                  "TODAY'S BONUS",
                   style: TextStyle(
                     fontSize: 11,
                     fontWeight: FontWeight.w800,
@@ -77,17 +137,18 @@ class _DailyChallengeScreenState extends ConsumerState<DailyChallengeScreen> {
                 ),
                 const SizedBox(height: 8),
                 const Text(
-                  'Bug Hunt',
+                  'Daily bonus',
                   style: TextStyle(fontSize: 26, fontWeight: FontWeight.w900),
                 ),
                 const SizedBox(height: 2),
                 Text(
-                  'Find the line with the bug',
+                  subtitle,
+                  textAlign: TextAlign.center,
                   style: TextStyle(color: AppColors.textSecondary),
                 ),
                 const SizedBox(height: 14),
                 Text(
-                  '+150 XP',
+                  '+$dailyBonusXp XP',
                   style: TextStyle(
                     fontSize: 40,
                     fontWeight: FontWeight.w900,
@@ -95,7 +156,7 @@ class _DailyChallengeScreenState extends ConsumerState<DailyChallengeScreen> {
                   ),
                 ),
                 Text(
-                  'bonus for today only',
+                  caption,
                   style: TextStyle(
                     fontSize: 12,
                     color: AppColors.textSecondary,
@@ -153,7 +214,7 @@ class _DailyChallengeScreenState extends ConsumerState<DailyChallengeScreen> {
                       for (var i = 0; i < 7; i++)
                         _DayDot(
                           label: days[i],
-                          done: i <= todayIndex && todayIndex - i < streak,
+                          done: recent.contains(week[i]),
                           today: i == todayIndex,
                         ),
                     ],
@@ -163,10 +224,22 @@ class _DailyChallengeScreenState extends ConsumerState<DailyChallengeScreen> {
             ),
           ),
           const SizedBox(height: 20),
-          const FilledButton(
-            onPressed: null,
-            child: Text('Play now (coming soon)'),
-          ),
+          switch (status) {
+            DailyBonusStatus.locked => FilledButton(
+              onPressed: () => context.go('/home'),
+              child: const Text('Go win something'),
+            ),
+            DailyBonusStatus.ready => FilledButton(
+              onPressed: _claiming ? null : _claim,
+              child: Text(
+                _claiming ? 'Claiming...' : 'Claim +$dailyBonusXp XP',
+              ),
+            ),
+            DailyBonusStatus.claimed => const FilledButton(
+              onPressed: null,
+              child: Text('Completed today'),
+            ),
+          },
         ],
       ),
     );
@@ -230,7 +303,7 @@ class _DayDot extends StatelessWidget {
           ),
         ),
         child: done
-            ? const Icon(Icons.check, size: 16, color: AppColors.green)
+            ? Icon(Icons.check, size: 16, color: AppColors.greenInk)
             : null,
       ),
       const SizedBox(height: 4),

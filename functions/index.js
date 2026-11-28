@@ -4,6 +4,7 @@ const { getFirestore, FieldValue } = require('firebase-admin/firestore');
 const { checkAnswer, gradeCodeRuns, isCodeType, comboXp, levelForXp } = require('./grading');
 const { dayKey, nextStreak } = require('./streak');
 const { newBadges } = require('./badges');
+const { DAILY_BONUS_XP, dailyBonusStatus } = require('./daily');
 const { runPython } = require('./judge0');
 
 initializeApp();
@@ -140,6 +141,7 @@ exports.submitAnswer = onCall({ timeoutSeconds: 60 }, async (request) => {
           currentStreak: streak.currentStreak,
           longestStreak: streak.longestStreak,
           lastStreakDay: streak.lastStreakDay,
+          recentDays: streak.recentDays,
         },
         { merge: true },
       );
@@ -191,6 +193,7 @@ exports.awardMiniGameXp = onCall(async (request) => {
         currentStreak: streak.currentStreak,
         longestStreak: streak.longestStreak,
         lastStreakDay: streak.lastStreakDay,
+        recentDays: streak.recentDays,
       },
       { merge: true },
     );
@@ -219,4 +222,45 @@ exports.getHint = onCall(async (request) => {
   if (!snap.exists) throw new HttpsError('not-found', 'Unknown puzzle.');
   const hints = snap.data().hints || [];
   return { hint: hints[hintNumber - 1] || null };
+});
+
+/**
+ * Pays the daily bonus once a day, after the player has won something today.
+ * Returns { status, xpAwarded, totalXp, level, newBadges }.
+ */
+exports.claimDailyBonus = onCall(async (request) => {
+  const uid = requireUid(request);
+  const userRef = db.doc(`users/${uid}`);
+  const today = dayKey(new Date());
+
+  try {
+    return await db.runTransaction(async (tx) => {
+      const userSnap = await tx.get(userRef);
+      const user = userSnap.exists ? userSnap.data() : {};
+      const oldXp = user.totalXp || 0;
+      const oldLevel = user.level || 1;
+      const status = dailyBonusStatus(user, today);
+      if (status !== 'ready') {
+        return { status, xpAwarded: 0, totalXp: oldXp, level: oldLevel, newBadges: [] };
+      }
+      const totalXp = oldXp + DAILY_BONUS_XP;
+      const level = Math.max(oldLevel, levelForXp(totalXp));
+      const earned = newBadges({ ...user, totalXp, level });
+      tx.set(
+        userRef,
+        {
+          totalXp,
+          level,
+          badges: [...(user.badges || []), ...earned.map((b) => b.id)],
+          lastDailyBonusDay: today,
+        },
+        { merge: true },
+      );
+      return { status: 'claimed', xpAwarded: DAILY_BONUS_XP, totalXp, level, newBadges: earned };
+    });
+  } catch (e) {
+    if (e instanceof HttpsError) throw e;
+    console.error('claimDailyBonus failed', e);
+    throw new HttpsError('internal', String((e && e.message) || e).slice(0, 100));
+  }
 });
