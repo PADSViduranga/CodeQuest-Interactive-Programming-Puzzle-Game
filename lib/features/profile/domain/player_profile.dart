@@ -13,6 +13,8 @@ class PlayerProfile {
     this.lastStreakDay,
     this.lastDailyBonusDay,
     this.recentDays = const [],
+    this.stats = const {},
+    this.achievements = const [],
   });
 
   final String uid;
@@ -37,6 +39,12 @@ class PlayerProfile {
   /// The most recent days (UTC, YYYY-MM-DD) the player won something.
   final List<String> recentDays;
 
+  /// Progress counters kept by the server (puzzlesSolved, miniGamesWon, ...).
+  final Map<String, int> stats;
+
+  /// Ids of the achievements the player has unlocked.
+  final List<String> achievements;
+
   factory PlayerProfile.fromMap(String uid, Map<String, dynamic> m) {
     return PlayerProfile(
       uid: uid,
@@ -53,6 +61,19 @@ class PlayerProfile {
       lastDailyBonusDay: m['lastDailyBonusDay'] as String?,
       recentDays:
           (m['recentDays'] as List?)?.whereType<String>().toList() ?? const [],
+      stats: _readStats(m['stats']),
+      achievements:
+          (m['achievements'] as List?)?.whereType<String>().toList() ??
+          const [],
     );
   }
+}
+
+Map<String, int> _readStats(Object? raw) {
+  if (raw is! Map) return const {};
+  return {
+    for (final e in raw.entries)
+      if (e.key is String && e.value is num)
+        e.key as String: (e.value as num).toInt(),
+  };
 }

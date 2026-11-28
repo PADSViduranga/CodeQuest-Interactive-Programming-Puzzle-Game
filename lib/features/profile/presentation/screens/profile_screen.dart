@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 
+import '../../../rewards/domain/achievement_catalog.dart';
 import '../../../rewards/presentation/widgets/badges_section.dart';
 
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -74,6 +75,20 @@ class ProfileScreen extends ConsumerWidget {
           const SizedBox(height: 20),
           BadgesSection(earned: profile?.badges ?? const []),
           const SizedBox(height: 20),
+          Card(
+            child: ListTile(
+              leading: Icon(
+                Icons.emoji_events_outlined,
+                color: AppColors.yellowInk,
+              ),
+              title: const Text('Achievements'),
+              subtitle: Text(
+                '${profile?.achievements.length ?? 0} / ${achievementCatalog.length} unlocked',
+              ),
+              trailing: const Icon(Icons.chevron_right),
+              onTap: () => context.push('/achievements'),
+            ),
+          ),
           if (isGuest)
             Card(
               color: AppColors.yellowTint,

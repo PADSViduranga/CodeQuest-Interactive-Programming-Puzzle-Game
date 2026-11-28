@@ -26,6 +26,7 @@ class AppRoutes {
   static const stageComplete = '/stage-complete';
   static const levelUp = '/level-up';
   static const badge = '/badge';
+  static const achievements = '/achievements';
   static const settings = '/settings';
   static const privacy = '/privacy';
   static const terms = '/terms';

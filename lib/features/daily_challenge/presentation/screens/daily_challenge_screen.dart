@@ -48,6 +48,7 @@ class _DailyChallengeScreenState extends ConsumerState<DailyChallengeScreen> {
       if (!mounted) return;
       final chain = buildRewardChain(
         badges: r.newBadges,
+        achievements: r.newAchievements,
         leveledUpTo: r.level > oldLevel ? r.level : null,
       );
       if (chain != null) {

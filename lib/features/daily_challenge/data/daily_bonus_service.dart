@@ -1,5 +1,6 @@
 import 'package:cloud_functions/cloud_functions.dart';
 
+import '../../rewards/domain/earned_achievement.dart';
 import '../../rewards/domain/earned_badge.dart';
 
 /// What the server says after a daily bonus claim.
@@ -10,6 +11,7 @@ class DailyBonusResult {
     this.totalXp = 0,
     this.level = 1,
     this.newBadges = const [],
+    this.newAchievements = const [],
   });
 
   final String status;
@@ -17,6 +19,7 @@ class DailyBonusResult {
   final int totalXp;
   final int level;
   final List<EarnedBadge> newBadges;
+  final List<EarnedAchievement> newAchievements;
 
   factory DailyBonusResult.fromMap(Map<String, dynamic> m) => DailyBonusResult(
     status: (m['status'] as String?) ?? 'locked',
@@ -24,6 +27,7 @@ class DailyBonusResult {
     totalXp: (m['totalXp'] as num?)?.toInt() ?? 0,
     level: (m['level'] as num?)?.toInt() ?? 1,
     newBadges: parseEarnedBadges(m['newBadges']),
+    newAchievements: parseEarnedAchievements(m['newAchievements']),
   );
 }
 
