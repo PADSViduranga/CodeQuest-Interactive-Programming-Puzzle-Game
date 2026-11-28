@@ -65,3 +65,29 @@ test('an old profile with a streak but no last day restarts safely', () => {
   assert.strictEqual(r.currentStreak, 1);
   assert.strictEqual(r.longestStreak, 2);
 });
+
+const { addRecentDay } = require('./streak');
+
+test('a win adds today to the recent days', () => {
+  assert.deepStrictEqual(nextStreak({}, '2026-11-28').recentDays, ['2026-11-28']);
+  const user = { currentStreak: 1, lastStreakDay: '2026-11-27', recentDays: ['2026-11-27'] };
+  assert.deepStrictEqual(nextStreak(user, '2026-11-28').recentDays, ['2026-11-27', '2026-11-28']);
+});
+
+test('the same day is never listed twice', () => {
+  assert.deepStrictEqual(addRecentDay(['2026-11-28'], '2026-11-28'), ['2026-11-28']);
+});
+
+test('only the newest 14 days are kept, oldest first', () => {
+  const days = [];
+  for (let i = 1; i <= 14; i++) days.push('2026-11-' + String(i).padStart(2, '0'));
+  const out = addRecentDay(days, '2026-11-15');
+  assert.strictEqual(out.length, 14);
+  assert.strictEqual(out[0], '2026-11-02');
+  assert.strictEqual(out[13], '2026-11-15');
+});
+
+test('bad entries in recent days are ignored', () => {
+  assert.deepStrictEqual(addRecentDay([3, null, '2026-11-27'], '2026-11-28'), ['2026-11-27', '2026-11-28']);
+  assert.deepStrictEqual(addRecentDay('oops', '2026-11-28'), ['2026-11-28']);
+});

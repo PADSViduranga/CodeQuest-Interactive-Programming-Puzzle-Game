@@ -9,6 +9,16 @@ function daysBetween(a, b) {
   return Math.round(ms / 86400000);
 }
 
+const MAX_RECENT_DAYS = 14;
+
+/** The list of recent winning days with [today] added (sorted, newest 14). */
+function addRecentDay(days, today) {
+  const list = Array.isArray(days) ? days.filter((d) => typeof d === 'string') : [];
+  if (!list.includes(today)) list.push(today);
+  list.sort();
+  return list.slice(-MAX_RECENT_DAYS);
+}
+
 /**
  * Works out the player's streak after a win on day [today].
  * - first win ever, or a gap of more than a day: streak restarts at 1
@@ -34,8 +44,9 @@ function nextStreak(user, today) {
     currentStreak: streak,
     longestStreak: Math.max(longest, streak),
     lastStreakDay: !last || daysBetween(last, today) > 0 ? today : last,
+    recentDays: addRecentDay(user.recentDays, today),
     increased: streak > current,
   };
 }
 
-module.exports = { dayKey, daysBetween, nextStreak };
+module.exports = { dayKey, daysBetween, addRecentDay, nextStreak };
