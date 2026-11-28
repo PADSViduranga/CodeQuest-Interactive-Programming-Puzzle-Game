@@ -2,6 +2,7 @@ const { onCall, HttpsError } = require('firebase-functions/v2/https');
 const { initializeApp } = require('firebase-admin/app');
 const { getFirestore, FieldValue } = require('firebase-admin/firestore');
 const { checkAnswer, gradeCodeRuns, isCodeType, comboXp, levelForXp } = require('./grading');
+const { dayKey, nextStreak } = require('./streak');
 const { runPython } = require('./judge0');
 
 initializeApp();
@@ -97,6 +98,7 @@ exports.submitAnswer = onCall({ timeoutSeconds: 60 }, async (request) => {
     const oldLevel = user.level || 1;
     const newTotalXp = (user.totalXp || 0) + xpAwarded;
     const newLevel = Math.max(oldLevel, levelForXp(newTotalXp));
+    const streak = xpAwarded > 0 ? nextStreak(user, dayKey(new Date())) : null;
 
     let explanation = secret.explanation || null;
     if (codeInfo) {
@@ -112,13 +114,24 @@ exports.submitAnswer = onCall({ timeoutSeconds: 60 }, async (request) => {
       newLevel,
       leveledUp: newLevel > oldLevel,
       comboCount: combo,
+      currentStreak: streak ? streak.currentStreak : user.currentStreak || 0,
       explanation,
     };
 
     tx.set(subRef, { puzzleId, result, createdAt: FieldValue.serverTimestamp() });
     tx.set(sessionRef, { combo, updatedAt: FieldValue.serverTimestamp() }, { merge: true });
     if (xpAwarded > 0) {
-      tx.set(userRef, { totalXp: newTotalXp, level: newLevel }, { merge: true });
+      tx.set(
+        userRef,
+        {
+          totalXp: newTotalXp,
+          level: newLevel,
+          currentStreak: streak.currentStreak,
+          longestStreak: streak.longestStreak,
+          lastStreakDay: streak.lastStreakDay,
+        },
+        { merge: true },
+      );
     }
     return result;
   });
@@ -151,8 +164,19 @@ exports.awardMiniGameXp = onCall(async (request) => {
     const totalXp = oldXp + MINI_GAME_XP;
     const level = Math.max(oldLevel, levelForXp(totalXp));
     tx.set(playRef, { gameId, xpAwarded: MINI_GAME_XP, createdAt: FieldValue.serverTimestamp() });
-    tx.set(userRef, { totalXp, level }, { merge: true });
-    return { xpAwarded: MINI_GAME_XP, totalXp, level };
+    const streak = nextStreak(user, dayKey(new Date()));
+    tx.set(
+      userRef,
+      {
+        totalXp,
+        level,
+        currentStreak: streak.currentStreak,
+        longestStreak: streak.longestStreak,
+        lastStreakDay: streak.lastStreakDay,
+      },
+      { merge: true },
+    );
+    return { xpAwarded: MINI_GAME_XP, totalXp, level, currentStreak: streak.currentStreak };
   });
   } catch (e) {
     if (e instanceof HttpsError) throw e;
