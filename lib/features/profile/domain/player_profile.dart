@@ -9,6 +9,7 @@ class PlayerProfile {
     required this.currentStreak,
     this.selectedLanguage,
     this.selectedLevel,
+    this.badges = const [],
   });
 
   final String uid;
@@ -21,6 +22,9 @@ class PlayerProfile {
   final String? selectedLanguage;
   final String? selectedLevel;
 
+  /// Ids of the badges the player has earned (set by the server).
+  final List<String> badges;
+
   factory PlayerProfile.fromMap(String uid, Map<String, dynamic> m) {
     return PlayerProfile(
       uid: uid,
@@ -32,6 +36,7 @@ class PlayerProfile {
       currentStreak: (m['currentStreak'] as num?)?.toInt() ?? 0,
       selectedLanguage: m['selectedLanguage'] as String?,
       selectedLevel: m['selectedLevel'] as String?,
+      badges: (m['badges'] as List?)?.whereType<String>().toList() ?? const [],
     );
   }
 }

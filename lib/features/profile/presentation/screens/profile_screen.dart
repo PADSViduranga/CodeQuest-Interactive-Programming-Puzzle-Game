@@ -1,4 +1,7 @@
 import 'package:flutter/material.dart';
+
+import '../../../rewards/presentation/widgets/badges_section.dart';
+
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 
@@ -68,6 +71,8 @@ class ProfileScreen extends ConsumerWidget {
               ),
             ],
           ),
+          const SizedBox(height: 20),
+          BadgesSection(earned: profile?.badges ?? const []),
           const SizedBox(height: 20),
           if (isGuest)
             Card(

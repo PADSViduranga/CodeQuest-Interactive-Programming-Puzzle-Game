@@ -1,3 +1,5 @@
+import '../../rewards/domain/earned_badge.dart';
+
 /// What the server says after an answer is submitted.
 class AnswerResult {
   const AnswerResult({
@@ -8,6 +10,7 @@ class AnswerResult {
     this.leveledUp = false,
     this.comboCount = 0,
     this.explanation,
+    this.newBadges = const [],
   });
 
   final bool correct;
@@ -17,6 +20,7 @@ class AnswerResult {
   final bool leveledUp;
   final int comboCount;
   final String? explanation;
+  final List<EarnedBadge> newBadges;
 
   factory AnswerResult.fromMap(Map<String, dynamic> map) => AnswerResult(
     correct: map['correct'] as bool? ?? false,
@@ -26,5 +30,6 @@ class AnswerResult {
     leveledUp: map['leveledUp'] as bool? ?? false,
     comboCount: (map['comboCount'] as num?)?.toInt() ?? 0,
     explanation: map['explanation'] as String?,
+    newBadges: parseEarnedBadges(map['newBadges']),
   );
 }

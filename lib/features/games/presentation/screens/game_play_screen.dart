@@ -6,6 +6,8 @@ import 'package:go_router/go_router.dart';
 
 import '../../../../core/theme/app_colors.dart';
 import '../../core/game_module.dart';
+import '../../../rewards/domain/earned_badge.dart';
+import '../../../rewards/domain/reward_chain.dart';
 import '../../domain/answer_result.dart';
 import '../../domain/puzzle.dart';
 import '../providers/game_session_provider.dart';
@@ -26,6 +28,10 @@ class _GamePlayScreenState extends ConsumerState<GamePlayScreen> {
   int _index = 0;
   Timer? _timer;
   bool _locked = false; // true while an answer is being checked or shown
+
+  // Rewards earned during this stage, shown after the stage-complete screen.
+  final List<EarnedBadge> _badges = [];
+  int? _leveledUpTo;
 
   @override
   void initState() {
@@ -74,6 +80,10 @@ class _GamePlayScreenState extends ConsumerState<GamePlayScreen> {
       rethrow;
     }
     ref.read(gameSessionProvider.notifier).recordResult(result);
+    if (result.leveledUp) _leveledUpTo = result.newLevel;
+    for (final b in result.newBadges) {
+      if (!_badges.any((e) => e.id == b.id)) _badges.add(b);
+    }
     // Return first so the game can colour the answer, then show feedback.
     Future.microtask(() => _afterResult(result, total));
     return result;
@@ -109,6 +119,7 @@ class _GamePlayScreenState extends ConsumerState<GamePlayScreen> {
     if (_index + 1 >= total) {
       final correct = s.correctCount;
       final stars = correct == total ? 3 : (correct >= total * 0.6 ? 2 : 1);
+      final next = buildRewardChain(badges: _badges, leveledUpTo: _leveledUpTo);
       final url = Uri(
         path: '/stage-complete',
         queryParameters: {
@@ -116,6 +127,7 @@ class _GamePlayScreenState extends ConsumerState<GamePlayScreen> {
           'xp': '${s.xpEarned}',
           'accuracy': '${(100 * correct / total).round()}',
           'combo': '${s.comboCount < 1 ? 1 : s.comboCount}',
+          if (next != null) 'next': next,
         },
       ).toString();
       context.pushReplacement(url);
