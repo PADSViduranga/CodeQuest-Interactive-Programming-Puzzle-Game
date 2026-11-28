@@ -3,6 +3,7 @@ const { initializeApp } = require('firebase-admin/app');
 const { getFirestore, FieldValue } = require('firebase-admin/firestore');
 const { checkAnswer, gradeCodeRuns, isCodeType, comboXp, levelForXp } = require('./grading');
 const { dayKey, nextStreak } = require('./streak');
+const { newBadges } = require('./badges');
 const { runPython } = require('./judge0');
 
 initializeApp();
@@ -99,6 +100,14 @@ exports.submitAnswer = onCall({ timeoutSeconds: 60 }, async (request) => {
     const newTotalXp = (user.totalXp || 0) + xpAwarded;
     const newLevel = Math.max(oldLevel, levelForXp(newTotalXp));
     const streak = xpAwarded > 0 ? nextStreak(user, dayKey(new Date())) : null;
+    const earned = streak
+      ? newBadges({
+          ...user,
+          totalXp: newTotalXp,
+          level: newLevel,
+          currentStreak: streak.currentStreak,
+        })
+      : [];
 
     let explanation = secret.explanation || null;
     if (codeInfo) {
@@ -115,6 +124,7 @@ exports.submitAnswer = onCall({ timeoutSeconds: 60 }, async (request) => {
       leveledUp: newLevel > oldLevel,
       comboCount: combo,
       currentStreak: streak ? streak.currentStreak : user.currentStreak || 0,
+      newBadges: earned,
       explanation,
     };
 
@@ -126,6 +136,7 @@ exports.submitAnswer = onCall({ timeoutSeconds: 60 }, async (request) => {
         {
           totalXp: newTotalXp,
           level: newLevel,
+          badges: [...(user.badges || []), ...earned.map((b) => b.id)],
           currentStreak: streak.currentStreak,
           longestStreak: streak.longestStreak,
           lastStreakDay: streak.lastStreakDay,
@@ -165,18 +176,31 @@ exports.awardMiniGameXp = onCall(async (request) => {
     const level = Math.max(oldLevel, levelForXp(totalXp));
     tx.set(playRef, { gameId, xpAwarded: MINI_GAME_XP, createdAt: FieldValue.serverTimestamp() });
     const streak = nextStreak(user, dayKey(new Date()));
+    const earned = newBadges({
+      ...user,
+      totalXp,
+      level,
+      currentStreak: streak.currentStreak,
+    });
     tx.set(
       userRef,
       {
         totalXp,
         level,
+        badges: [...(user.badges || []), ...earned.map((b) => b.id)],
         currentStreak: streak.currentStreak,
         longestStreak: streak.longestStreak,
         lastStreakDay: streak.lastStreakDay,
       },
       { merge: true },
     );
-    return { xpAwarded: MINI_GAME_XP, totalXp, level, currentStreak: streak.currentStreak };
+    return {
+      xpAwarded: MINI_GAME_XP,
+      totalXp,
+      level,
+      currentStreak: streak.currentStreak,
+      newBadges: earned,
+    };
   });
   } catch (e) {
     if (e instanceof HttpsError) throw e;
