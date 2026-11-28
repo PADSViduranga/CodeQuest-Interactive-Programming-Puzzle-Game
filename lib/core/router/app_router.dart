@@ -22,6 +22,7 @@ import '../../features/onboarding/presentation/screens/choose_level_screen.dart'
 import '../../features/profile/presentation/providers/profile_provider.dart';
 import '../../features/progress/presentation/screens/progress_screen.dart';
 import '../../features/profile/presentation/screens/profile_screen.dart';
+import '../../features/rewards/presentation/screens/achievements_screen.dart';
 import '../../features/rewards/presentation/screens/badge_unlocked_screen.dart';
 import '../../features/rewards/presentation/screens/level_up_screen.dart';
 import '../../features/rewards/presentation/screens/stage_complete_screen.dart';
@@ -193,9 +194,14 @@ final routerProvider = Provider<GoRouter>((ref) {
           return BadgeUnlockedScreen(
             name: q['name'] ?? 'New badge',
             description: q['desc'] ?? '',
+            label: q['label'] ?? 'BADGE UNLOCKED',
             next: q['next'],
           );
         },
+      ),
+      GoRoute(
+        path: AppRoutes.achievements,
+        builder: (_, _) => const AchievementsScreen(),
       ),
       GoRoute(
         path: AppRoutes.settings,

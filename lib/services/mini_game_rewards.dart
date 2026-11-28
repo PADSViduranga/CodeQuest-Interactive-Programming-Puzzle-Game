@@ -1,6 +1,7 @@
 import 'package:cloud_functions/cloud_functions.dart';
 import 'package:flutter/foundation.dart';
 
+import '../features/rewards/domain/earned_achievement.dart';
 import '../features/rewards/domain/earned_badge.dart';
 
 /// Asks the server to award XP for a won mini-game and returns a short
@@ -15,12 +16,19 @@ class MiniGameRewards {
           .call({'gameId': gameId});
       final data = Map<String, dynamic>.from(result.data as Map);
       final xp = (data['xpAwarded'] as num?)?.toInt() ?? 0;
-      final message = xp > 0
+      var message = xp > 0
           ? '+$xp XP saved to your profile'
           : 'Already earned today, no extra XP';
       final badges = parseEarnedBadges(data['newBadges']);
-      if (badges.isEmpty) return message;
-      return '$message · Badge unlocked: ${badges.map((b) => b.name).join(', ')}';
+      if (badges.isNotEmpty) {
+        message += ' · Badge unlocked: ${badges.map((b) => b.name).join(', ')}';
+      }
+      final achievements = parseEarnedAchievements(data['newAchievements']);
+      if (achievements.isNotEmpty) {
+        message +=
+            ' · Achievement unlocked: ${achievements.map((a) => '${a.name} (+${a.rewardXp} XP)').join(', ')}';
+      }
+      return message;
     } catch (e) {
       debugPrint('mini-game reward skipped: $e');
       final text = e.toString();

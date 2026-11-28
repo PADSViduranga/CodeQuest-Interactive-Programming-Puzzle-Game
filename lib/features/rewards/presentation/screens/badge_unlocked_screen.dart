@@ -11,11 +11,13 @@ class BadgeUnlockedScreen extends StatelessWidget {
     required this.name,
     required this.description,
     this.next,
+    this.label = 'BADGE UNLOCKED',
   });
 
   final String name;
   final String description;
   final String? next;
+  final String label;
 
   @override
   Widget build(BuildContext context) {
@@ -50,7 +52,7 @@ class BadgeUnlockedScreen extends StatelessWidget {
           ),
           const SizedBox(height: 28),
           Text(
-            'BADGE UNLOCKED',
+            label,
             style: TextStyle(
               fontSize: 12,
               fontWeight: FontWeight.w800,

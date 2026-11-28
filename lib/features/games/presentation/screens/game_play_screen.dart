@@ -6,6 +6,7 @@ import 'package:go_router/go_router.dart';
 
 import '../../../../core/theme/app_colors.dart';
 import '../../core/game_module.dart';
+import '../../../rewards/domain/earned_achievement.dart';
 import '../../../rewards/domain/earned_badge.dart';
 import '../../../rewards/domain/reward_chain.dart';
 import '../../domain/answer_result.dart';
@@ -31,6 +32,7 @@ class _GamePlayScreenState extends ConsumerState<GamePlayScreen> {
 
   // Rewards earned during this stage, shown after the stage-complete screen.
   final List<EarnedBadge> _badges = [];
+  final List<EarnedAchievement> _achievements = [];
   int? _leveledUpTo;
 
   @override
@@ -84,6 +86,9 @@ class _GamePlayScreenState extends ConsumerState<GamePlayScreen> {
     for (final b in result.newBadges) {
       if (!_badges.any((e) => e.id == b.id)) _badges.add(b);
     }
+    for (final a in result.newAchievements) {
+      if (!_achievements.any((e) => e.id == a.id)) _achievements.add(a);
+    }
     // Return first so the game can colour the answer, then show feedback.
     Future.microtask(() => _afterResult(result, total));
     return result;
@@ -119,7 +124,11 @@ class _GamePlayScreenState extends ConsumerState<GamePlayScreen> {
     if (_index + 1 >= total) {
       final correct = s.correctCount;
       final stars = correct == total ? 3 : (correct >= total * 0.6 ? 2 : 1);
-      final next = buildRewardChain(badges: _badges, leveledUpTo: _leveledUpTo);
+      final next = buildRewardChain(
+        achievements: _achievements,
+        badges: _badges,
+        leveledUpTo: _leveledUpTo,
+      );
       final url = Uri(
         path: '/stage-complete',
         queryParameters: {
