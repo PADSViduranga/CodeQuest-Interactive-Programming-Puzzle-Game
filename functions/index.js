@@ -5,6 +5,7 @@ const { checkAnswer, gradeCodeRuns, isCodeType, comboXp, levelForXp } = require(
 const { dayKey, nextStreak } = require('./streak');
 const { newBadges } = require('./badges');
 const { DAILY_BONUS_XP, dailyBonusStatus } = require('./daily');
+const { newAchievements, bumpStat, maxStat } = require('./achievements');
 const { runPython } = require('./judge0');
 
 initializeApp();
@@ -98,7 +99,13 @@ exports.submitAnswer = onCall({ timeoutSeconds: 60 }, async (request) => {
 
     const user = userSnap.exists ? userSnap.data() : {};
     const oldLevel = user.level || 1;
-    const newTotalXp = (user.totalXp || 0) + xpAwarded;
+    const stats = correct
+      ? maxStat(bumpStat(user.stats, 'puzzlesSolved'), 'bestCombo', combo)
+      : user.stats || {};
+    const ach = correct
+      ? newAchievements({ ...user, stats })
+      : { unlocked: [], bonusXp: 0 };
+    const newTotalXp = (user.totalXp || 0) + xpAwarded + ach.bonusXp;
     const newLevel = Math.max(oldLevel, levelForXp(newTotalXp));
     const streak = xpAwarded > 0 ? nextStreak(user, dayKey(new Date())) : null;
     const earned = streak
@@ -126,6 +133,8 @@ exports.submitAnswer = onCall({ timeoutSeconds: 60 }, async (request) => {
       comboCount: combo,
       currentStreak: streak ? streak.currentStreak : user.currentStreak || 0,
       newBadges: earned,
+      newAchievements: ach.unlocked,
+      achievementXp: ach.bonusXp,
       explanation,
     };
 
@@ -142,6 +151,8 @@ exports.submitAnswer = onCall({ timeoutSeconds: 60 }, async (request) => {
           longestStreak: streak.longestStreak,
           lastStreakDay: streak.lastStreakDay,
           recentDays: streak.recentDays,
+          stats,
+          achievements: [...(user.achievements || []), ...ach.unlocked.map((a) => a.id)],
         },
         { merge: true },
       );
@@ -174,7 +185,9 @@ exports.awardMiniGameXp = onCall(async (request) => {
     const oldXp = user.totalXp || 0;
     const oldLevel = user.level || 1;
     if (playSnap.exists) return { xpAwarded: 0, totalXp: oldXp, level: oldLevel };
-    const totalXp = oldXp + MINI_GAME_XP;
+    const stats = bumpStat(user.stats, 'miniGamesWon');
+    const ach = newAchievements({ ...user, stats });
+    const totalXp = oldXp + MINI_GAME_XP + ach.bonusXp;
     const level = Math.max(oldLevel, levelForXp(totalXp));
     tx.set(playRef, { gameId, xpAwarded: MINI_GAME_XP, createdAt: FieldValue.serverTimestamp() });
     const streak = nextStreak(user, dayKey(new Date()));
@@ -194,6 +207,8 @@ exports.awardMiniGameXp = onCall(async (request) => {
         longestStreak: streak.longestStreak,
         lastStreakDay: streak.lastStreakDay,
         recentDays: streak.recentDays,
+        stats,
+        achievements: [...(user.achievements || []), ...ach.unlocked.map((a) => a.id)],
       },
       { merge: true },
     );
@@ -203,6 +218,8 @@ exports.awardMiniGameXp = onCall(async (request) => {
       level,
       currentStreak: streak.currentStreak,
       newBadges: earned,
+      newAchievements: ach.unlocked,
+      achievementXp: ach.bonusXp,
     };
   });
   } catch (e) {
@@ -241,9 +258,11 @@ exports.claimDailyBonus = onCall(async (request) => {
       const oldLevel = user.level || 1;
       const status = dailyBonusStatus(user, today);
       if (status !== 'ready') {
-        return { status, xpAwarded: 0, totalXp: oldXp, level: oldLevel, newBadges: [] };
+        return { status, xpAwarded: 0, totalXp: oldXp, level: oldLevel, newBadges: [], newAchievements: [] };
       }
-      const totalXp = oldXp + DAILY_BONUS_XP;
+      const stats = bumpStat(user.stats, 'bonusesClaimed');
+      const ach = newAchievements({ ...user, stats });
+      const totalXp = oldXp + DAILY_BONUS_XP + ach.bonusXp;
       const level = Math.max(oldLevel, levelForXp(totalXp));
       const earned = newBadges({ ...user, totalXp, level });
       tx.set(
@@ -253,10 +272,20 @@ exports.claimDailyBonus = onCall(async (request) => {
           level,
           badges: [...(user.badges || []), ...earned.map((b) => b.id)],
           lastDailyBonusDay: today,
+          stats,
+          achievements: [...(user.achievements || []), ...ach.unlocked.map((a) => a.id)],
         },
         { merge: true },
       );
-      return { status: 'claimed', xpAwarded: DAILY_BONUS_XP, totalXp, level, newBadges: earned };
+      return {
+        status: 'claimed',
+        xpAwarded: DAILY_BONUS_XP,
+        totalXp,
+        level,
+        newBadges: earned,
+        newAchievements: ach.unlocked,
+        achievementXp: ach.bonusXp,
+      };
     });
   } catch (e) {
     if (e instanceof HttpsError) throw e;
